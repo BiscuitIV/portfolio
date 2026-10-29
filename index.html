@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pavlos P</title>
+    <meta name="description" content="Pavlos P, mechanical engineering student: I design across mechanical, electrical and aerospace engineering, from planes and drones to a 3D printer and the circuit boards that run them.">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
@@ -14,12 +16,15 @@
         <div class="sheet-left">
             <header class="intro">
                 <h1 class="title title-display name">Pavlos P</h1>
+                <p class="title title-md lede">I design across mechanical, electrical and aerospace engineering.</p>
                 <dl class="kv bio">
                     <dt class="mono">Status</dt><dd>College Freshman</dd>
                     <dt class="mono">Track</dt><dd>Mechanical Engineering</dd>
-                    <dt class="mono">Seeking</dt><dd>Summer 2027 internship in aerospace, EV, or mechanical design</dd>
-                    <dt class="mono">Contact</dt><dd class="contact-links"></dd>
-                </dl>
+                    <dt class="mono">Seeking</dt><dd>Summer 2027 internship in aerospace, EV, or mechanical design</dd>                </dl>
+                <div class="cta">
+                    <button type="button" class="bare mono chip chip-solid" id="view-work">View work &darr;</button>
+                    <span class="contact-links"></span>
+                </div>
             </header>
 
             <main class="index" aria-labelledby="projects-head">
@@ -61,7 +66,7 @@
                             <span class="muted entry-meta"><a class="link" href="https://racing.umd.edu/formula-ev" target="_blank" rel="noopener">Terps Racing Electric Vehicle</a></span>
                             <ul class="marks entry-points">
                                 <li>Designing a SolidWorks enclosure for a 4S LFP battery pack powering the low-voltage circuitry</li>
-                                <li>Redesigning HV battery charger to cut required outlets from 3 to 1 and add Raspberry Pi data logging</li>
+                                <li>Assembling, testing, and validating the next-gen low-voltage BMS board</li>
                             </ul>
                         </dd>
                     </div>
@@ -71,7 +76,7 @@
                             <span class="title upright entry-title">Summer Camp Assistant</span>
                             <span class="muted entry-meta"><a class="link" href="https://www.hiller.org" target="_blank" rel="noopener">Hiller Aviation Museum</a></span>
                             <ul class="marks entry-points">
-                                <li>Ran activities for 20+ campers and assisted instructors in STEM-focused aviation programs</li>
+                                <li>Ran activities for <strong>20+</strong> campers and assisted instructors in STEM-focused aviation programs</li>
                             </ul>
                         </dd>
                     </div>
@@ -81,9 +86,9 @@
                             <span class="title upright entry-title">Prototype Engineer</span>
                             <span class="muted entry-meta">Apperture S&agrave;rl &middot; Remote</span>
                             <ul class="marks entry-points">
-                                <li>Rebuilt 10+ legacy Rhino models of wearable products as parametric, editable Onshape CAD</li>
+                                <li>Rebuilt <strong>10+</strong> legacy Rhino models of wearable products as parametric, editable Onshape CAD</li>
                                 <li>Designed toleranced functional parts (bezels, strap clips) for FDM/MSLA printing</li>
-                                <li>Ran MSLA production for 50+ batches end to end, from slicing to inspection</li>
+                                <li>Ran MSLA production for <strong>50+</strong> batches end to end, from slicing to inspection</li>
                                 <li>Diagnosed and replaced cracked FEP films to minimize downtime</li>
                             </ul>
                         </dd>
@@ -94,7 +99,7 @@
                             <span class="title upright entry-title">Head of Mechanical</span>
                             <span class="muted entry-meta">d.Aviation (High School Club)</span>
                             <ul class="marks entry-points">
-                                <li>Designed a servo-actuated tennis ball intake and release mechanism; placed 3rd of 12 teams at the 2023 STEM-ED Aero Robotics Competition</li>
+                                <li>Designed a servo-actuated tennis ball intake and release mechanism; placed <strong>3rd of 12</strong> teams at the 2023 STEM-ED Aero Robotics Competition</li>
                                 <li>Led and trained a 5-person mechanical team; handled field repairs and firmware debugging at competition</li>
                             </ul>
                         </dd>
@@ -172,6 +177,18 @@
                 </dl>
             </section>
 
+            <section class="about" aria-labelledby="about-head">
+                <h2 class="mono section-head" id="about-head">About</h2>
+                <div class="about-body">
+                    <img class="headshot" src="web/headshot.jpg" width="384" height="480" loading="lazy" alt="Portrait of Pavlos P">
+                    <div>
+                        <p>I&rsquo;m a mechanical engineering freshman at the University of Maryland, and what I enjoy most is learning something new and putting it straight to use. I learned CFD to streamline my plane&rsquo;s airframe, and electronics to design its motor controller and my 3D printer&rsquo;s accelerometer board. I&rsquo;m looking for a summer 2027 internship in aerospace, EV or mechanical design where I can keep doing that.</p>
+                        <p class="title title-md">Let&rsquo;s build something.</p>
+                        <p class="contact-links"></p>
+                    </div>
+                </div>
+            </section>
+
             <p class="mono muted colophon">&copy; 2026 Pavlos P</p>
         </div>
 
@@ -191,7 +208,7 @@
                             <p class="mono muted frame-label" id="card-meta"></p>
                             <p class="title title-lg upright card-title" id="card-title"></p>
                             <div class="card-body" id="card-body"></div>
-                            <p class="mono muted frame-caption">Open &rarr;</p>
+                            <p class="mono muted frame-caption">Read case study &rarr;</p>
                         </div>
                         <video id="featured-video" muted loop playsinline></video>
                     </div>
@@ -245,7 +262,10 @@
 
         <footer class="project-foot mono muted">
             <span>&copy; 2026 Pavlos P</span>
-            <span class="contact-links"></span>
+            <span class="foot-cta">
+                <span>Hiring for summer 2027? Get in touch</span>
+                <span class="contact-links"></span>
+            </span>
         </footer>
     </div>
 

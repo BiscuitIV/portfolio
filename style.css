@@ -265,7 +265,42 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
 
 .name { margin: 0; }
 
+.lede { margin: var(--s-5) 0 0; }
+
 .bio { margin: var(--s-6) 0 0; }
+
+/* Above-the-fold next steps: one inked button, then the contact links */
+.cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-4) var(--s-5);
+    margin-top: var(--s-6);
+}
+
+.chip-solid { padding: var(--s-2) var(--s-4); background: var(--ink); color: var(--paper); }
+.chip-solid:is(:hover, :focus-visible) { border-color: var(--accent); background: var(--accent); }
+
+/* Closing section: portrait beside the intro, the sign-off and contact links */
+.about-body {
+    display: grid;
+    grid-template-columns: var(--portrait-w) 1fr;
+    gap: var(--s-5);
+    align-items: start;
+    --portrait-w: calc(2 * var(--s-8));
+}
+
+/* Pre-cropped 4:5 at 2x (web/headshot.jpg), so the browser never shrinks the full-size original */
+.headshot {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    border: var(--line);
+    border-radius: var(--radius);
+}
+
+.about p { margin: 0 0 var(--s-4); }
+.about p:last-child { margin-bottom: 0; }
 
 /* Resume rows: spacing lives inside each row so hover targets touch, with no dead gap between entries */
 .rows { row-gap: 0; }
@@ -546,8 +581,9 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
 }
 
 .project-bar { border-bottom: var(--line); }
-.project-foot { margin-top: auto; border-top: var(--line); }
+.project-foot { flex-wrap: wrap; margin-top: auto; border-top: var(--line); }
 .project-foot .contact-links { color: var(--ink); }
+.foot-cta { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); }
 
 .project-head {
     padding: var(--s-8) 0 var(--s-7);
@@ -836,6 +872,10 @@ video.fig-img { cursor: auto; }
     }
 
     .panel { display: none; }
+
+    /* Portrait stacks above the text */
+    .about-body { grid-template-columns: 1fr; }
+    .headshot { width: var(--portrait-w); }
 
     /* Rows drop to three columns; the year moves under the outcome */
     .index-head,

@@ -43,7 +43,7 @@ const projects = {
     "plane": {
         title: "LWS X",
         subtitle: "Sub-250 g endurance RC plane",
-        outcome: "18% lighter airframe and 2.2× wing lift-to-drag from a 275-airfoil sweep",
+        outcome: "<strong>18% lighter</strong> airframe and <strong>2.2×</strong> wing lift-to-drag from a 275-airfoil sweep",
         thumb: "lws-x/Velocity%20Picture%203.png",
         tags: ["Aero", "CAD", "Electronics", "Fabrication"],
         date: "2024-2026",
@@ -215,70 +215,6 @@ const projects = {
             ] }
         ]
     },
-    "fpv-quads": {
-        title: "FPV Quads",
-        subtitle: "Three quadcopters, flown and debugged",
-        outcome: "A tiny whoop, a 3.5-inch and a 5-inch, each tuned and debugged in Betaflight",
-        thumb: "across-the-years/drone-quad.jpg",
-        tags: ["Aero", "Electronics"],
-        date: "2023",
-        problem: "Build, fly and debug FPV quadcopters across three sizes",
-        role: "Personal project · build, tuning, flying",
-        tools: "Betaflight",
-        text: [
-            "<strong>FPV quads</strong> were my first builds: three quadcopters of different sizes, flown and debugged.",
-            { heading: "Three FPV quads, flown and debugged in Betaflight" },
-            "I fly a tiny whoop, a 3.5-inch and a 5-inch. Each runs Betaflight, which I use for debugging as well as flying.",
-            { media: [
-                { src: "across-the-years/drone-quad.jpg", width: 1427, height: 951, alt: "3.5-inch carbon-frame FPV quadcopter with a strapped battery on a wooden floor" },
-                { src: "across-the-years/web/drone-micro-2023.mp4", width: 800, height: 360, alt: "Tiny whoop, a micro ducted quadcopter, lifting off a hallway floor" }
-            ], caption: "The 3.5-inch quad, and the tiny whoop lifting off a hallway floor in March 2023" },
-            { media: [{ src: "across-the-years/web/drone-quad-2023-12.mp4", width: 720, height: 1280, alt: "FPV quadcopter flight clip filmed in portrait, December 2023" }],
-                caption: "An FPV quad flight, December 2023" }
-        ]
-    },
-    "drone-payload": {
-        title: "Drone Payload",
-        subtitle: "Tennis-ball pickup for the d.Aviation S500",
-        outcome: "Servo-actuated pickup mechanism placed 3rd of 12 teams at the 2023 STEM-ED Aero Robotics Competition",
-        thumb: "across-the-years/web/drone-s500-hover.jpg",
-        tags: ["Aero", "CAD"],
-        date: "2023",
-        problem: "Pick up and release a tennis ball from an S500 quadcopter for competition",
-        role: "Head of Mechanical, d.Aviation",
-        tools: "Onshape",
-        results: [
-            ["3rd of 12", "Aero Robotics placing", "2023 STEM-ED competition, d.Aviation"]
-        ],
-        text: [
-            "<strong>The payload</strong> was my high school club's competition entry: a mechanism that picks up and releases a tennis ball, carried on an S500 quadcopter.",
-            { heading: "A tennis-ball payload that placed 3rd of 12" },
-            "As Head of Mechanical at d.Aviation, I designed a servo-actuated mechanism that picks up and releases a tennis ball. We placed 3rd of 12 teams at the 2023 STEM-ED Aero Robotics Competition.",
-            { media: [{ src: "across-the-years/web/drone-s500-hover.mp4", width: 1280, height: 576, alt: "The d.Aviation S500 quadcopter climbing and descending over a field with a load hanging on a line" }],
-                caption: "The d.Aviation S500 climbing and descending over a field, with a load slung on a line below" }
-        ]
-    },
-    "drone-frame": {
-        title: "Drone Frame",
-        subtitle: "A quadcopter frame of my own",
-        outcome: "Quadcopter frame designed in Onshape, built and flown",
-        thumb: "across-the-years/drone-frame-render-v4.jpg",
-        tags: ["CAD", "Fabrication"],
-        problem: "Design, build and fly a quadcopter frame of my own",
-        role: "Personal project · frame design, build",
-        tools: "Onshape",
-        text: [
-            "<strong>This frame</strong> is the first airframe I designed from scratch: modelled in Onshape, built up and flown.",
-            { heading: "A frame of my own: designed, built and flown" },
-            "Stacked plates on standoffs hold the electronics, and cutouts in the plates and arms take out weight that does not carry load.",
-            { media: [
-                { src: "across-the-years/drone-frame-cad.png", width: 1305, height: 756, alt: "CAD line render of a quadcopter frame with stacked plates and four arms" },
-                { src: "across-the-years/drone-frame-render-v4.jpg", width: 3840, height: 2160, alt: "Rendered blue quadcopter frame with stacked plates on dark standoffs and triangular cutouts" }
-            ], caption: "Drone frame in CAD and rendered (Frame Render V4): stacked plates on standoffs, with lightening cutouts in the plates and arms · click to enlarge" },
-            { media: [{ src: "across-the-years/web/drone-frame-turntable.mp4", width: 1280, height: 720, alt: "Exploded-assembly animation of the blue quadcopter frame" }],
-                caption: "Exploded-assembly animation of the drone frame: plates, standoffs and fasteners" }
-        ]
-    },
     "printer": {
         title: "3D Printer",
         subtitle: "A cartesian printer designed from scratch, build in progress",
@@ -309,6 +245,49 @@ const projects = {
             ], caption: "Vibration Tracker V1.0, the 3D printer's accelerometer board for input-shaping resonance tuning: an SPI accelerometer and 1.8V regulator, December 2025 · click to enlarge" }
         ]
     },
+    "drone-frame": {
+        title: "Drone Frame",
+        subtitle: "An FPV quadcopter frame of my own",
+        outcome: "FPV quadcopter frame designed in Onshape and optimized for <strong>weight and strength</strong>, then built and flown",
+        thumb: "across-the-years/drone-frame-render-v4.jpg",
+        tags: ["CAD", "Fabrication"],
+        date: "2023-2024",
+        problem: "Design, build and fly an FPV quadcopter frame of my own, optimized for weight and strength",
+        role: "Personal project · frame design, build",
+        tools: "Onshape",
+        text: [
+            "<strong>This FPV frame</strong> is the first airframe I designed from scratch: modelled in Onshape, built up and flown.",
+            { heading: "A frame of my own, optimized for weight and strength" },
+            "I optimized the frame for weight and strength. Stacked plates on standoffs hold the electronics, and cutouts in the plates and arms take out material that does not carry load.",
+            { media: [
+                { src: "across-the-years/drone-frame-cad.png", width: 1305, height: 756, alt: "CAD line render of a quadcopter frame with stacked plates and four arms" },
+                { src: "across-the-years/drone-frame-render-v4.jpg", width: 3840, height: 2160, alt: "Rendered blue quadcopter frame with stacked plates on dark standoffs and triangular cutouts" }
+            ], caption: "Drone frame in CAD and rendered (Frame Render V4): stacked plates on standoffs, with lightening cutouts in the plates and arms · click to enlarge" },
+            { media: [{ src: "across-the-years/web/drone-frame-turntable.mp4", width: 1280, height: 720, alt: "Exploded-assembly animation of the blue quadcopter frame" }],
+                caption: "Exploded-assembly animation of the drone frame: plates, standoffs and fasteners" }
+        ]
+    },
+    "drone-payload": {
+        title: "Drone Payload",
+        subtitle: "Tennis-ball pickup for the d.Aviation S500",
+        outcome: "Servo-actuated pickup mechanism placed <strong>3rd of 12</strong> teams at the 2023 STEM-ED Aero Robotics Competition",
+        thumb: "across-the-years/web/drone-s500-hover.jpg",
+        tags: ["Aero", "CAD"],
+        date: "2023",
+        problem: "Pick up and release a tennis ball from an S500 quadcopter for competition",
+        role: "Head of Mechanical, d.Aviation",
+        tools: "Onshape",
+        results: [
+            ["3rd of 12", "Aero Robotics placing", "2023 STEM-ED competition, d.Aviation"]
+        ],
+        text: [
+            "<strong>The payload</strong> was my high school club's competition entry: a mechanism that picks up and releases a tennis ball, carried on an S500 quadcopter.",
+            { heading: "A tennis-ball payload that placed 3rd of 12" },
+            "As Head of Mechanical at d.Aviation, I designed a servo-actuated mechanism that picks up and releases a tennis ball. We placed 3rd of 12 teams at the 2023 STEM-ED Aero Robotics Competition.",
+            { media: [{ src: "across-the-years/web/drone-s500-hover.mp4", width: 1280, height: 576, alt: "The d.Aviation S500 quadcopter climbing and descending over a field with a load hanging on a line" }],
+                caption: "The d.Aviation S500 climbing and descending over a field, with a load slung on a line below" }
+        ]
+    },
     "radio-dock": {
         title: "Radio Dock",
         subtitle: "Paid commission for six Motorola T600 radios",
@@ -328,6 +307,28 @@ const projects = {
                 { src: "across-the-years/radio-dock-printed.jpg", width: 713, height: 951, alt: "Blue printed six-slot dock on a wooden table holding a green Motorola radio" },
                 { src: "across-the-years/motorola-t600.webp", width: 723, height: 1280, alt: "Manufacturer product photo of the green Motorola T600 radio, side view" }
             ], caption: "The printed radio dock in use, April 2026, beside the manufacturer's photo of the Motorola T600 it was designed around · click to enlarge" }
+        ]
+    },
+    "fpv-quads": {
+        title: "FPV Quads",
+        subtitle: "Three quadcopters, flown and debugged",
+        outcome: "A tiny whoop, a 3.5-inch and a 5-inch, each tuned and debugged in Betaflight",
+        thumb: "across-the-years/drone-quad.jpg",
+        tags: ["Aero", "Electronics"],
+        date: "2023",
+        problem: "Build, fly and debug FPV quadcopters across three sizes",
+        role: "Personal project · build, tuning, flying",
+        tools: "Betaflight",
+        text: [
+            "<strong>FPV quads</strong> were my first builds: three quadcopters of different sizes, flown and debugged.",
+            { heading: "Three FPV quads, flown and debugged in Betaflight" },
+            "I fly a tiny whoop, a 3.5-inch and a 5-inch. Each runs Betaflight, which I use for debugging as well as flying.",
+            { media: [
+                { src: "across-the-years/drone-quad.jpg", width: 1427, height: 951, alt: "3.5-inch carbon-frame FPV quadcopter with a strapped battery on a wooden floor" },
+                { src: "across-the-years/web/drone-micro-2023.mp4", width: 800, height: 360, alt: "Tiny whoop, a micro ducted quadcopter, lifting off a hallway floor" }
+            ], caption: "The 3.5-inch quad, and the tiny whoop lifting off a hallway floor in March 2023" },
+            { media: [{ src: "across-the-years/web/drone-quad-2023-12.mp4", width: 720, height: 1280, alt: "FPV quadcopter flight clip filmed in portrait, December 2023" }],
+                caption: "An FPV quad flight, December 2023" }
         ]
     }
 };
@@ -804,7 +805,7 @@ document.addEventListener("DOMContentLoaded", function () {
             featuredImage.src = image.src;
             featuredImage.alt = image.alt;
             featuredLink.href = `#${key}`;
-            featuredLink.querySelector(".frame-caption").textContent = `${label} · ${proj.title} · Open →`;
+            featuredLink.querySelector(".frame-caption").textContent = `${label} · ${proj.title} · Read case study →`;
         } else {
             // Strip the <strong> markup from the first paragraph
             const excerpt = document.createElement("div");
@@ -871,6 +872,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     fillPanel(featured, "Featured");
+
+    // HERO CTA: a button rather than a #anchor, since the hash selects the project
+    const projectsHead = $("projects-head");
+    projectsHead.tabIndex = -1;
+    $("view-work").addEventListener("click", () => {
+        projectsHead.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth" });
+        projectsHead.focus({ preventScroll: true });
+    });
 
     // GENERATE INDEX: number, thumbnail (an empty grid-paper box without one), title, subtitle, outcome, tags, year.
     // The thumbnail is decorative: the title already names the link
