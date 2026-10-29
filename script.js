@@ -284,6 +284,11 @@ const projects = {
             "<strong>The payload</strong> was my high school club's competition entry: a mechanism that picks up and releases a tennis ball, carried on an S500 quadcopter.",
             { heading: "A tennis-ball payload that placed 3rd of 12" },
             "As Head of Mechanical at d.Aviation, I designed a servo-actuated mechanism that picks up and releases a tennis ball. We placed 3rd of 12 teams at the 2023 STEM-ED Aero Robotics Competition.",
+            { media: [
+                { src: "web/Aviation%20Club%20Drone.jpeg", width: 1500, height: 2000, alt: "S500 quadcopter on a workshop bench beside a Flysky transmitter, with the payload servo wired to the rear arm" },
+                { src: "web/Aviation%20Club%20Me%20Shot.jpeg", width: 1500, height: 2000, alt: "Holding the S500 with the payload mechanism fitted underneath, on a sunny competition field" }
+            ],
+                caption: "The S500 on the bench with the payload servo wired in, and carried to the field at the competition" },
             { media: [{ src: "across-the-years/web/drone-s500-hover.mp4", width: 1280, height: 576, alt: "The d.Aviation S500 quadcopter climbing and descending over a field with a load hanging on a line" }],
                 caption: "The d.Aviation S500 climbing and descending over a field, with a load slung on a line below" }
         ]
