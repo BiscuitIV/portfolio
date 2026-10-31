@@ -3,7 +3,7 @@ const WING_CHORD = 0.11; // m, Generation X
 
 // Profiles normalized to chord = 1 (TE → upper → LE → lower → TE), cosine-resampled to 35 stations
 // per surface: E205 from the UIUC Airfoil Coordinates Database, I.S.A. 960 from the batch run's
-// simulated geometry (trailing edge closed, repanelled by XFoil).
+// simulated geometry (trailing edge closed, repaneled by XFoil).
 // polar: [α°, Cl, Cd], XFoil 6.99 batch run at Re 60,000, Ncrit 9, 160 panels, α −5° to 15° (polars stored to 12°);
 // gaps are angles where XFoil did not converge. cl/cd: the best-Cl/Cd point for α 0–5° (cruise window)
 const airfoils = [
@@ -47,7 +47,7 @@ const projects = {
         thumb: "lws-x/web/predecessor-thumb.jpg",
         tags: ["Aero", "CAD", "Electronics", "Fabrication"],
         date: "2024-2026",
-        problem: "Fit a one-metre-class wing, battery and 40 g payload under 250 g, and cruise at 7 m/s for 30 minutes",
+        problem: "Fit a one-meter-class wing, battery and 40 g payload under 250 g, and cruise at 7 m/s for 30 minutes",
         role: "Personal project · design, build, flight test",
         tools: "Onshape · KiCad · XFoil · OpenFOAM · 3D printing",
         results: [
@@ -102,7 +102,7 @@ const projects = {
             ]
         },
         text: [
-            "<strong>LWS X</strong> is a radio-controlled plane with a one-metre-class wingspan that weighs under 250 grams, battery and payload included. It is the current generation of the Light-Weight System (LWS), which I have designed, built and flown since 2024.",
+            "<strong>LWS X</strong> is a radio-controlled plane with a one-meter-class wingspan that weighs under 250 grams, battery and payload included. It is the current generation of the Light-Weight System (LWS), which I have designed, built and flown since 2024.",
             "Nine generations took it from a 263g tube glider that flew for three seconds to the 216g Predecessor. Generation X draws on a 275-airfoil XFoil sweep, OpenFOAM CFD and a custom motor controller.",
             { heading: "The brief: under 250g, 40g payload, 30 minutes aloft" },
             "Generation X must meet the first four requirements; the rest keep it practical in the field.",
@@ -111,12 +111,12 @@ const projects = {
                 "<strong>Payload</strong> at least 40g of electronics (camera, video transmitter, flight controller, GPS) in a protected bay, powered with at least 5W",
                 "<strong>Endurance</strong> 30 minutes at 15°C and 15 minutes at 0°C with full payload",
                 "<strong>Flight</strong> steady cruise at about 7 m/s, hand-launched by one person",
-                "<strong>Field use</strong> tool-free battery swap in under a minute, fits in a backpack, ready to fly within five minutes, operates from 0 to 150 metres",
+                "<strong>Field use</strong> tool-free battery swap in under a minute, fits in a backpack, ready to fly within five minutes, operates from 0 to 150 meters",
                 "<strong>Cost</strong> under $250 for airframe and propulsion, excluding electronics"
             ] },
             "Regulatory and safety requirements, including FPV frequency selection, lighting for night flying, and privacy and local laws, are being reviewed alongside the design.",
             { heading: "275 airfoils ranked: the I.S.A. 960 has 2.2× the E205's lift-to-drag" },
-            "<strong>Design Re: 60,000.</strong> Flight testing showed level flight needs closer to 8 m/s than the 7 m/s cruise target. At 8 m/s on the 110mm chord, Re is about 60,300 at sea level and 59,500 at 150 metres in the standard atmosphere.",
+            "<strong>Design Re: 60,000.</strong> Flight testing showed level flight needs closer to 8 m/s than the 7 m/s cruise target. At 8 m/s on the 110mm chord, Re is about 60,300 at sea level and 59,500 at 150 meters in the standard atmosphere.",
             { figure: "reynolds" },
             "<strong>Choice: I.S.A. 960.</strong> It scores 43.7 at 4.75°, fourth of the 273 airfoils that converged in the cruise window and within 3% of the best score of 45.0.",
             "The two MID 108 sections that score higher are 9.2mm thick. The I.S.A. 960 is 10.3mm thick with 5.7% camber, and its best point falls inside the cruise window rather than at its edge.",
@@ -133,7 +133,7 @@ const projects = {
                 "<strong>Metric and filters.</strong> The metric was the best lift-to-drag ratio (Cl/Cd) between 0° and 5°, the angles the wing actually sees in cruise with its 5° incidence. Candidates were kept to a range of cambers and a maximum thickness above 8mm at the 110mm chord, so the wing can be built from balsa and PLA with room for a spar. The thinnest of the 275 is 8.8mm.",
                 "The selection followed five steps, from operating conditions to a buildable airfoil:",
                 { list: [
-                    "<strong>Reynolds number</strong> 8 m/s level flight on the 110mm chord from 0 to 150 metres, giving Re 60,000",
+                    "<strong>Reynolds number</strong> 8 m/s level flight on the 110mm chord from 0 to 150 meters, giving Re 60,000",
                     "<strong>Goal metric</strong> best Cl/Cd between 0° and 5°, the cruise window",
                     "<strong>Camber and thickness</strong> a range of cambers and a maximum thickness above 8mm, which all 275 airfoils meet",
                     "<strong>Polars at optimal angle</strong> Cl, Cl/Cd and the drag polar at each airfoil's best angle, with 273 ranked",
@@ -173,7 +173,9 @@ const projects = {
                 "<strong>Interfaces</strong> signal and telemetry pins, SWD for programming, and test points on every key net"
             ] }] },
             { heading: "Split airframe, 7-inch prop, 67% more battery energy" },
-            "<strong>Airframe.</strong> Generation X splits the airframe into a front body and a rear body, joined by frame plates, so each body can be streamlined without compromising the joint between them. It is built from PLA and balsa, with carbon fibre under consideration.",
+            "<strong>Airframe.</strong> Generation X splits the airframe into a front body and a rear body, joined by frame plates, so each body can be streamlined without compromising the joint between them. It is built from PLA and balsa, with carbon fiber under consideration.",
+            { media: [{ src: "lws-x/lws-x-cad.png", width: 1413, height: 544, alt: "CAD wireframe of LWS X: long straight wing with winglets, a split fuselage and a tail boom carrying the tail surfaces" }],
+                caption: "LWS X in CAD: one-metre wing and split airframe · click to enlarge" },
             "<strong>Wing.</strong> The chord grows from the first generation's 100mm at 0° incidence to 110mm at 5°. Each of its two halves is 486mm wide.",
             "<strong>Propulsion.</strong> A 2003.5 motor on a 2S to 3S 15A ESC drives a 7-inch 7x4.5 bi-blade propeller, up from the 6-inch propeller of the first three generations.",
             "<strong>Power.</strong> The 2S 1200mAh battery stores about 8.9Wh for 56g: roughly 67% more energy than the earlier 2S 720mAh pack for 53% more weight. Custom PCBs replace off-the-shelf boards to save weight, and a flight controller is being added for more automation.",
@@ -182,13 +184,13 @@ const projects = {
             { heading: "Nine generations, from 263g to 216g" },
             "I had never flown an RC plane when the project began, so the early generations were as much about learning to fly as about the aircraft. Every revision was crash-tested. The rule that came out of them still drives the design: remove weight wherever it does not serve flight.",
             { figure: "timeline" },
-            "<strong>Gen 1 · Tube glider.</strong> At 263g, the first prototype was already over the target. It used carbon fibre tubes for the wing and fuselage, so components could be repositioned to balance it. Built within a month, it crashed three times on a rough asphalt runway; its tube fuselage lacked the stiffness to fly well.",
+            "<strong>Gen 1 · Tube glider.</strong> At 263g, the first prototype was already over the target. It used carbon fiber tubes for the wing and fuselage, so components could be repositioned to balance it. Built within a month, it crashed three times on a rough asphalt runway; its tube fuselage lacked the stiffness to fly well.",
             { media: [
                 { src: "lws-x/IMG20240903231440.jpg", width: 755, height: 1007, alt: "First-generation tube glider assembled on the floor, with 3D-printed ribs on carbon tubes, motor and landing gear" },
                 { src: "lws-x/web/gen1-v1-overview.mp4", width: 720, height: 1280, alt: "Walk-around of the first-generation glider: motor, landing gear, ribs, servos and tail" },
                 { src: "lws-x/web/gen1-v1-test.mp4", width: 720, height: 1280, alt: "Overhead ground test of the first-generation glider with its covered wing" }
             ], caption: "Generation 1, the 263g tube glider: assembled airframe, walk-around and ground test" },
-            "<strong>Gens 4–8 · Two-piece frame.</strong> Generations Four to Eight moved to a two-piece frame, one piece per side with the components housed inside, tested in cardboard, balsa and carbon fibre.",
+            "<strong>Gens 4–8 · Two-piece frame.</strong> Generations Four to Eight moved to a two-piece frame, one piece per side with the components housed inside, tested in cardboard, balsa and carbon fiber.",
             "Over those revisions a flap linkage replaced the string-and-pulley servo system and the wing mount became adjustable. A 2207 motor and 5g servos replaced the originals, and the ESC and receiver were stripped down.",
             { media: [{ src: "lws-x/IMG20250119132358.jpg", width: 755, height: 1007, alt: "Blue 3D-printed tail surface with an integrated servo mount, held in hand" }],
                 caption: "3D-printed tail surface with integrated servo mount, two-piece frame era, January 2025 · click to enlarge" },
@@ -210,14 +212,14 @@ const projects = {
             { list: [
                 "<strong>Cruise at 7 m/s</strong> further aerodynamic revision to bring level flight from 7.83 m/s down to the target",
                 "<strong>Flight controller</strong> being added for more automation",
-                "<strong>Lighter structure</strong> carbon fibre under consideration for the airframe, and custom PCBs replacing off-the-shelf boards",
+                "<strong>Lighter structure</strong> carbon fiber under consideration for the airframe, and custom PCBs replacing off-the-shelf boards",
                 "<strong>Payload and endurance</strong> fly the 40g payload of camera, video transmitter, flight controller and GPS, and test the 30-minute endurance target"
             ] }
         ]
     },
     "printer": {
         title: "Scratch-Built 3D Printer",
-        subtitle: "Cartesian printer on a hand-milled aluminium frame",
+        subtitle: "Cartesian printer on a hand-milled aluminum frame",
         outcome: "Designed from scratch in Onshape and <strong>assembled in four months</strong>, with a custom accelerometer board for input shaping",
         thumb: "across-the-years/printer-complete.jpg",
         image: {
@@ -231,11 +233,11 @@ const projects = {
         role: "Personal project · design, sourcing, build",
         tools: "Onshape · KiCad · Raspberry Pi",
         text: [
-            "<strong>This 3D printer</strong> is a cartesian machine of my own design, modelled in Onshape. I sourced the parts in November 2025 and had it assembled with its printed parts by March 2026. The build paused when I started college and is still in progress.",
-            { heading: "Hand-milled aluminium frame, twin lead screws, belt-driven gantry" },
-            "The frame is aluminium extrusion that I milled by hand on a manual mill, with twin lead screws lifting a belt-driven gantry. Printed brackets and feet tie it together, and a Raspberry Pi sits beside the main control board.",
-            { media: [{ src: "across-the-years/printer-cad.png", width: 883, height: 837, alt: "CAD line render of the 3D printer: aluminium extrusion frame, gantry, toolhead and lead screws" }],
-                caption: "CAD line render of the printer's aluminium extrusion frame, gantry and lead screws · click to enlarge" },
+            "<strong>This 3D printer</strong> is a cartesian machine of my own design, modeled in Onshape. I sourced the parts in November 2025 and had it assembled with its printed parts by March 2026. The build paused when I started college and is still in progress.",
+            { heading: "Hand-milled aluminum frame, twin lead screws, belt-driven gantry" },
+            "The frame is aluminum extrusion that I milled by hand on a manual mill, with twin lead screws lifting a belt-driven gantry. Printed brackets and feet tie it together, and a Raspberry Pi sits beside the main control board.",
+            { media: [{ src: "across-the-years/printer-cad.png", width: 883, height: 837, alt: "CAD line render of the 3D printer: aluminum extrusion frame, gantry, toolhead and lead screws" }],
+                caption: "CAD line render of the printer's aluminum extrusion frame, gantry and lead screws · click to enlarge" },
             { media: [
                 { src: "across-the-years/printer-parts.jpg", width: 713, height: 951, alt: "3D printer parts laid out on a desk: black extrusions, steel rods, lead screws, four stepper motors, pulleys and hardware" },
                 { src: "across-the-years/printer-first-assembly.jpg", width: 713, height: 951, alt: "First assembly of the 3D printer frame with gantry, toolhead and control boards wired on a desk" }
@@ -265,7 +267,7 @@ const projects = {
         role: "Personal project · frame design, build",
         tools: "Onshape",
         text: [
-            "<strong>This FPV frame</strong> is the first airframe I designed from scratch: modelled in Onshape, built up and flown.",
+            "<strong>This FPV frame</strong> is the first airframe I designed from scratch: modeled in Onshape, built up and flown.",
             { heading: "Stacked plates on standoffs, cut away wherever they carry no load" },
             "I optimized the frame for weight and strength. Stacked plates on standoffs hold the electronics, and cutouts in the plates and arms take out material that does not carry load.",
             { media: [{ src: "across-the-years/drone-frame-cad.png", width: 1305, height: 756, alt: "CAD line render of a quadcopter frame with stacked plates and four arms" }],
@@ -305,7 +307,7 @@ const projects = {
     "radio-dock": {
         title: "Radio Dock",
         subtitle: "Paid commission to hold six Motorola T600 radios",
-        outcome: "Six pockets modelled around the radio's body from the manufacturer's photo, printed as <strong>two three-slot halves</strong>",
+        outcome: "Six pockets modeled around the radio's body from the manufacturer's photo, printed as <strong>two three-slot halves</strong>",
         thumb: "across-the-years/radio-dock-printed.jpg",
         image: {
             src: "across-the-years/radio-dock-cad.png",
@@ -319,7 +321,7 @@ const projects = {
         tools: "Onshape · 3D printing",
         text: [
             "<strong>The radio dock</strong> was a paid commission: a client paid me to design and print a dock that holds six Motorola T600 radios upright.",
-            "Each pocket is modelled around the radio's body, using the manufacturer's photo as the reference for its shape. The dock is split into two three-slot halves.",
+            "Each pocket is modeled around the radio's body, using the manufacturer's photo as the reference for its shape. The dock is split into two three-slot halves.",
             { media: [
                 { src: "across-the-years/radio-dock-printed.jpg", width: 713, height: 951, alt: "Blue printed six-slot dock on a wooden table holding a green Motorola radio" },
                 { src: "across-the-years/motorola-t600.webp", width: 723, height: 1280, alt: "Manufacturer product photo of the green Motorola T600 radio, side view" }
@@ -600,7 +602,7 @@ const figures = {
     // One row per generation, the current design last (its result in red)
     timeline() {
         const gens = [
-            ["1", "Tube glider", "carbon fibre tube wing and fuselage · E205, 100 mm chord, 0° · 2814 motor, 32 g ESC", "263 g · ~3 s flight"],
+            ["1", "Tube glider", "carbon fiber tube wing and fuselage · E205, 100 mm chord, 0° · 2814 motor, 32 g ESC", "263 g · ~3 s flight"],
             ["4–8", "Two-piece frame", "tube or balsa halves · flap linkage · adjustable wing mount · 2207 motor · 5 g servos", "flights of seconds"],
             ["9", "The Predecessor", "balsa frame · 10 g ESC", "216 g · 10.1 m/s level"],
             ["X", "Front and rear body", "PLA and balsa · I.S.A. 960, 110 mm chord, 5° · custom PCBs", "210 g target · 7.83 m/s level"]
@@ -615,7 +617,7 @@ const figures = {
     sweep() {
         const fig = makeFigure("polars", `
             <div class="polar-plot">
-                <svg class="polar-svg" role="img" aria-label="Scatter of ${sweep.length} airfoils: maximum thickness in millimetres against best Cl/Cd for α 0 to 5°. All are thicker than the 8 mm minimum; I.S.A. 960 is 10.3 mm at Cl/Cd 43.7, fourth overall."></svg>
+                <svg class="polar-svg" role="img" aria-label="Scatter of ${sweep.length} airfoils: maximum thickness in millimeters against best Cl/Cd for α 0 to 5°. All are thicker than the 8 mm minimum; I.S.A. 960 is 10.3 mm at Cl/Cd 43.7, fourth overall."></svg>
                 <div class="mono-data polar-tip" hidden></div>
             </div>`,
             `${sweep.length} airfoils from the batch run, XFoil at Re 60,000 · hover to read values`);

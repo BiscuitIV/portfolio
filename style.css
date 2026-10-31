@@ -210,7 +210,7 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
     padding: var(--s-2) var(--s-3);
 }
 
-/* Drafting grid in CSS centimetres (nominal: 1cm = 37.8px at 96dpi): major every 1cm, minor every 2mm */
+/* Drafting grid in CSS centimeters (nominal: 1cm = 37.8px at 96dpi): major every 1cm, minor every 2mm */
 .grid-paper {
     background-color: var(--paper-2);
     background-image:
@@ -691,7 +691,7 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
 .fig-plate { border: var(--line); border-radius: var(--radius); padding: var(--s-5); }
 .fig figcaption { margin-top: var(--s-2); }
 
-/* Airfoil overlay (SVG units are millimetres) */
+/* Airfoil overlay (SVG units are millimeters) */
 .af-plot { display: block; width: 100%; height: auto; overflow: visible; }
 .af-plot path { fill: none; stroke-width: 0.45; stroke-linejoin: round; }
 .af-curr { stroke: var(--accent); }
