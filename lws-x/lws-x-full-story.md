@@ -32,7 +32,7 @@ Results include force coefficients (Cd, Cl, Cm), residual plots, case comparison
 
 The first custom PCB is the ESC, designed from scratch in KiCad to drive the 2003.5 motor on 2S to 3S at up to 15A. An STM32G0 microcontroller, powered by a TLV70433 3.3V regulator, commands an FD6288T three-phase gate driver. The driver switches six MOSFETs arranged as three half-bridges, with BAT54W bootstrap diodes supplying the high-side gates.
 
-Commutation is sensorless. Each phase's back-EMF is scaled through a 10k/4.7k divider and compared against a virtual neutral, so the motor needs no Hall sensors. A 1mΩ shunt with an INA181A3 amplifier measures motor current, a divider measures battery voltage, and a 470µF bulk capacitor with ceramic decoupling steadies the input. The board brings out signal and telemetry pins, SWD for programming, and test points on every key net.
+Commutation is sensorless. Each phase's back-EMF is scaled through a 10k/4.7k divider and compared against a virtual neutral, so the motor needs no Hall sensors. A 1mΩ shunt with an INA181A1 amplifier measures motor current, a divider measures battery voltage, and a 470µF bulk capacitor with ceramic decoupling steadies the input. The board brings out signal and telemetry pins, SWD for programming, and test points on every key net.
 
 ## Split airframe, 7-inch prop, 67% more battery energy
 

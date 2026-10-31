@@ -449,8 +449,7 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
 .frame-note { transition: opacity var(--dur) var(--ease); }
 .frame.has-preview .frame-note { opacity: 0; }
 
-.frame-note .frame-caption,
-.frame-card .frame-caption { margin-top: auto; }
+.frame-note .frame-caption { margin-top: auto; }
 
 /* Featured photo fills the frame; its caption is a ruled paper label */
 .frame-featured { padding: var(--s-4); }

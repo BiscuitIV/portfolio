@@ -41,10 +41,10 @@ const formatRe = re => (Math.round(re / 100) * 100).toLocaleString("en-US");
 
 const projects = {
     "plane": {
-        title: "LWS X",
-        subtitle: "Sub-250 g endurance RC plane",
+        title: "Sub-250 g Endurance Plane",
+        subtitle: "LWS X, the tenth generation of my Light-Weight System",
         outcome: "<strong>18% lighter</strong> airframe and <strong>2.2×</strong> wing lift-to-drag from a 275-airfoil sweep",
-        thumb: "lws-x/Velocity%20Picture%203.png",
+        thumb: "lws-x/web/predecessor-thumb.jpg",
         tags: ["Aero", "CAD", "Electronics", "Fabrication"],
         date: "2024-2026",
         problem: "Fit a one-metre-class wing, battery and 40 g payload under 250 g, and cruise at 7 m/s for 30 minutes",
@@ -148,7 +148,7 @@ const projects = {
             ] },
             { figure: "airfoils" },
             { figure: "polars" },
-            { heading: "PIFOAMUI: Simple CFD to run on any platform" },
+            { heading: "PIFOAMUI: OpenFOAM CFD from a browser, quick enough to run between builds" },
             "PIFOAMUI is a browser interface for OpenFOAM 13, the open-source CFD toolkit. It replaces writing OpenFOAM dictionaries and setting up each case by hand, so aerodynamic changes are quick enough to test between builds.",
             "CFD run through PIFOAMUI guided the streamlining of both bodies. So far it has been run at level flight to compare Generation Nine with Generation X.",
             { fold: "What PIFOAMUI does, from setup to report", text: [{ list: [
@@ -162,13 +162,13 @@ const projects = {
             { heading: "A 15 A sensorless ESC, designed from scratch" },
             "The ESC is the first custom PCB, designed from scratch in KiCad to drive the 2003.5 motor on 2S to 3S at up to 15A.",
             "Commutation is sensorless: each phase's back-EMF is compared against a virtual neutral, so the motor needs no Hall sensors.",
-            { media: [{ src: "lws-x/ESC%20V1%20Schematic.png", width: 2339, height: 1654,
+            { media: [{ src: "lws-x/web/esc-v1-schematic.png", width: 3508, height: 2480,
                 alt: "LWS X ESC V1 schematic: BEMF sensing, current sense, gate driver, LDO, MCU, power input, voltage sense, three half-bridges, connections and test points" }],
-                caption: `ESC V1 schematic in KiCad: sensing, gate driver, MCU and three half-bridges on one board · click to enlarge · <a class="link" href="lws-x/ESC%20V1%20Schematic.pdf" target="_blank" rel="noopener">PDF</a>` },
+                caption: `ESC V1 schematic in KiCad: sensing, gate driver, MCU and three half-bridges on one board · click to enlarge · <a class="link" href="lws-x/ESC%20V1.pdf" target="_blank" rel="noopener">PDF</a>` },
             { fold: "Circuit details: control, power stage, sensing", text: [{ list: [
                 "<strong>Control</strong> STM32G0 microcontroller, powered by a TLV70433 3.3V regulator",
                 "<strong>Power stage</strong> FD6288T three-phase gate driver switching six MOSFETs as three half-bridges, with BAT54W bootstrap diodes supplying the high-side gates",
-                "<strong>Sensing</strong> back-EMF scaled through 10k/4.7k dividers; motor current from a 1mΩ shunt and INA181A3 amplifier; battery voltage from a divider",
+                "<strong>Sensing</strong> back-EMF scaled through 10k/4.7k dividers; motor current from a 1mΩ shunt and INA181A1 amplifier; battery voltage from a divider",
                 "<strong>Input</strong> 470µF bulk capacitor with ceramic decoupling",
                 "<strong>Interfaces</strong> signal and telemetry pins, SWD for programming, and test points on every key net"
             ] }] },
@@ -216,10 +216,15 @@ const projects = {
         ]
     },
     "printer": {
-        title: "3D Printer",
-        subtitle: "A cartesian printer designed from scratch, build in progress",
-        outcome: "Cartesian printer designed from scratch in Onshape, with a custom accelerometer board for input shaping; build in progress",
+        title: "Scratch-Built 3D Printer",
+        subtitle: "Cartesian printer on a hand-milled aluminium frame",
+        outcome: "Designed from scratch in Onshape and <strong>assembled in four months</strong>, with a custom accelerometer board for input shaping",
         thumb: "across-the-years/printer-complete.jpg",
+        image: {
+            src: "across-the-years/printer-complete.jpg",
+            alt: "3D printer assembled with green printed corner brackets and feet, Raspberry Pi and control board",
+            caption: "The printer assembled with its green printed brackets and feet, March 2026; the build is paused while I am at college"
+        },
         tags: ["CAD", "Electronics", "Fabrication"],
         date: "2025-Now",
         problem: "Design and build a cartesian 3D printer from scratch, and tune it to print fast without ringing",
@@ -227,16 +232,15 @@ const projects = {
         tools: "Onshape · KiCad · Raspberry Pi",
         text: [
             "<strong>This 3D printer</strong> is a cartesian machine of my own design, modelled in Onshape. I sourced the parts in November 2025 and had it assembled with its printed parts by March 2026. The build paused when I started college and is still in progress.",
-            { heading: "A manually milled aluminium frame, twin lead screws, a belt-driven gantry" },
+            { heading: "Hand-milled aluminium frame, twin lead screws, belt-driven gantry" },
             "The frame is aluminium extrusion that I milled by hand on a manual mill, with twin lead screws lifting a belt-driven gantry. Printed brackets and feet tie it together, and a Raspberry Pi sits beside the main control board.",
             { media: [{ src: "across-the-years/printer-cad.png", width: 883, height: 837, alt: "CAD line render of the 3D printer: aluminium extrusion frame, gantry, toolhead and lead screws" }],
                 caption: "CAD line render of the printer's aluminium extrusion frame, gantry and lead screws · click to enlarge" },
             { media: [
                 { src: "across-the-years/printer-parts.jpg", width: 713, height: 951, alt: "3D printer parts laid out on a desk: black extrusions, steel rods, lead screws, four stepper motors, pulleys and hardware" },
-                { src: "across-the-years/printer-first-assembly.jpg", width: 713, height: 951, alt: "First assembly of the 3D printer frame with gantry, toolhead and control boards wired on a desk" },
-                { src: "across-the-years/printer-complete.jpg", width: 755, height: 1007, alt: "3D printer assembled with green printed corner brackets and feet, Raspberry Pi and control board" }
-            ], caption: "The 3D printer build so far: November 2025 parts, December first assembly, and assembled with green printed parts in March 2026 · click to enlarge" },
-            { heading: "Vibration Tracker V1.0: an accelerometer board for input shaping" },
+                { src: "across-the-years/printer-first-assembly.jpg", width: 713, height: 951, alt: "First assembly of the 3D printer frame with gantry, toolhead and control boards wired on a desk" }
+            ], caption: "From parts to first assembly: the November 2025 parts, and the frame wired up in December · click to enlarge" },
+            { heading: "Vibration Tracker V1.0: a custom accelerometer board to tune out ringing" },
             "To tune the printer's input shaping, I designed an accelerometer board in KiCad. Input shaping measures the frame's resonant frequencies and filters them out of the motion, so the printer can run faster without ringing in the prints.",
             "The board carries an SPI accelerometer and a 1.8V regulator, and connects through six pads: 3.3V, ground and the four SPI lines.",
             { media: [
@@ -246,10 +250,15 @@ const projects = {
         ]
     },
     "drone-frame": {
-        title: "Drone Frame",
-        subtitle: "An FPV quadcopter frame of my own",
-        outcome: "FPV quadcopter frame designed in Onshape and optimized for <strong>weight and strength</strong>, then built and flown",
+        title: "Custom Drone Frame",
+        subtitle: "The first airframe I designed from scratch",
+        outcome: "Stacked-plate FPV frame designed in Onshape, with material <strong>cut away wherever it carries no load</strong>, then built and flown",
         thumb: "across-the-years/drone-frame-render-v4.jpg",
+        image: {
+            src: "across-the-years/drone-frame-render-v4.jpg",
+            alt: "Rendered blue quadcopter frame with stacked plates on dark standoffs and triangular cutouts",
+            caption: "Frame Render V4: stacked plates on standoffs, with lightening cutouts in the plates and arms"
+        },
         tags: ["CAD", "Fabrication"],
         date: "2023-2024",
         problem: "Design, build and fly an FPV quadcopter frame of my own, optimized for weight and strength",
@@ -257,21 +266,24 @@ const projects = {
         tools: "Onshape",
         text: [
             "<strong>This FPV frame</strong> is the first airframe I designed from scratch: modelled in Onshape, built up and flown.",
-            { heading: "A frame of my own, optimized for weight and strength" },
+            { heading: "Stacked plates on standoffs, cut away wherever they carry no load" },
             "I optimized the frame for weight and strength. Stacked plates on standoffs hold the electronics, and cutouts in the plates and arms take out material that does not carry load.",
-            { media: [
-                { src: "across-the-years/drone-frame-cad.png", width: 1305, height: 756, alt: "CAD line render of a quadcopter frame with stacked plates and four arms" },
-                { src: "across-the-years/drone-frame-render-v4.jpg", width: 3840, height: 2160, alt: "Rendered blue quadcopter frame with stacked plates on dark standoffs and triangular cutouts" }
-            ], caption: "Drone frame in CAD and rendered (Frame Render V4): stacked plates on standoffs, with lightening cutouts in the plates and arms · click to enlarge" },
+            { media: [{ src: "across-the-years/drone-frame-cad.png", width: 1305, height: 756, alt: "CAD line render of a quadcopter frame with stacked plates and four arms" }],
+                caption: "The frame in CAD: four arms under a two-plate stack · click to enlarge" },
             { media: [{ src: "across-the-years/web/drone-frame-turntable.mp4", width: 1280, height: 720, alt: "Exploded-assembly animation of the blue quadcopter frame" }],
                 caption: "Exploded-assembly animation of the drone frame: plates, standoffs and fasteners" }
         ]
     },
     "drone-payload": {
-        title: "Drone Payload",
-        subtitle: "Tennis-ball pickup for the d.Aviation S500",
+        title: "Aviation Club S-500",
+        subtitle: "Tennis-ball pickup payload for my high school club's competition drone",
         outcome: "Servo-actuated pickup mechanism placed <strong>3rd of 12</strong> teams at the 2023 STEM-ED Aero Robotics Competition",
-        thumb: "across-the-years/web/drone-s500-hover.jpg",
+        thumb: "web/aviation-club-bench.jpg",
+        image: {
+            src: "web/aviation-club-bench.jpg",
+            alt: "S500 quadcopter on a workshop bench beside a Flysky transmitter, with the payload servo wired to the rear arm",
+            caption: "The S500 on the bench, with the payload servo wired to the rear arm"
+        },
         tags: ["Aero", "CAD"],
         date: "2023",
         problem: "Pick up and release a tennis ball from an S500 quadcopter for competition",
@@ -284,20 +296,22 @@ const projects = {
             "<strong>The payload</strong> was my high school club's competition entry: a mechanism that picks up and releases a tennis ball, carried on an S500 quadcopter.",
             { heading: "A tennis-ball payload that placed 3rd of 12" },
             "As Head of Mechanical at d.Aviation, I designed a servo-actuated mechanism that picks up and releases a tennis ball. We placed 3rd of 12 teams at the 2023 STEM-ED Aero Robotics Competition.",
-            { media: [
-                { src: "web/Aviation%20Club%20Drone.jpeg", width: 1500, height: 2000, alt: "S500 quadcopter on a workshop bench beside a Flysky transmitter, with the payload servo wired to the rear arm" },
-                { src: "web/Aviation%20Club%20Me%20Shot.jpeg", width: 1500, height: 2000, alt: "Holding the S500 with the payload mechanism fitted underneath, on a sunny competition field" }
-            ],
-                caption: "The S500 on the bench with the payload servo wired in, and carried to the field at the competition" },
+            { media: [{ src: "web/Aviation%20Club%20Me%20Shot.jpeg", width: 1500, height: 2000, alt: "Holding the S500 with the payload mechanism fitted underneath, on a sunny competition field" }],
+                caption: "Carrying the S500 onto the field at the 2023 STEM-ED Aero Robotics Competition, payload fitted underneath · click to enlarge" },
             { media: [{ src: "across-the-years/web/drone-s500-hover.mp4", width: 1280, height: 576, alt: "The d.Aviation S500 quadcopter climbing and descending over a field with a load hanging on a line" }],
                 caption: "The d.Aviation S500 climbing and descending over a field, with a load slung on a line below" }
         ]
     },
     "radio-dock": {
         title: "Radio Dock",
-        subtitle: "Paid commission for six Motorola T600 radios",
-        outcome: "Six-slot dock modelled around the radio's body, designed and printed for a paying client",
+        subtitle: "Paid commission to hold six Motorola T600 radios",
+        outcome: "Six pockets modelled around the radio's body from the manufacturer's photo, printed as <strong>two three-slot halves</strong>",
         thumb: "across-the-years/radio-dock-printed.jpg",
+        image: {
+            src: "across-the-years/radio-dock-cad.png",
+            alt: "CAD line render of a six-slot radio dock in two three-slot halves",
+            caption: "CAD line render of the six-slot dock, split into two three-slot halves"
+        },
         tags: ["CAD", "Fabrication"],
         date: "2026",
         problem: "Hold six Motorola T600 radios upright in one dock",
@@ -306,8 +320,6 @@ const projects = {
         text: [
             "<strong>The radio dock</strong> was a paid commission: a client paid me to design and print a dock that holds six Motorola T600 radios upright.",
             "Each pocket is modelled around the radio's body, using the manufacturer's photo as the reference for its shape. The dock is split into two three-slot halves.",
-            { media: [{ src: "across-the-years/radio-dock-cad.png", width: 1060, height: 657, alt: "CAD line render of a six-slot radio dock in two three-slot halves" }],
-                caption: "CAD line render of the six-slot dock, split into two three-slot halves · click to enlarge" },
             { media: [
                 { src: "across-the-years/radio-dock-printed.jpg", width: 713, height: 951, alt: "Blue printed six-slot dock on a wooden table holding a green Motorola radio" },
                 { src: "across-the-years/motorola-t600.webp", width: 723, height: 1280, alt: "Manufacturer product photo of the green Motorola T600 radio, side view" }
@@ -315,10 +327,15 @@ const projects = {
         ]
     },
     "fpv-quads": {
-        title: "FPV Quads",
-        subtitle: "Three quadcopters, flown and debugged",
+        title: "FPV Drones",
+        subtitle: "My first builds: three quadcopters flown through a live camera feed",
         outcome: "A tiny whoop, a 3.5-inch and a 5-inch, each tuned and debugged in Betaflight",
         thumb: "across-the-years/drone-quad.jpg",
+        image: {
+            src: "across-the-years/drone-quad.jpg",
+            alt: "3.5-inch carbon-frame FPV quadcopter with a strapped battery on a wooden floor",
+            caption: "The 3.5-inch quad: a carbon frame with the battery strapped on top"
+        },
         tags: ["Aero", "Electronics"],
         date: "2023",
         problem: "Build, fly and debug FPV quadcopters across three sizes",
@@ -328,10 +345,8 @@ const projects = {
             "<strong>FPV quads</strong> were my first builds: three quadcopters of different sizes, flown and debugged.",
             { heading: "Three FPV quads, flown and debugged in Betaflight" },
             "I fly a tiny whoop, a 3.5-inch and a 5-inch. Each runs Betaflight, which I use for debugging as well as flying.",
-            { media: [
-                { src: "across-the-years/drone-quad.jpg", width: 1427, height: 951, alt: "3.5-inch carbon-frame FPV quadcopter with a strapped battery on a wooden floor" },
-                { src: "across-the-years/web/drone-micro-2023.mp4", width: 800, height: 360, alt: "Tiny whoop, a micro ducted quadcopter, lifting off a hallway floor" }
-            ], caption: "The 3.5-inch quad, and the tiny whoop lifting off a hallway floor in March 2023" },
+            { media: [{ src: "across-the-years/web/drone-micro-2023.mp4", width: 800, height: 360, alt: "Tiny whoop, a micro ducted quadcopter, lifting off a hallway floor" }],
+                caption: "The tiny whoop lifting off a hallway floor, March 2023" },
             { media: [{ src: "across-the-years/web/drone-quad-2023-12.mp4", width: 720, height: 1280, alt: "FPV quadcopter flight clip filmed in portrait, December 2023" }],
                 caption: "An FPV quad flight, December 2023" }
         ]
@@ -810,7 +825,7 @@ document.addEventListener("DOMContentLoaded", function () {
             featuredImage.src = image.src;
             featuredImage.alt = image.alt;
             featuredLink.href = `#${key}`;
-            featuredLink.querySelector(".frame-caption").textContent = `${label} · ${proj.title} · Read case study →`;
+            featuredLink.querySelector(".frame-caption").textContent = `${label} · ${proj.title}`;
         } else {
             // Strip the <strong> markup from the first paragraph
             const excerpt = document.createElement("div");
