@@ -87,7 +87,7 @@ const projects = {
                     ["ESC", "2–3S, 15 A"]
                 ] },
                 { group: "Power", rows: [
-                    ["Battery", "2S 1200 mAh"],
+                    ["Battery", "Custom 2S 1200 mAh"],
                     ["Voltage", "7.4 V nominal"],
                     ["Energy", "8.9 Wh"],
                     ["Mass", "56 g"]
@@ -149,7 +149,7 @@ const projects = {
             { figure: "airfoils" },
             { figure: "polars" },
             { heading: "PIFOAMUI: OpenFOAM CFD from a browser, quick enough to run between builds" },
-            "PIFOAMUI is a browser interface for OpenFOAM 13, the open-source CFD toolkit. It replaces writing OpenFOAM dictionaries and setting up each case by hand, so aerodynamic changes are quick enough to test between builds.",
+            "PIFOAMUI is a browser interface for OpenFOAM 13, the open-source CFD toolkit, which I built with Claude Code. It replaces writing OpenFOAM dictionaries and setting up each case by hand, so aerodynamic changes are quick enough to test between builds.",
             "CFD run through PIFOAMUI guided the streamlining of both bodies. So far it has been run at level flight to compare Generation Nine with Generation X.",
             { fold: "What PIFOAMUI does, from setup to report", text: [{ list: [
                 "<strong>Setup</strong> an STL and flow conditions: speed, angle of attack and yaw, ground, and half models on a symmetry plane, in Basic, Intermediate or Advanced mode",
@@ -178,7 +178,7 @@ const projects = {
                 caption: "LWS X in CAD: one-metre wing and split airframe · click to enlarge" },
             "<strong>Wing.</strong> The chord grows from the first generation's 100mm at 0° incidence to 110mm at 5°. Each of its two halves is 486mm wide.",
             "<strong>Propulsion.</strong> A 2003.5 motor on a 2S to 3S 15A ESC drives a 7-inch 7x4.5 bi-blade propeller, up from the 6-inch propeller of the first three generations.",
-            "<strong>Power.</strong> The 2S 1200mAh battery stores about 8.9Wh for 56g: roughly 67% more energy than the earlier 2S 720mAh pack for 53% more weight. Custom PCBs replace off-the-shelf boards to save weight, and a flight controller is being added for more automation.",
+            "<strong>Power.</strong> The custom 2S 1200mAh battery stores about 8.9Wh for 56g: roughly 67% more energy than the earlier 2S 720mAh pack for 53% more weight. Custom PCBs replace off-the-shelf boards to save weight, and a flight controller is being added for more automation.",
             { media: [{ src: "lws-x/Airfoil.png", width: 1447, height: 675, alt: "CAD render of a wing rib with lightening cutouts" }],
                 caption: "Wing rib in CAD, with lightening cutouts to save weight · click to enlarge" },
             { heading: "Nine generations, from 263g to 216g" },
@@ -232,10 +232,13 @@ const projects = {
         problem: "Design and build a cartesian 3D printer from scratch, and tune it to print fast without ringing",
         role: "Personal project · design, sourcing, build",
         tools: "Onshape · KiCad · Raspberry Pi",
+        results: [
+            ["180 × 180 × 220", "Build volume, mm", "X × Y × Z"]
+        ],
         text: [
             "<strong>This 3D printer</strong> is a cartesian machine of my own design, modeled in Onshape. I sourced the parts in November 2025 and had it assembled with its printed parts by March 2026. The build paused when I started college and is still in progress.",
             { heading: "Hand-milled aluminum frame, twin lead screws, belt-driven gantry" },
-            "The frame is aluminum extrusion that I milled by hand on a manual mill, with twin lead screws lifting a belt-driven gantry. Printed brackets and feet tie it together, and a Raspberry Pi sits beside the main control board.",
+            "The frame is aluminum extrusion that I milled by hand on a manual mill, with twin lead screws lifting a belt-driven gantry over a 180 × 180 × 220mm build volume. Printed brackets and feet tie it together, and a Raspberry Pi sits beside the main control board.",
             { media: [{ src: "across-the-years/printer-cad.png", width: 883, height: 837, alt: "CAD line render of the 3D printer: aluminum extrusion frame, gantry, toolhead and lead screws" }],
                 caption: "CAD line render of the printer's aluminum extrusion frame, gantry and lead screws · click to enlarge" },
             { media: [
@@ -254,7 +257,7 @@ const projects = {
     "drone-frame": {
         title: "Custom Drone Frame",
         subtitle: "The first airframe I designed from scratch",
-        outcome: "Stacked-plate FPV frame designed in Onshape, with material <strong>cut away wherever it carries no load</strong>, then built and flown",
+        outcome: "<strong>56 g</strong> carbon fiber FPV frame, refined over four versions, that replaced the frame on my 3-inch quad",
         thumb: "across-the-years/drone-frame-render-v4.jpg",
         image: {
             src: "across-the-years/drone-frame-render-v4.jpg",
@@ -263,45 +266,59 @@ const projects = {
         },
         tags: ["CAD", "Fabrication"],
         date: "2023-2024",
-        problem: "Design, build and fly an FPV quadcopter frame of my own, optimized for weight and strength",
+        problem: "Design, build and fly a carbon fiber frame, optimized for weight and strength, to replace the frame on my 3-inch FPV quad",
         role: "Personal project · frame design, build",
         tools: "Onshape",
+        results: [
+            ["56 g", "Frame mass", "Carbon fiber"],
+            ["V1 → V4", "Design revisions", "Weight optimization and overall structure"]
+        ],
         text: [
-            "<strong>This FPV frame</strong> is the first airframe I designed from scratch: modeled in Onshape, built up and flown.",
-            { heading: "Stacked plates on standoffs, cut away wherever they carry no load" },
+            "<strong>This FPV frame</strong> is the first airframe I designed from scratch: a 56g carbon fiber frame modeled in Onshape, built up and flown. It replaced the old frame on my 3-inch FPV quad.",
+            { heading: "56g of carbon fiber, cut away wherever it carries no load" },
             "I optimized the frame for weight and strength. Stacked plates on standoffs hold the electronics, and cutouts in the plates and arms take out material that does not carry load.",
+            "Four versions, V1 to V4, refined both the weight and the overall structure.",
             { media: [{ src: "across-the-years/drone-frame-cad.png", width: 1305, height: 756, alt: "CAD line render of a quadcopter frame with stacked plates and four arms" }],
                 caption: "The frame in CAD: four arms under a two-plate stack · click to enlarge" },
             { media: [{ src: "across-the-years/web/drone-frame-turntable.mp4", width: 1280, height: 720, alt: "Exploded-assembly animation of the blue quadcopter frame" }],
                 caption: "Exploded-assembly animation of the drone frame: plates, standoffs and fasteners" }
         ]
     },
-    "drone-payload": {
-        title: "Aviation Club S-500",
-        subtitle: "Tennis-ball pickup payload for my high school club's competition drone",
-        outcome: "Servo-actuated pickup mechanism placed <strong>3rd of 12</strong> teams at the 2023 STEM-ED Aero Robotics Competition",
+    "drones": {
+        title: "Competition and FPV Drones",
+        subtitle: "A tennis-ball payload for my club's S500, and the three FPV quads I learned on",
+        outcome: "Servo-actuated S500 payload placed <strong>3rd of 12</strong> at the 2023 STEM-ED Aero Robotics Competition; three FPV quads built and tuned in Betaflight",
         thumb: "web/aviation-club-bench.jpg",
         image: {
             src: "web/aviation-club-bench.jpg",
             alt: "S500 quadcopter on a workshop bench beside a Flysky transmitter, with the payload servo wired to the rear arm",
             caption: "The S500 on the bench, with the payload servo wired to the rear arm"
         },
-        tags: ["Aero", "CAD"],
+        tags: ["Aero", "CAD", "Electronics"],
         date: "2023",
-        problem: "Pick up and release a tennis ball from an S500 quadcopter for competition",
-        role: "Head of Mechanical, d.Aviation",
-        tools: "Onshape",
+        problem: "Pick up and release a tennis ball from an S500 quadcopter for competition, and build, fly and debug FPV quads across three sizes",
+        role: "Head of Mechanical, d.Aviation · personal FPV builds",
+        tools: "Onshape · Betaflight",
         results: [
-            ["3rd of 12", "Aero Robotics placing", "2023 STEM-ED competition, d.Aviation"]
+            ["3rd of 12", "Aero Robotics placing", "2023 STEM-ED competition, d.Aviation"],
+            ["3", "FPV quads built and tuned", "Tiny whoop, 3.5-inch and 5-inch, in Betaflight"]
         ],
         text: [
-            "<strong>The payload</strong> was my high school club's competition entry: a mechanism that picks up and releases a tennis ball, carried on an S500 quadcopter.",
+            "<strong>These drones</strong> are my high school club's competition entry, a tennis-ball payload carried on an S500 quadcopter, and the three FPV quads that were my first builds.",
             { heading: "A tennis-ball payload that placed 3rd of 12" },
             "As Head of Mechanical at d.Aviation, I designed a servo-actuated mechanism that picks up and releases a tennis ball. We placed 3rd of 12 teams at the 2023 STEM-ED Aero Robotics Competition.",
             { media: [{ src: "web/Aviation%20Club%20Me%20Shot.jpeg", width: 1500, height: 2000, alt: "Holding the S500 with the payload mechanism fitted underneath, on a sunny competition field" }],
                 caption: "Carrying the S500 onto the field at the 2023 STEM-ED Aero Robotics Competition, payload fitted underneath · click to enlarge" },
             { media: [{ src: "across-the-years/web/drone-s500-hover.mp4", width: 1280, height: 576, alt: "The d.Aviation S500 quadcopter climbing and descending over a field with a load hanging on a line" }],
-                caption: "The d.Aviation S500 climbing and descending over a field, with a load slung on a line below" }
+                caption: "The d.Aviation S500 climbing and descending over a field, with a load slung on a line below" },
+            { heading: "Three FPV quads, flown and debugged in Betaflight" },
+            "FPV quads, flown through a live camera feed, were my first builds. I fly a tiny whoop, a 3.5-inch and a 5-inch. Each runs Betaflight, which I use for debugging as well as flying.",
+            { media: [{ src: "across-the-years/drone-quad.jpg", width: 1427, height: 951, alt: "3.5-inch carbon-frame FPV quadcopter with a strapped battery on a wooden floor" }],
+                caption: "The 3.5-inch quad: a carbon frame with the battery strapped on top · click to enlarge" },
+            { media: [{ src: "across-the-years/web/drone-micro-2023.mp4", width: 800, height: 360, alt: "Tiny whoop, a micro ducted quadcopter, lifting off a hallway floor" }],
+                caption: "The tiny whoop lifting off a hallway floor, March 2023" },
+            { media: [{ src: "across-the-years/web/drone-quad-2023-12.mp4", width: 720, height: 1280, alt: "FPV quadcopter flight clip filmed in portrait, December 2023" }],
+                caption: "An FPV quad flight, December 2023" }
         ]
     },
     "radio-dock": {
@@ -326,31 +343,6 @@ const projects = {
                 { src: "across-the-years/radio-dock-printed.jpg", width: 713, height: 951, alt: "Blue printed six-slot dock on a wooden table holding a green Motorola radio" },
                 { src: "across-the-years/motorola-t600.webp", width: 723, height: 1280, alt: "Manufacturer product photo of the green Motorola T600 radio, side view" }
             ], caption: "The printed radio dock in use, April 2026, beside the manufacturer's photo of the Motorola T600 it was designed around · click to enlarge" }
-        ]
-    },
-    "fpv-quads": {
-        title: "FPV Drones",
-        subtitle: "My first builds: three quadcopters flown through a live camera feed",
-        outcome: "A tiny whoop, a 3.5-inch and a 5-inch, each tuned and debugged in Betaflight",
-        thumb: "across-the-years/drone-quad.jpg",
-        image: {
-            src: "across-the-years/drone-quad.jpg",
-            alt: "3.5-inch carbon-frame FPV quadcopter with a strapped battery on a wooden floor",
-            caption: "The 3.5-inch quad: a carbon frame with the battery strapped on top"
-        },
-        tags: ["Aero", "Electronics"],
-        date: "2023",
-        problem: "Build, fly and debug FPV quadcopters across three sizes",
-        role: "Personal project · build, tuning, flying",
-        tools: "Betaflight",
-        text: [
-            "<strong>FPV quads</strong> were my first builds: three quadcopters of different sizes, flown and debugged.",
-            { heading: "Three FPV quads, flown and debugged in Betaflight" },
-            "I fly a tiny whoop, a 3.5-inch and a 5-inch. Each runs Betaflight, which I use for debugging as well as flying.",
-            { media: [{ src: "across-the-years/web/drone-micro-2023.mp4", width: 800, height: 360, alt: "Tiny whoop, a micro ducted quadcopter, lifting off a hallway floor" }],
-                caption: "The tiny whoop lifting off a hallway floor, March 2023" },
-            { media: [{ src: "across-the-years/web/drone-quad-2023-12.mp4", width: 720, height: 1280, alt: "FPV quadcopter flight clip filmed in portrait, December 2023" }],
-                caption: "An FPV quad flight, December 2023" }
         ]
     }
 };
