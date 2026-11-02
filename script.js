@@ -369,6 +369,12 @@ function makeFigure(plateClass, plateHTML, caption) {
 
 // Muted clips play while at least half on screen; reduced motion leaves them to their controls
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
+
+// In-page navigation uses buttons, not #anchors (the hash selects the project): scroll to a heading, then move focus there
+function jumpTo(el) {
+    el.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth" });
+    el.focus({ preventScroll: true });
+}
 const clipPlayer = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {
     if (isIntersecting && !reduceMotion.matches) target.play().catch(() => {});
     else target.pause();
@@ -887,12 +893,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fillPanel(featured, "Featured");
 
-    // HERO CTA: a button rather than a #anchor, since the hash selects the project
-    const projectsHead = $("projects-head");
-    projectsHead.tabIndex = -1;
-    $("view-work").addEventListener("click", () => {
-        projectsHead.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth" });
-        projectsHead.focus({ preventScroll: true });
+    // HERO JUMP BUTTONS: one per résumé section, each targeting its heading by id (data-jump)
+    document.querySelectorAll("[data-jump]").forEach(button => {
+        const head = $(button.dataset.jump);
+        head.tabIndex = -1;
+        button.addEventListener("click", () => jumpTo(head));
     });
 
     // GENERATE INDEX: number, thumbnail (an empty grid-paper box without one), title, subtitle, outcome, tags, year.
@@ -1089,10 +1094,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 button.className = "bare toc-item";
                 button.innerHTML = `<span class="mono muted cue">${no}</span><span class="link"></span>`;
                 button.lastChild.textContent = title;
-                button.addEventListener("click", () => {
-                    h.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth" });
-                    h.focus({ preventScroll: true });
-                });
+                button.addEventListener("click", () => jumpTo(h));
                 li.append(button);
                 return li;
             }));

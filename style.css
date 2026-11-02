@@ -269,13 +269,19 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
 
 .bio { margin: var(--s-6) 0 0; }
 
-/* Above-the-fold next steps: one inked button, then the contact links */
+/* Above-the-fold next steps: a jump button per résumé section (Projects inked), then the contact links */
 .cta {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--s-4) var(--s-5);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s-4);
     margin-top: var(--s-6);
+}
+
+.jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2) var(--s-3);
 }
 
 .chip-solid { padding: var(--s-2) var(--s-4); background: var(--ink); color: var(--paper); }
@@ -334,7 +340,8 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
     margin-bottom: var(--s-4);
 }
 
-.filter .chip:is(:hover, :focus-visible):not([aria-pressed="true"]) { color: var(--accent); }
+.filter .chip:is(:hover, :focus-visible):not([aria-pressed="true"]),
+.jump .chip:is(:hover, :focus-visible):not(.chip-solid) { color: var(--accent); }
 
 /* Index rows: number, thumbnail, title over outcome over tags, year */
 .index-head,
