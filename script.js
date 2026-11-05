@@ -287,7 +287,7 @@ const projects = {
     "drones": {
         title: "Competition and FPV Drones",
         subtitle: "A tennis-ball payload for my club's S500, and the three FPV quads I learned on",
-        outcome: "Servo-actuated S500 payload placed <strong>3rd of 12</strong> at the 2023 STEM-ED Aero Robotics Competition; three FPV quads built and tuned in Betaflight",
+        outcome: "Servo-actuated S500 payload placed <strong>3rd of 12</strong> at the 2023 STEM-ED Aero Robotics Competition; two FPV quads hand-built from parts and PID-tuned in Betaflight",
         thumb: "web/aviation-club-bench.jpg",
         image: {
             src: "web/aviation-club-bench.jpg",
@@ -296,23 +296,24 @@ const projects = {
         },
         tags: ["Aero", "CAD", "Electronics"],
         date: "2023",
-        problem: "Pick up and release a tennis ball from an S500 quadcopter for competition, and build, fly and debug FPV quads across three sizes",
+        problem: "Pick up and release multiple tennis balls at a time from an S500 quadcopter for competition, and build, fly and debug FPV quads across three sizes",
         role: "Head of Mechanical, d.Aviation · personal FPV builds",
         tools: "Onshape · Betaflight",
         results: [
             ["3rd of 12", "Aero Robotics placing", "2023 STEM-ED competition, d.Aviation"],
-            ["3", "FPV quads built and tuned", "Tiny whoop, 3.5-inch and 5-inch, in Betaflight"]
+            ["2", "FPV quads hand-built from parts", "3.5-inch and 5-inch, firmware configured and PID-tuned in Betaflight"]
         ],
         text: [
             "<strong>These drones</strong> are my high school club's competition entry, a tennis-ball payload carried on an S500 quadcopter, and the three FPV quads that were my first builds.",
             { heading: "A tennis-ball payload that placed 3rd of 12" },
-            "As Head of Mechanical at d.Aviation, I designed a servo-actuated mechanism that picks up and releases a tennis ball. We placed 3rd of 12 teams at the 2023 STEM-ED Aero Robotics Competition.",
+            "As Head of Mechanical at d.Aviation, I designed a servo-actuated mechanism that picks up and releases multiple tennis balls at a time. We placed 3rd of 12 teams at the 2023 STEM-ED Aero Robotics Competition.",
             { media: [{ src: "web/Aviation%20Club%20Me%20Shot.jpeg", width: 1500, height: 2000, alt: "Holding the S500 with the payload mechanism fitted underneath, on a sunny competition field" }],
                 caption: "Carrying the S500 onto the field at the 2023 STEM-ED Aero Robotics Competition, payload fitted underneath · click to enlarge" },
             { media: [{ src: "across-the-years/web/drone-s500-hover.mp4", width: 1280, height: 576, alt: "The d.Aviation S500 quadcopter climbing and descending over a field with a load hanging on a line" }],
                 caption: "The d.Aviation S500 climbing and descending over a field, with a load slung on a line below" },
-            { heading: "Three FPV quads, flown and debugged in Betaflight" },
-            "FPV quads, flown through a live camera feed, were my first builds. I fly a tiny whoop, a 3.5-inch and a 5-inch. Each runs Betaflight, which I use for debugging as well as flying.",
+            { heading: "Two FPV quads ordered as parts, hand-built and PID-tuned" },
+            "FPV quads, flown through a live camera feed, were my first builds. I fly a tiny whoop, a 3.5-inch and a 5-inch.",
+            "For the 3.5-inch and the 5-inch I ordered every part and assembled each quad by hand. I then configured the firmware in Betaflight and tuned the PID loops myself, and I still use Betaflight to debug them.",
             { media: [{ src: "across-the-years/drone-quad.jpg", width: 1427, height: 951, alt: "3.5-inch carbon-frame FPV quadcopter with a strapped battery on a wooden floor" }],
                 caption: "The 3.5-inch quad: a carbon frame with the battery strapped on top · click to enlarge" },
             { media: [{ src: "across-the-years/web/drone-micro-2023.mp4", width: 800, height: 360, alt: "Tiny whoop, a micro ducted quadcopter, lifting off a hallway floor" }],
