@@ -8,7 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400..700;1,400..700&display=swap">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,18 +22,16 @@
                     <dt class="mono">Track</dt><dd>Mechanical Engineering</dd>
                     <dt class="mono">Citizenship</dt><dd>U.S. citizen</dd>
                     <dt class="mono">Seeking</dt><dd>Summer 2027 internship in aerospace, EV, or mechanical design</dd>                </dl>
-                <div class="cta">
-                    <nav class="jump" aria-label="Résumé sections">
-                        <button type="button" class="bare mono chip chip-solid" data-jump="projects-head">Projects &darr;</button>
-                        <button type="button" class="bare mono chip" data-jump="education-head">Education</button>
-                        <button type="button" class="bare mono chip" data-jump="experience-head">Experience</button>
-                        <button type="button" class="bare mono chip" data-jump="skills-head">Skills</button>
-                        <button type="button" class="bare mono chip" data-jump="activities-head">Activities</button>
-                        <button type="button" class="bare mono chip" data-jump="about-head">About</button>
-                    </nav>
-                    <span class="contact-links"></span>
-                </div>
             </header>
+
+            <nav class="jump" id="jump" aria-label="Résumé sections">
+                <button type="button" class="bare mono chip chip-solid" data-jump="projects-head">Projects &darr;</button>
+                <button type="button" class="bare mono chip" data-jump="education-head">Education</button>
+                <button type="button" class="bare mono chip" data-jump="experience-head">Experience</button>
+                <button type="button" class="bare mono chip" data-jump="skills-head">Skills</button>
+                <button type="button" class="bare mono chip" data-jump="activities-head">Activities</button>
+                <button type="button" class="bare mono chip" data-jump="about-head">About</button>
+            </nav>
 
             <main class="index" aria-labelledby="projects-head">
                 <h2 class="mono section-head" id="projects-head">Projects</h2>
@@ -201,7 +199,7 @@
             <p class="mono muted colophon">&copy; 2026 Pavlos P</p>
         </div>
 
-        <section class="panel grid-paper" aria-label="Project preview">
+        <section class="panel tint" aria-label="Project preview">
             <div class="panel-stage">
                 <div class="frame-wrap" id="frame-wrap">
                     <span class="dim dim-x" aria-hidden="true"><i class="dim-line"></i><span class="dim-label" id="dim-w"></span></span>

@@ -364,7 +364,7 @@ const drawingNumber = key => String(projectKeys.indexOf(key) + 1).padStart(2, "0
 function makeFigure(plateClass, plateHTML, caption) {
     const fig = document.createElement("figure");
     fig.className = "fig";
-    fig.innerHTML = `<div class="fig-plate grid-paper ${plateClass}">${plateHTML}</div><figcaption class="mono muted">${caption}</figcaption>`;
+    fig.innerHTML = `<div class="fig-plate tint ${plateClass}">${plateHTML}</div><figcaption class="mono muted">${caption}</figcaption>`;
     return fig;
 }
 
@@ -894,14 +894,60 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fillPanel(featured, "Featured");
 
-    // HERO JUMP BUTTONS: one per résumé section, each targeting its heading by id (data-jump)
-    document.querySelectorAll("[data-jump]").forEach(button => {
+    // SECTION NAV: one button per résumé section, each targeting its heading by id (data-jump).
+    // The nav sticks to the top of the left column; the button for the section being read gets aria-current
+    const jumpNav = $("jump");
+    const jumps = [...jumpNav.querySelectorAll("[data-jump]")].map(button => {
         const head = $(button.dataset.jump);
         head.tabIndex = -1;
         button.addEventListener("click", () => jumpTo(head));
+        return { button, section: head.closest("main, section") };
     });
 
-    // GENERATE INDEX: number, thumbnail (an empty grid-paper box without one), title, subtitle, outcome, tags, year.
+    // Headings scroll to just below the stuck nav, whatever its height (it wraps on some widths)
+    new ResizeObserver(() => {
+        homeView.style.setProperty("--jump-h", `${jumpNav.offsetHeight}px`);
+    }).observe(jumpNav);
+
+    // Current section: the last one whose top has passed the nav's bottom edge; the page end selects the last
+    let spyQueued = false;
+    let currentJump = null;
+    function updateJumpNav() {
+        spyQueued = false;
+        if (homeView.hidden) return;
+        const navBox = jumpNav.getBoundingClientRect();
+        jumpNav.classList.toggle("is-stuck", navBox.top <= 0 && window.scrollY > 0);
+        const atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+        let current = null;
+        for (const jump of jumps) {
+            // 24px (--s-5) of slack, so a heading just scrolled to counts as current
+            if (jump.section.getBoundingClientRect().top <= navBox.bottom + 24) current = jump;
+        }
+        if (atEnd && current) current = jumps[jumps.length - 1];
+        if (current === currentJump) return;
+        currentJump = current;
+        jumps.forEach(jump => {
+            if (jump === current) jump.button.setAttribute("aria-current", "true");
+            else jump.button.removeAttribute("aria-current");
+        });
+        // Narrow screens: the nav is one swipeable row, so bring the current button into it
+        if (current && jumpNav.scrollWidth > jumpNav.clientWidth) {
+            const padding = parseFloat(getComputedStyle(jumpNav).paddingLeft);
+            jumpNav.scrollTo({ left: current.button.offsetLeft - padding, behavior: reduceMotion.matches ? "auto" : "smooth" });
+        }
+    }
+    const queueJumpNav = () => {
+        if (!spyQueued) {
+            spyQueued = true;
+            requestAnimationFrame(updateJumpNav);
+        }
+    };
+    window.addEventListener("scroll", queueJumpNav, { passive: true });
+    window.addEventListener("resize", queueJumpNav);
+    window.addEventListener("hashchange", queueJumpNav);
+    updateJumpNav();
+
+    // GENERATE INDEX: number, thumbnail (an empty tint box without one), title, subtitle, outcome, tags, year.
     // The thumbnail is decorative: the title already names the link
     const rows = projectKeys.map(key => {
         const proj = projects[key];
@@ -913,7 +959,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <span class="mono muted cue part-no">${drawingNumber(key)}</span>
             ${proj.thumb
                 ? `<img class="part-thumb" src="${proj.thumb}" width="96" height="72" loading="lazy" alt="">`
-                : `<span class="part-thumb grid-paper" aria-hidden="true"></span>`}
+                : `<span class="part-thumb tint" aria-hidden="true"></span>`}
             <span>
                 <span class="title title-md upright link">${proj.title}</span>
                 ${proj.subtitle ? `<span class="muted entry-meta">${proj.subtitle}</span>` : ""}

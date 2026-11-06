@@ -1,17 +1,18 @@
-/* Drawing sheet: drafting paper, graphite ink, one red pencil. */
+/* Studio sheet: light gray paper, near-black ink, gray hairlines, one cobalt accent, one sans family. */
 :root {
-    --paper: #EEEAE0;
-    --paper-2: #E4DFD3;
-    --ink: #1C1B19;
-    --ink-2: #5A5750;
-    --rule: #C9C3B4;
-    --grid-minor: rgba(28, 27, 25, 0.05);
-    --grid-major: rgba(28, 27, 25, 0.16);
-    /* Red pencil, dark enough for 12px text: 5.5:1 on --paper, 4.9:1 on --paper-2 */
-    --accent: #B02A17;
+    --paper: #F7F7F5;
+    --paper-2: #EDEDEA;
+    --ink: #111214;
+    --ink-2: #5E5F63;
+    --rule: #D7D7D2;
+    /* Hairline for box edges and the rules between cells; section heads keep an ink rule (--line-strong) */
+    --edge: #BEBEB8;
+    /* Cobalt, dark enough for 12px text: 6.1:1 on --paper, 5.6:1 on --paper-2 */
+    --accent: #2350D8;
 
-    --serif: "Newsreader", Georgia, serif;
-    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    /* Text and titles; labels, data, buttons and chart text use the same family in the label voice */
+    --font: "Inter Tight", system-ui, sans-serif;
+    --font-label: "Inter Tight", system-ui, sans-serif;
 
     --t-12: 12px;
     --t-18: 18px;
@@ -28,15 +29,18 @@
     --s-7: 48px;
     --s-8: 96px;
 
-    --line: 1px solid var(--ink);
+    --line: 1px solid var(--edge);
+    --line-strong: 1px solid var(--ink);
     --line-soft: 1px solid var(--rule);
-    /* Corner rounding: boxes (frames, plates, ruled cell groups) and small parts (chips, thumbnails, tooltips, focus rings) */
+    /* Corner rounding: boxes (frames, plates, ruled cell groups) and small parts (thumbnails, tooltips, focus rings) */
     --radius: 4px;
     --radius-sm: 2px;
+    /* Chips (buttons, filters, skill tags): between the two, so they read as buttons */
+    --radius-chip: 3px;
     --article: 960px;
 
-    --dur: 150ms;
-    --dur-slow: 250ms;
+    --dur: 110ms;
+    --dur-slow: 200ms;
     --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
@@ -50,23 +54,11 @@ body {
     margin: 0;
     background: var(--paper);
     color: var(--ink);
-    font-family: var(--serif);
+    font-family: var(--font);
     font-size: var(--t-18);
     line-height: 1.5;
     font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
-}
-
-/* Paper grain */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    pointer-events: none;
-    opacity: 0.08;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 a { color: inherit; text-decoration: none; }
@@ -92,48 +84,50 @@ a { color: inherit; text-decoration: none; }
     cursor: pointer;
 }
 
-/* Text voices: mono labels (uppercase), mono data (case kept for units like mm, mAh, ρ), serif titles */
+/* Text voices: labels (uppercase), data (case kept for units like mm, mAh, ρ), titles. ".mono" names the label voice, not a monospace font */
 .mono {
-    font-family: var(--mono);
+    font-family: var(--font-label);
     font-size: var(--t-12);
-    font-weight: 400;
-    letter-spacing: 0.08em;
+    font-weight: 500;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     line-height: 1.4;
 }
 
 .mono-data {
-    font-family: var(--mono);
+    font-family: var(--font-label);
     font-size: var(--t-12);
     letter-spacing: 0.02em;
 }
 
+/* Sans figures default to proportional: keep numbers in stat cells and tables aligned */
+.mono, .mono-data { font-variant-numeric: tabular-nums; }
+
 .muted { color: var(--ink-2); }
 
 .title {
-    font-family: var(--serif);
+    font-family: var(--font);
     font-size: var(--t-18);
-    font-style: italic;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .title-md { font-size: var(--t-24); line-height: 1.2; }
 .title-lg { font-size: var(--t-40); line-height: 1; letter-spacing: -0.02em; }
-.title-display { font-size: var(--t-display); line-height: 0.9; letter-spacing: -0.03em; }
+.title-display { font-size: var(--t-display); font-weight: 600; line-height: 0.9; letter-spacing: -0.03em; }
 
-/* Upright semibold: titles that are scanned (entries, parts, cards, figures) rather than displayed */
+/* Semibold: titles that are scanned (entries, parts, cards, figures) rather than displayed */
 .upright { font-style: normal; font-weight: 600; }
 
-/* Bold upright serif: section headings inside an article */
+/* Semibold: section headings inside an article */
 .subhead {
-    font-family: var(--serif);
+    font-family: var(--font);
     font-size: var(--t-24);
     font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.01em;
 }
 
-/* Hover underline in red pencil; on a link itself or a title inside a clickable row */
+/* Hover underline in the accent; on a link itself or a title inside a clickable row */
 .link {
     text-decoration: underline transparent;
     text-decoration-thickness: 0.08em;
@@ -147,13 +141,13 @@ a { color: inherit; text-decoration: none; }
 /* Text links that leave the page (sites, email, files) get a diagonal arrow, hidden from screen readers */
 a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / ""; }
 
-/* Hover cue in red pencil for small labels (part numbers, contents numbers); same triggers as .link */
+/* Hover cue in the accent for small labels (part numbers, contents numbers); same triggers as .link */
 .cue { transition: color var(--dur) var(--ease); }
 
 .cue:is(:hover, :focus-visible),
 :is(a, button):is(:hover, :focus-visible) .cue { color: var(--accent); }
 
-/* Bulleted list with red-pencil markers */
+/* Bulleted list with accent markers */
 .marks { margin: 0; padding-left: var(--s-5); }
 .marks li::marker { color: var(--accent); }
 
@@ -161,12 +155,15 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
 .chip {
     padding: var(--s-1) var(--s-2);
     border: var(--line);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-chip);
     background: var(--paper);
-    transition: color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+    transition: color var(--dur) var(--ease), background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+/* Buttons (jump nav, filter chips) a step heavier than the labels */
+button.chip { font-weight: 600; }
 
 /* Label/value list; optional <div> rows span both columns via subgrid */
 .kv {
@@ -187,7 +184,7 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
 .kv dt { color: var(--ink-2); }
 .kv dd { margin: 0; }
 
-/* Ruled cells: the 1px gaps over an ink background draw the internal rules. The outer edge is a real border,
+/* Ruled cells: the 1px gaps over the --edge background draw the internal rules. The outer edge is a real border,
    so it follows the rounded corners; the clip keeps the square cells inside it */
 .cells {
     gap: 1px;
@@ -196,7 +193,7 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
     border: var(--line);
     border-radius: var(--radius);
     overflow: hidden;
-    background: var(--ink);
+    background: var(--edge);
 }
 
 .cells > * { background: var(--paper); }
@@ -210,24 +207,16 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
     padding: var(--s-2) var(--s-3);
 }
 
-/* Drafting grid in CSS centimeters (nominal: 1cm = 37.8px at 96dpi): major every 1cm, minor every 2mm */
-.grid-paper {
-    background-color: var(--paper-2);
-    background-image:
-        linear-gradient(var(--grid-major) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
-        linear-gradient(var(--grid-minor) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
-    background-size: 1cm 1cm, 1cm 1cm, 2mm 2mm, 2mm 2mm;
-}
+/* Tinted box: the panel, figure plates and empty thumbnails */
+.tint { background-color: var(--paper-2); }
 
 .section-head {
     margin: 0 0 var(--s-3);
     padding-bottom: var(--s-2);
-    border-bottom: var(--line);
+    border-bottom: var(--line-strong);
 }
 
-/* Collapsible depth (<details>): a mono summary with a red +/− marker, the body indented under it */
+/* Collapsible depth (<details>): a label-voice summary with an accent +/− marker, the body indented under it */
 .fold { margin: 0 0 var(--s-5); border-top: var(--line-soft); border-bottom: var(--line-soft); }
 
 .fold > summary {
@@ -269,20 +258,30 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
 
 .bio { margin: var(--s-6) 0 0; }
 
-/* Above-the-fold next steps: a jump button per résumé section (Projects inked), then the contact links */
-.cta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--s-4);
-    margin-top: var(--s-6);
-}
-
+/* Section nav: a jump button per résumé section (Projects inked). It sits under the hero, then sticks to the
+   top of the left column while the résumé scrolls, bleeding to the column edges so text passes under it.
+   script.js marks the section being read (aria-current) and adds .is-stuck for the rule under it */
 .jump {
+    position: sticky;
+    top: 0;
+    z-index: 10;
     display: flex;
     flex-wrap: wrap;
     gap: var(--s-2) var(--s-3);
+    /* The column's flex gap is --s-7; the nav sits --s-6 under the bio, less its own top padding */
+    margin: calc(var(--s-6) - var(--s-7) - var(--s-3)) calc(-1 * var(--s-7)) 0;
+    padding: var(--s-3) var(--s-7);
+    background: var(--paper);
+    transition: box-shadow var(--dur) var(--ease);
 }
+
+.jump.is-stuck { box-shadow: 0 1px 0 var(--edge); }
+
+/* Section headings land below the stuck nav (--jump-h is its measured height) */
+.sheet-left .section-head { scroll-margin-top: calc(var(--jump-h, 0px) + var(--s-4)); }
+
+.jump .chip[aria-current="true"]:not(.chip-solid) { border-color: var(--accent); color: var(--accent); }
+.jump .chip-solid[aria-current="true"] { border-color: var(--accent); background: var(--accent); }
 
 .chip-solid { padding: var(--s-2) var(--s-4); background: var(--ink); color: var(--paper); }
 .chip-solid:is(:hover, :focus-visible) { border-color: var(--accent); background: var(--accent); }
@@ -353,7 +352,7 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
     --thumb-w: 96px;
 }
 
-.index-head { padding-bottom: var(--s-2); border-bottom: var(--line); }
+.index-head { padding-bottom: var(--s-2); border-bottom: var(--line-strong); }
 
 .index-list { list-style: none; margin: 0; padding: 0; }
 .index-list > li { border-bottom: var(--line-soft); }
@@ -530,7 +529,7 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
     transform: translate(-50%, -50%);
     padding: 0 var(--s-2);
     background: var(--paper-2);
-    font-family: var(--mono);
+    font-family: var(--font-label);
     font-size: var(--t-12);
     letter-spacing: 0.08em;
     line-height: 1;
@@ -633,7 +632,7 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
 /* Section number sits above the heading, matching the contents list */
 .subhead-no { display: block; margin-bottom: var(--s-1); }
 
-/* Scannable lists: red-pencil markers (.marks), small-caps <strong> labels lead each item */
+/* Scannable lists: accent markers (.marks), small-caps <strong> labels lead each item */
 .prose-list { margin-bottom: var(--s-5); }
 .prose-list li + li { margin-top: var(--s-2); }
 
@@ -735,8 +734,8 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
 
 .swatch-dash { border-top: 2px dashed var(--ink-2); }
 
-/* Section polars: E205 is the graphite baseline (dashed), I.S.A. 960 the red current design */
-/* Plain paper: the drafting grid would compete with the chart gridlines */
+/* Section polars: E205 is the gray baseline (dashed), I.S.A. 960 the accent current design */
+/* Plain paper behind the charts, not the plate tint */
 .fig-plate.polars { background: var(--paper); }
 
 /* Photos and renders fill the plate edge to edge, clipped to its corners (chart plates don't clip: their tooltips overflow) */
@@ -762,7 +761,7 @@ video.fig-img { cursor: auto; }
     width: 100%;
     overflow: visible;
     touch-action: pan-y;
-    font-family: var(--mono);
+    font-family: var(--font-label);
     font-size: var(--t-12);
 }
 
@@ -808,7 +807,7 @@ video.fig-img { cursor: auto; }
 .polar-table td { padding: var(--s-2) var(--s-2) var(--s-2) 0; text-align: left; border-bottom: var(--line-soft); }
 .polar-table thead th { font-weight: 400; border-bottom: var(--line); }
 
-/* Airfoil sweep scatter: graphite field, the chosen foil in red */
+/* Airfoil sweep scatter: gray field, the chosen foil in the accent */
 .sweep-dot { fill: var(--ink-2); fill-opacity: 0.4; }
 .sweep-pick { fill: var(--accent); stroke: var(--paper); stroke-width: 2; }
 .sweep-hover { fill: none; stroke: var(--ink); stroke-width: 1.5; }
@@ -878,6 +877,17 @@ video.fig-img { cursor: auto; }
     }
 
     .panel { display: none; }
+
+    /* One swipeable row, so the stuck nav stays short */
+    .jump {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        margin-inline: calc(-1 * var(--s-4));
+        padding-inline: var(--s-4);
+    }
+
+    .jump .chip { flex: none; }
 
     /* Portrait stacks above the text */
     .about-body { grid-template-columns: 1fr; }
