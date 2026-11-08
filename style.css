@@ -260,14 +260,16 @@ button.chip { font-weight: 600; }
 
 /* Section nav: a jump button per résumé section (Projects inked). It sits under the hero, then sticks to the
    top of the left column while the résumé scrolls, bleeding to the column edges so text passes under it.
-   script.js marks the section being read (aria-current) and adds .is-stuck for the rule under it */
+   script.js marks the section being read (aria-current) and adds .is-stuck for the rule under it.
+   The buttons stay on one row; if the column is too narrow the row scrolls sideways */
 .jump {
     position: sticky;
     top: 0;
     z-index: 10;
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2) var(--s-3);
+    gap: var(--s-2);
+    overflow-x: auto;
+    scrollbar-width: none;
     /* The column's flex gap is --s-7; the nav sits --s-6 under the bio, less its own top padding */
     margin: calc(var(--s-6) - var(--s-7) - var(--s-3)) calc(-1 * var(--s-7)) 0;
     padding: var(--s-3) var(--s-7);
@@ -276,6 +278,8 @@ button.chip { font-weight: 600; }
 }
 
 .jump.is-stuck { box-shadow: 0 1px 0 var(--edge); }
+
+.jump .chip { flex: none; }
 
 /* Section headings land below the stuck nav (--jump-h is its measured height) */
 .sheet-left .section-head { scroll-margin-top: calc(var(--jump-h, 0px) + var(--s-4)); }
@@ -878,16 +882,11 @@ video.fig-img { cursor: auto; }
 
     .panel { display: none; }
 
-    /* One swipeable row, so the stuck nav stays short */
+    /* The nav row bleeds to the narrower page gutter */
     .jump {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        scrollbar-width: none;
         margin-inline: calc(-1 * var(--s-4));
         padding-inline: var(--s-4);
     }
-
-    .jump .chip { flex: none; }
 
     /* Portrait stacks above the text */
     .about-body { grid-template-columns: 1fr; }

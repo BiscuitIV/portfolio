@@ -41,13 +41,13 @@ const formatRe = re => (Math.round(re / 100) * 100).toLocaleString("en-US");
 
 const projects = {
     "plane": {
-        title: "Sub-250 g Endurance Plane",
+        title: "Endurance Plane Under 250 g",
         subtitle: "LWS X, the tenth generation of my Light-Weight System",
-        outcome: "<strong>18% lighter</strong> airframe and <strong>2.2×</strong> wing lift-to-drag from a 275-airfoil sweep",
+        outcome: "<strong>18% lighter</strong> airframe, and a wing airfoil with <strong>2.2×</strong> the lift-to-drag ratio, picked from 275 I simulated",
         thumb: "lws-x/web/predecessor-thumb.jpg",
         tags: ["Aero", "CAD", "Electronics", "Fabrication"],
         date: "2024-2026",
-        problem: "Fit a one-meter-class wing, battery and 40 g payload under 250 g, and cruise at 7 m/s for 30 minutes",
+        problem: "Fit a wing about one meter across, a battery and a 40 g payload under 250 g, and cruise at 7 m/s for 30 minutes",
         role: "Personal project · design, build, flight test",
         tools: "Onshape · KiCad · XFoil · OpenFOAM · 3D printing",
         results: [
@@ -102,30 +102,30 @@ const projects = {
             ]
         },
         text: [
-            "<strong>LWS X</strong> is a radio-controlled plane with a one-meter-class wingspan that weighs under 250 grams, battery and payload included. It is the current generation of the Light-Weight System (LWS), which I have designed, built and flown since 2024.",
-            "Nine generations took it from a 263g tube glider that flew for three seconds to the 216g Predecessor. Generation X draws on a 275-airfoil XFoil sweep, OpenFOAM CFD and a custom motor controller.",
-            { heading: "The brief: under 250g, 40g payload, 30 minutes aloft" },
+            "<strong>LWS X</strong> is a radio-controlled plane with a wingspan of about one meter that weighs under 250 grams, battery and payload included. It is the current generation of the Light-Weight System (LWS), which I have designed, built and flown since 2024.",
+            "Nine generations took it from a 263g tube glider that flew for three seconds to the 216g Predecessor. For Generation X, I simulated 275 airfoils in XFoil to choose the wing section, ran OpenFOAM CFD to streamline the body, and designed my own motor controller.",
+            { heading: "The requirements: under 250g, a 40g payload and 30 minutes in the air" },
             "Generation X must meet the first four requirements; the rest keep it practical in the field.",
             { list: [
                 "<strong>Mass</strong> under 250g including battery and payload, 210g target",
                 "<strong>Payload</strong> at least 40g of electronics (camera, video transmitter, flight controller, GPS) in a protected bay, powered with at least 5W",
                 "<strong>Endurance</strong> 30 minutes at 15°C and 15 minutes at 0°C with full payload",
-                "<strong>Flight</strong> steady cruise at about 7 m/s, hand-launched by one person",
-                "<strong>Field use</strong> tool-free battery swap in under a minute, fits in a backpack, ready to fly within five minutes, operates from 0 to 150 meters",
+                "<strong>Flight</strong> steady cruise at about 7 m/s, launched by hand by one person",
+                "<strong>Field use</strong> battery swaps without tools in under a minute, fits in a backpack, ready to fly within five minutes, operates from 0 to 150 meters",
                 "<strong>Cost</strong> under $250 for airframe and propulsion, excluding electronics"
             ] },
             "I'm reviewing the regulatory and safety requirements alongside the design: FPV frequency selection, lighting for night flying, and privacy and local laws.",
             { heading: "275 airfoils ranked: the I.S.A. 960 has 2.2× the E205's lift-to-drag" },
             "<strong>Design Re: 60,000.</strong> Flight testing showed level flight needs closer to 8 m/s than the 7 m/s cruise target. At 8 m/s on the 110mm chord, Re is about 60,300 at sea level and 59,500 at 150 meters in the standard atmosphere.",
             { figure: "reynolds" },
-            "<strong>Choice: I.S.A. 960.</strong> It scores 43.7 at 4.75°, fourth of the 273 airfoils that converged in the cruise window and within 3% of the best score of 45.0.",
-            "The two MID 108 sections that score higher are only 9.2mm thick. The I.S.A. 960 is 10.3mm thick with 5.7% camber, and its best point sits inside the cruise window, not at the edge.",
+            "<strong>Choice: I.S.A. 960.</strong> Its best lift-to-drag ratio is 43.7, at 4.75°. That ranks it fourth of the 273 airfoils that converged in the cruise window, within 3% of the top result of 45.0.",
+            "The two MID 108 sections that rank higher are only 9.2mm thick. The I.S.A. 960 is 10.3mm thick with 5.7% camber, and it reaches its best lift-to-drag ratio inside the 0° to 5° cruise window rather than at one end of it.",
             { figure: "sweep" },
             { fold: "How the 275 airfoils were simulated and ranked", text: [
                 "<strong>Sweep.</strong> 275 airfoils were run through XFoil 6.99, the panel-method solver airfoiltools.com also uses, with these settings:",
                 { list: [
                     "<strong>Sources</strong> coordinates from airfoiltools, the UIUC Airfoil Coordinates Database or the AeroSandbox database",
-                    "<strong>Geometry</strong> every file converted to Selig format, with 27 blunt trailing edges closed so XFoil does not under-predict them",
+                    "<strong>Geometry</strong> every file converted to Selig format, and 27 blunt trailing edges closed",
                     "<strong>Solver</strong> Re 60,000, Ncrit 9, 160 panels",
                     "<strong>Sweep</strong> α −5° to 15° in 0.25° steps, 21,023 converged points",
                     "<strong>Output</strong> polars and cruise-window metrics, ranked in an interactive tool to sort, filter and compare polars"
@@ -133,7 +133,7 @@ const projects = {
                 "<strong>Metric and filters.</strong> They were ranked by best lift-to-drag ratio (Cl/Cd) between 0° and 5°, the angles the wing sees in cruise with its 5° incidence. Candidates had to fall within a range of cambers and be more than 8mm thick at the 110mm chord, so the wing can be built from balsa and PLA with room for a spar. The thinnest of the 275 is 8.8mm.",
                 "The selection followed five steps, from operating conditions to a buildable airfoil:",
                 { list: [
-                    "<strong>Reynolds number</strong> 8 m/s level flight on the 110mm chord from 0 to 150 meters, giving Re 60,000",
+                    "<strong>Reynolds number</strong> about 60,000, from level flight at 8 m/s on the 110mm chord between 0 and 150 meters",
                     "<strong>Goal metric</strong> best Cl/Cd between 0° and 5°, the cruise window",
                     "<strong>Camber and thickness</strong> a range of cambers and a maximum thickness above 8mm, which all 275 airfoils meet",
                     "<strong>Polars at optimal angle</strong> Cl, Cl/Cd and the drag polar at each airfoil's best angle, with 273 ranked",
@@ -148,41 +148,27 @@ const projects = {
             ] },
             { figure: "airfoils" },
             { figure: "polars" },
-            { heading: "PIFOAMUI: OpenFOAM CFD from a browser, quick enough to run between builds" },
+            { heading: "PIFOAMUI runs OpenFOAM CFD from a browser, fast enough to use between builds" },
             "PIFOAMUI is a browser interface I built with Claude Code for OpenFOAM 13, the open-source CFD toolkit. With it I no longer write OpenFOAM dictionaries or set up each case by hand, so I can test an aerodynamic change between builds.",
-            "CFD run through PIFOAMUI guided the streamlining of both bodies. So far it has been run at level flight, comparing Generation Nine with Generation X.",
-            { fold: "What PIFOAMUI does, from setup to report", text: [{ list: [
-                "<strong>Setup</strong> an STL and flow conditions: speed, angle of attack and yaw, ground, and half models on a symmetry plane, in Basic, Intermediate or Advanced mode",
-                "<strong>Meshing</strong> blockMesh and snappyHexMesh, with boundary layers sized by thickness or a y+ target; checkMesh quality check, retried at a finer level if meshing fails",
-                "<strong>Solving</strong> steady (SIMPLE) or transient (PIMPLE), with Spalart–Allmaras, k-ω SST or γ-Reθ turbulence models, in parallel over MPI, from a job queue that stops each run once it converges",
-                "<strong>Results</strong> force coefficients (Cd, Cl, Cm), residual plots, case comparison and a printable report",
-                "<strong>Studies</strong> parameter sweeps, mesh independence, aircraft polars, and neutral point and static margin"
-            ] }] },
+            "I used PIFOAMUI to run CFD while streamlining both bodies. So far I have simulated level flight, comparing Generation Nine with Generation X.",
             "PIFOAMUI is open source on GitHub under GPL-3.0: <a class=\"link\" href=\"https://github.com/BiscuitIV/PIFOAMUI\" target=\"_blank\" rel=\"noopener\">github.com/BiscuitIV/PIFOAMUI</a>",
-            { heading: "A 15 A sensorless ESC, designed from scratch" },
+            { heading: "A 15 A motor controller I designed in KiCad" },
             "The ESC is the project's first custom PCB. I designed it in KiCad to drive the 2003.5 motor on 2S to 3S at up to 15A.",
-            "Commutation is sensorless: each phase's back-EMF is compared against a virtual neutral, so the motor needs no Hall sensors.",
+            "The ESC needs no Hall sensors to track the rotor. As the motor spins, each phase generates a voltage (back-EMF), and the ESC compares it with a virtual neutral point to decide when to switch phases.",
             { media: [{ src: "lws-x/web/esc-v1-schematic.png", width: 3508, height: 2480,
                 alt: "LWS X ESC V1 schematic: BEMF sensing, current sense, gate driver, LDO, MCU, power input, voltage sense, three half-bridges, connections and test points" }],
                 caption: `ESC V1 schematic in KiCad: sensing, gate driver, MCU and three half-bridges on one board · click to enlarge · <a class="link" href="lws-x/ESC%20V1.pdf" target="_blank" rel="noopener">PDF</a>` },
-            { fold: "Circuit details: control, power stage, sensing", text: [{ list: [
-                "<strong>Control</strong> STM32G0 microcontroller, powered by a TLV70433 3.3V regulator",
-                "<strong>Power stage</strong> FD6288T three-phase gate driver switching six MOSFETs as three half-bridges, with BAT54W bootstrap diodes supplying the high-side gates",
-                "<strong>Sensing</strong> back-EMF scaled through 10k/4.7k dividers; motor current from a 1mΩ shunt and INA181A1 amplifier; battery voltage from a divider",
-                "<strong>Input</strong> 470µF bulk capacitor with ceramic decoupling",
-                "<strong>Interfaces</strong> signal and telemetry pins, SWD for programming, and test points on every key net"
-            ] }] },
-            { heading: "Split airframe, 7-inch prop, 67% more battery energy" },
+            { heading: "A two-part body, a bigger propeller and 67% more battery energy" },
             "<strong>Airframe.</strong> Generation X splits the airframe into a front body and a rear body, joined by frame plates, so each body can be streamlined without compromising the joint between them. It is built from PLA and balsa, and I'm considering carbon fiber.",
             { media: [{ src: "lws-x/lws-x-cad.png", width: 1413, height: 544, alt: "CAD wireframe of LWS X: long straight wing with winglets, a split fuselage and a tail boom carrying the tail surfaces" }],
                 caption: "LWS X in CAD: one-metre wing and split airframe · click to enlarge" },
             "<strong>Wing.</strong> The chord is 110mm at 5° incidence, up from 100mm at 0° in the first generation. Each half of the wing is 486mm wide.",
             "<strong>Propulsion.</strong> A 2003.5 motor on a 2S to 3S 15A ESC drives a 7-inch 7x4.5 bi-blade propeller, up from the 6-inch propeller of the first three generations.",
-            "<strong>Power.</strong> The custom 2S 1200mAh battery stores about 8.9Wh for 56g: roughly 67% more energy than the earlier 2S 720mAh pack for 53% more weight. Custom PCBs replace off-the-shelf boards to save weight, and I'm adding a flight controller for more automation.",
+            "<strong>Power.</strong> The custom 2S 1200mAh battery weighs 56g and stores about 8.9Wh. Compared with the earlier 2S 720mAh pack, it holds roughly 67% more energy and weighs 53% more. Custom PCBs replace off-the-shelf boards to save weight, and I'm adding a flight controller for more automation.",
             { media: [{ src: "lws-x/Airfoil.png", width: 1447, height: 675, alt: "CAD render of a wing rib with lightening cutouts" }],
                 caption: "Wing rib in CAD, with lightening cutouts to save weight · click to enlarge" },
             { heading: "Nine generations, from 263g to 216g" },
-            "I had never flown an RC plane when the project began, so the early generations taught me to fly as much as they tested the aircraft, and every revision got crash-tested. I still design by the rule I took from them: remove weight wherever it does not serve flight.",
+            "I had never flown an RC plane when the project began, so the early generations taught me to fly as much as they tested the aircraft, and every revision got crash-tested. I still follow the lesson they taught me: take out any weight the plane doesn't need to fly.",
             { figure: "timeline" },
             "<strong>Gen 1 · Tube glider.</strong> At 263g, the first prototype was already over the target. It used carbon fiber tubes for the wing and fuselage, so I could move components along them to balance it. I built it in under a month, and it crashed three times on a rough asphalt runway: the tube fuselage was too flexible to fly well.",
             { media: [
@@ -218,9 +204,9 @@ const projects = {
         ]
     },
     "printer": {
-        title: "Scratch-Built 3D Printer",
-        subtitle: "Cartesian printer on a hand-milled aluminum frame",
-        outcome: "Designed from scratch in Onshape and <strong>assembled in four months</strong>, with a custom accelerometer board for input shaping",
+        title: "DIY 3D Printer",
+        subtitle: "A cartesian printer with an aluminum frame I milled by hand",
+        outcome: "Designed in Onshape and <strong>assembled in four months</strong>, with a custom accelerometer board that helps it print fast without ringing",
         thumb: "across-the-years/printer-complete.jpg",
         image: {
             src: "across-the-years/printer-complete.jpg",
@@ -229,23 +215,49 @@ const projects = {
         },
         tags: ["CAD", "Electronics", "Fabrication"],
         date: "2025-Now",
-        problem: "Design and build a cartesian 3D printer from scratch, and tune it to print fast without ringing",
+        problem: "Design and build a cartesian 3D printer, and tune it to print fast without ringing",
         role: "Personal project · design, sourcing, build",
         tools: "Onshape · KiCad · Raspberry Pi",
         results: [
             ["180 × 180 × 220", "Build volume, mm", "X × Y × Z"]
         ],
+        specs: {
+            title: "Hardware",
+            groups: [
+                { group: "Frame", rows: [
+                    ["Extrusion", "2020 aluminum"],
+                    ["Build volume", "180 × 180 × 220 mm"],
+                    ["Build plate", "Aluminum"]
+                ] },
+                { group: "Motion", rows: [
+                    ["Gantry", "Linear rails"],
+                    ["Vertical", "Smooth rods, twin 8 mm lead screws"],
+                    ["Build plate", "Smooth rods"],
+                    ["Belt", "10 mm wide"]
+                ] },
+                { group: "Motors", rows: [
+                    ["Gantry and build plate", "2 × NEMA 17, 48 mm"],
+                    ["Vertical", "2 × NEMA 17, 42 mm"]
+                ] },
+                { group: "Toolhead", rows: [
+                    ["Extruder", "HGX-LITE"],
+                    ["Hotend cooling", "3010 axial fan"],
+                    ["Print cooling", "2 × 4010 radial fans"]
+                ] }
+            ]
+        },
         text: [
             "<strong>This 3D printer</strong> is a cartesian machine of my own design, modeled in Onshape. I sourced the parts in November 2025 and had it assembled with its printed parts by March 2026. The build paused when I started college and is still in progress.",
-            { heading: "Hand-milled aluminum frame, twin lead screws, belt-driven gantry" },
-            "The frame is aluminum extrusion that I milled by hand on a manual mill, with twin lead screws lifting a belt-driven gantry over a 180 × 180 × 220mm build volume. Printed brackets and feet tie it together, and a Raspberry Pi sits beside the main control board.",
+            { heading: "An aluminum frame I milled by hand, with twin lead screws and a belt-driven gantry" },
+            "The frame is 2020 aluminum extrusion that I milled by hand on a manual mill. Twin 8mm lead screws lift the gantry on smooth rods, and the gantry itself runs on linear rails with a 10mm belt. The aluminum build plate also moves on smooth rods, over a 180 × 180 × 220mm build volume.",
+            "Four NEMA 17 motors drive it: two 42mm motors for the vertical axis, and two 48mm motors for the gantry and build plate. The toolhead uses an HGX-LITE extruder; a 3010 axial fan cools the hotend and two 4010 radial fans cool the print. Printed brackets and feet tie the frame together, and a Raspberry Pi sits beside the main control board.",
             { media: [{ src: "across-the-years/printer-cad.png", width: 883, height: 837, alt: "CAD line render of the 3D printer: aluminum extrusion frame, gantry, toolhead and lead screws" }],
                 caption: "CAD line render of the printer's aluminum extrusion frame, gantry and lead screws · click to enlarge" },
             { media: [
                 { src: "across-the-years/printer-parts.jpg", width: 713, height: 951, alt: "3D printer parts laid out on a desk: black extrusions, steel rods, lead screws, four stepper motors, pulleys and hardware" },
                 { src: "across-the-years/printer-first-assembly.jpg", width: 713, height: 951, alt: "First assembly of the 3D printer frame with gantry, toolhead and control boards wired on a desk" }
             ], caption: "From parts to first assembly: the November 2025 parts, and the frame wired up in December · click to enlarge" },
-            { heading: "Vibration Tracker V1.0: a custom accelerometer board to tune out ringing" },
+            { heading: "Vibration Tracker V1.0, an accelerometer board I designed to reduce ringing" },
             "To tune the printer's input shaping, I designed an accelerometer board in KiCad. Input shaping measures the frame's resonant frequencies and filters them out of the motion, so the printer can run faster without ringing in the prints.",
             "The board carries an SPI accelerometer and a 1.8V regulator, and connects through six pads: 3.3V, ground and the four SPI lines.",
             { media: [
@@ -256,7 +268,7 @@ const projects = {
     },
     "drone-frame": {
         title: "Custom Drone Frame",
-        subtitle: "The first airframe I designed from scratch",
+        subtitle: "The first airframe I designed myself",
         outcome: "<strong>56 g</strong> carbon fiber FPV frame, refined over four versions, that replaced the frame on my 3-inch quad",
         thumb: "across-the-years/drone-frame-render-v4.jpg",
         image: {
@@ -274,9 +286,9 @@ const projects = {
             ["V1 → V4", "Design revisions", "Weight optimization and overall structure"]
         ],
         text: [
-            "<strong>This FPV frame</strong> is the first airframe I designed from scratch: a 56g carbon fiber frame modeled in Onshape, built up and flown. It replaced the old frame on my 3-inch FPV quad.",
-            { heading: "56g of carbon fiber, cut away wherever it carries no load" },
-            "I optimized the frame for weight and strength. Stacked plates on standoffs hold the electronics, and cutouts in the plates and arms take out material that does not carry load.",
+            "<strong>This FPV frame</strong> is the first airframe I designed myself: a 56g carbon fiber frame that I modeled in Onshape, built and flew. It replaced the old frame on my 3-inch FPV quad.",
+            { heading: "56g of carbon fiber, with cutouts to save weight" },
+            "I designed the frame to be light and strong. Stacked plates on standoffs hold the electronics, and cutouts in the plates and arms remove material the frame doesn't need for strength.",
             "I went through four versions, V1 to V4, refining the weight and the overall structure each time.",
             { media: [{ src: "across-the-years/drone-frame-cad.png", width: 1305, height: 756, alt: "CAD line render of a quadcopter frame with stacked plates and four arms" }],
                 caption: "The frame in CAD: four arms under a two-plate stack · click to enlarge" },
@@ -287,7 +299,7 @@ const projects = {
     "drones": {
         title: "Competition and FPV Drones",
         subtitle: "A tennis-ball payload for my club's S500, and the three FPV quads I learned on",
-        outcome: "Servo-actuated S500 payload placed <strong>3rd of 12</strong> at the 2023 STEM-ED Aero Robotics Competition; two FPV quads hand-built from parts and PID-tuned in Betaflight",
+        outcome: "Our S500, carrying the tennis-ball mechanism I designed, placed <strong>3rd of 12</strong> at the 2023 STEM-ED Aero Robotics Competition. I also built two FPV quads from parts and tuned them in Betaflight",
         thumb: "web/aviation-club-bench.jpg",
         image: {
             src: "web/aviation-club-bench.jpg",
@@ -301,17 +313,17 @@ const projects = {
         tools: "Onshape · Betaflight",
         results: [
             ["3rd of 12", "Aero Robotics placing", "2023 STEM-ED competition, d.Aviation"],
-            ["2", "FPV quads hand-built from parts", "3.5-inch and 5-inch, firmware configured and PID-tuned in Betaflight"]
+            ["2", "FPV quads built by hand from parts", "3.5-inch and 5-inch, set up and tuned in Betaflight"]
         ],
         text: [
             "<strong>These drones</strong> are my high school club's competition entry, a tennis-ball payload carried on an S500 quadcopter, and the three FPV quads that were my first builds.",
             { heading: "A tennis-ball payload that placed 3rd of 12" },
-            "As Head of Mechanical at d.Aviation, I designed a servo-actuated mechanism that picks up and releases multiple tennis balls at a time. We placed 3rd of 12 teams at the 2023 STEM-ED Aero Robotics Competition.",
+            "As Head of Mechanical at d.Aviation, I designed a mechanism, moved by a servo, that picks up and releases multiple tennis balls at a time. We placed 3rd of 12 teams at the 2023 STEM-ED Aero Robotics Competition.",
             { media: [{ src: "web/Aviation%20Club%20Me%20Shot.jpeg", width: 1500, height: 2000, alt: "Holding the S500 with the payload mechanism fitted underneath, on a sunny competition field" }],
                 caption: "Carrying the S500 onto the field at the 2023 STEM-ED Aero Robotics Competition, payload fitted underneath · click to enlarge" },
             { media: [{ src: "across-the-years/web/drone-s500-hover.mp4", width: 1280, height: 576, alt: "The d.Aviation S500 quadcopter climbing and descending over a field with a load hanging on a line" }],
                 caption: "The d.Aviation S500 climbing and descending over a field, with a load slung on a line below" },
-            { heading: "Two FPV quads ordered as parts, hand-built and PID-tuned" },
+            { heading: "Two FPV quads I built from parts and tuned myself" },
             "FPV quads, flown through a live camera feed, were my first builds. I fly a tiny whoop, a 3.5-inch and a 5-inch.",
             "For the 3.5-inch and the 5-inch I ordered every part and assembled each quad by hand. I then configured the firmware in Betaflight and tuned the PID loops myself, and I still use Betaflight to debug them.",
             { media: [{ src: "across-the-years/drone-quad.jpg", width: 1427, height: 951, alt: "3.5-inch carbon-frame FPV quadcopter with a strapped battery on a wooden floor" }],
@@ -325,12 +337,12 @@ const projects = {
     "radio-dock": {
         title: "Radio Dock",
         subtitle: "Paid commission to hold six Motorola T600 radios",
-        outcome: "Six pockets modeled around the radio's body from the manufacturer's photo, printed as <strong>two three-slot halves</strong>",
+        outcome: "Six pockets modeled around the radio's body from the manufacturer's photo, printed as two halves of three pockets each",
         thumb: "across-the-years/radio-dock-printed.jpg",
         image: {
             src: "across-the-years/radio-dock-cad.png",
-            alt: "CAD line render of a six-slot radio dock in two three-slot halves",
-            caption: "CAD line render of the six-slot dock, split into two three-slot halves"
+            alt: "CAD line render of a radio dock for six radios, split into two halves of three pockets each",
+            caption: "CAD line render of the dock for six radios, split into two halves of three pockets each"
         },
         tags: ["CAD", "Fabrication"],
         date: "2026",
@@ -339,9 +351,9 @@ const projects = {
         tools: "Onshape · 3D printing",
         text: [
             "<strong>The radio dock</strong> was a paid commission: a client asked me to design and print a dock that holds six Motorola T600 radios upright.",
-            "Each pocket is modeled around the radio's body, using the manufacturer's photo as the reference for its shape. The dock is split into two three-slot halves.",
+            "Each pocket is modeled around the radio's body, using the manufacturer's photo as the reference for its shape. The dock is split into two halves that hold three radios each.",
             { media: [
-                { src: "across-the-years/radio-dock-printed.jpg", width: 713, height: 951, alt: "Blue printed six-slot dock on a wooden table holding a green Motorola radio" },
+                { src: "across-the-years/radio-dock-printed.jpg", width: 713, height: 951, alt: "Blue printed dock for six radios on a wooden table holding a green Motorola radio" },
                 { src: "across-the-years/motorola-t600.webp", width: 723, height: 1280, alt: "Manufacturer product photo of the green Motorola T600 radio, side view" }
             ], caption: "The printed radio dock in use, April 2026, beside the manufacturer's photo of the Motorola T600 it was designed around · click to enlarge" }
         ]
