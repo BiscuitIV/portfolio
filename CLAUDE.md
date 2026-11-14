@@ -19,6 +19,10 @@ To preview it, serve the folder statically. The workspace is set up for the VS C
 
 **Two views, hash routing.** `index.html` holds both `#home-view` (the résumé index plus a fixed featured-part panel) and `#project-view` (one article column). `route()` in `script.js` runs on `hashchange`. If `#<key>` matches a key in `projects`, the project view is shown and rebuilt from data; any other hash shows the home view. Because the hash selects the project, in-article navigation (the Contents list) uses buttons that scroll to the heading, not `#anchor` links.
 
+`route()` also keeps the reader's place and the page metadata: it saves the index scroll position when a project opens and restores it on the way back, sets `document.title` and `<meta name="description">` (the project's `outcome`, markup stripped), and fills the Prev / Next links in the sticky `.project-bar` (`#project-prev`, `#project-next`, wrapping at both ends). The project title is the `<h1>` of its view; generated subheads and the spec-sheet head are `<h2>`.
+
+**Lightbox.** Photos in `{ media }` figures are links with class `.fig-zoom`. One delegated click handler on `#project-description-container` opens them in the `<dialog id="lightbox">` at the end of `index.html`, copying the figure's caption; modified clicks (Ctrl, Shift, middle button) keep the link's new-tab behavior. The dialog has no padding of its own, so a click whose target is the dialog is a backdrop click and closes it. Don't write "click to enlarge" into captions.
+
 **`projects` is the content model.** Each entry in the `projects` object in `script.js` becomes one index row and one project page. Insertion order sets the "drawing number" (`drawingNumber(key)`, zero-padded), so reordering keys renumbers projects, and it also sets the "Next" link that ends each project page (the next key, wrapping). Optional fields:
 - Index row: `subtitle`, `outcome` (one front-loaded result line), `thumb` (image path, decorative; rows without one show an empty `.tint` box), and `tags` (disciplines; their union, in first-seen order, builds the filter chips above the index, and untagged projects show only under "All").
 - Summary block (the 15-second read at the top of a project page): `problem`, `role`, `tools`, plus `date` as Timeline.
@@ -55,7 +59,7 @@ Panel sequence in detail:
 ## Code map
 
 **`script.js`, top to bottom:**
-- Data: `airfoils`, `sweep`, `air(h)`, `reynolds(v, h)`, `formatRe(re)`, then `projects` (keys in drawing order: `plane` for LWS X, `printer`, `drone-frame`, `drones`, `radio-dock`), `contact` and `featured` (the key the idle panel shows, currently `"plane"`).
+- Data: `airfoils`, `sweep`, `air(h)`, `reynolds(v, h)`, `formatRe(re)`, then `projects` (keys in drawing order: `plane` for LWS X, `printer`, `drones`, which includes the custom FPV frame, and `radio-dock`, which is hidden). An entry with `hidden: true` stays in the data but is left out of `projectKeys`, so it has no index row, drawing number or route, `contact` and `featured` (the key the idle panel shows, currently `"plane"`).
 - Helpers: `projectKeys`, `drawingNumber(key)`, `makeFigure(plateClass, plateHTML, caption)` (wraps a builder's output in `.fig-plate.tint` plus a caption), `reduceMotion` (a `matchMedia` query), `jumpTo(el)`, `clipPlayer` (an `IntersectionObserver` that plays muted clips while at least half on screen), `mediaFigure(items, caption)`, `stepRows(steps)`, `niceTicks(min, max, count)`, `polarCharts` with `polarPanel(chart)` and `polarSummary()`.
 - `figures`: one builder per `{ figure: name }`. `airfoils()` draws a true-scale section overlay (SVG units are mm), `polars()` the Cl/Cd charts and summary table, `timeline()` the generation steps, `sweep()` the 273-foil scatter, `reynolds()` the calculator with altitude and speed sliders.
 - `kvPair([label, value], dtClass, ddClass)` and `renderSpecs(container, { title, groups })`.
@@ -76,7 +80,10 @@ Panel sequence in detail:
   - In JS, `kvPair([label, value], dtClass, ddClass)` builds every generated `<dt>`/`<dd>`.
 - `a.link` pointing outside the page automatically gets a ↗ suffix from CSS. Don't add arrows by hand.
 - Keep the existing accessibility behavior: `:focus-visible` rings, `aria-live` on the title block and the Re output, and SVG `role="img"` + `aria-label`. Reduced motion is respected in both CSS and JS (`reduceMotion`).
-- Responsive layout uses one breakpoint (`max-width: 860px`): the page becomes one column, the panel is hidden, and index rows drop the year under the outcome.
+- Responsive layout uses one breakpoint (`max-width: 860px`): the page becomes one column, the panel is hidden, `#hero-frame` (the featured part's image, filled by `partImage(featured)`) appears under the bio in its place, and index rows drop the year under the outcome.
+- A `@media print` block at the end of `style.css` drops the navigation, panel and videos and prints outside links with their address; `beforeprint` / `afterprint` handlers in `script.js` open the folds and close them again.
+- Units are written with a space ("216 g", "110 mm", "15 A") and date ranges with an en dash ("2024–2026"), in `script.js`, `index.html` and `lws-x/lws-x-full-story.md` alike.
+- Link previews: the Open Graph tags in `index.html` use absolute URLs under `https://biscuitiv.github.io/portfolio/` and the 1200×630 `web/social-card.jpg` (a crop of the CFD velocity plot). Update them if the site moves. The filter chips show each tag's part count, and `.filter-status` (`aria-live`) states how many parts a filter shows. The `<noscript>` note in the index repeats the two contact links by hand, so update it with the `contact` array.
 
 ### Studio tokens
 
@@ -219,5 +226,8 @@ There are no automated tests. After a change:
 - Hover and Tab through the index rows: the panel preview, dimension lines, title block and focus rings should all update.
 - Scroll the home view: the section nav should stick under the top edge, highlight each section as it reaches the nav, and land jumped-to headings just below it (also below 860px, where the one-row nav scrolls sideways).
 - On LWS X, check the polar and sweep tooltips, the Reynolds sliders, the folds and the Contents buttons.
+- Click a figure photo: the lightbox opens with its caption and closes on Esc, the Close button and a backdrop click. Scroll the article: the bar with Index, Prev and Next stays at the top, and Contents targets land below it.
+- Scroll the index, open a project, then go back: the index returns to the same position.
+- Open print preview on both views: one column, folds open, no panel or navigation.
 - Turn on reduced motion in the OS: transitions stop and muted clips don't autoplay.
 - For a new color, check its contrast against `--paper` and `--paper-2`.

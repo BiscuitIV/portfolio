@@ -3,8 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pavlos P</title>
+    <title>Pavlos P · Mechanical engineering portfolio</title>
     <meta name="description" content="Pavlos P, mechanical engineering student: I design across mechanical, electrical and aerospace engineering, from planes and drones to a 3D printer and the circuit boards that run them.">
+    <meta name="theme-color" content="#F7F7F5">
+
+    <!-- Link previews. Crawlers don't run script.js, so every shared link (project pages included) shows this card.
+         The image and URLs must be absolute: update them if the site moves -->
+    <link rel="canonical" href="https://biscuitiv.github.io/portfolio/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://biscuitiv.github.io/portfolio/">
+    <meta property="og:title" content="Pavlos P · Mechanical engineering portfolio">
+    <meta property="og:description" content="Planes, drones, a 3D printer and the circuit boards that run them: mechanical, electrical and aerospace design projects.">
+    <meta property="og:image" content="https://biscuitiv.github.io/portfolio/web/social-card.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="CFD velocity contour around the LWS X airframe in level flight">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Favicon: a single P on ink with an accent rule, inline so there is no extra file -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23111214'/%3E%3Ctext x='16' y='20' text-anchor='middle' font-family='system-ui,sans-serif' font-size='18' font-weight='700' fill='%23F7F7F5'%3EP%3C/text%3E%3Crect x='6' y='24' width='20' height='2' fill='%232350D8'/%3E%3C/svg%3E">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,12 +33,20 @@
         <div class="sheet-left">
             <header class="intro">
                 <h1 class="title title-display name">Pavlos P</h1>
-                <p class="title title-md lede">I design across mechanical, electrical and aerospace engineering.</p>
+                <p class="title title-md lede">I design across mechanical, electrical and aerospace engineering: most recently a sub-250&nbsp;g endurance plane.</p>
                 <dl class="kv bio">
-                    <dt class="mono">Status</dt><dd>College Freshman</dd>
+                    <dt class="mono">Status</dt><dd>Freshman, University of Maryland</dd>
                     <dt class="mono">Track</dt><dd>Mechanical Engineering</dd>
                     <dt class="mono">Citizenship</dt><dd>U.S. citizen</dd>
-                    <dt class="mono">Seeking</dt><dd>Summer 2027 internship in aerospace, EV, or mechanical design</dd>                </dl>
+                    <dt class="mono">Seeking</dt><dd>Summer 2027 internship in aerospace, EV, or mechanical design</dd>
+                </dl>
+                <!-- Shown only below 860px, where the panel is hidden; filled by script.js with the featured part -->
+                <div class="frame hero-frame" id="hero-frame">
+                    <a class="frame-note frame-featured">
+                        <img alt="" loading="lazy">
+                        <span class="mono chip cue frame-caption"></span>
+                    </a>
+                </div>
             </header>
 
             <nav class="jump" id="jump" aria-label="Résumé sections">
@@ -40,6 +65,10 @@
                     <span>No.</span><span></span><span>Part</span><span>Year</span>
                 </div>
                 <ol class="index-list" id="project-links-container"></ol>
+                <!-- The index is built by script.js; without it, say so and keep a way to get in touch -->
+                <noscript>
+                    <p>The project index needs JavaScript. You can still reach me by <a class="link" href="mailto:pavlos.paparrizos@gmail.com">email</a> or on <a class="link" href="https://www.linkedin.com/in/pavlos-paparrizos/">LinkedIn</a>.</p>
+                </noscript>
             </main>
 
             <section aria-labelledby="education-head">
@@ -104,9 +133,9 @@
                             <span class="title upright entry-title">Head of Mechanical</span>
                             <span class="muted entry-meta">d.Aviation (High School Club)</span>
                             <ul class="marks entry-points">
-                                <li>Built a mechanism, moved by a servo, to pick up and release multiple tennis balls at a time</li>
                                 <li>Took <strong>3rd of 12</strong> teams at the 2023 STEM-ED Aero Robotics Competition in San Diego</li>
-                                <li>Taught members about drone technology and led a 5-person mechanical team</li>
+                                <li>Designed the servo-driven mechanism that picks up and releases multiple tennis balls at a time</li>
+                                <li>Led a 5-person mechanical team and taught members drone technology</li>
                                 <li>Repaired operational damage, debugged PX4 firmware, and tuned PID</li>
                             </ul>
                         </dd>
@@ -237,12 +266,16 @@
     <div id="project-view" class="project" hidden>
         <header class="project-bar mono">
             <a href="#" class="link">&larr; Index</a>
-            <span>Pavlos P &middot; Dwg <span id="project-no">00</span></span>
+            <nav class="bar-nav" aria-label="Projects">
+                <a class="link" id="project-prev" aria-label="Previous project">&larr; Prev</a>
+                <span class="muted">Dwg <span id="project-no">00</span> / <span id="project-count">00</span></span>
+                <a class="link" id="project-next" aria-label="Next project">Next &rarr;</a>
+            </nav>
         </header>
 
         <main>
             <header class="project-head">
-                <h2 class="title title-display project-title" id="project-title">Project Title</h2>
+                <h1 class="title title-display project-title" id="project-title">Project Title</h1>
                 <p class="title title-md muted project-subtitle" id="project-subtitle" hidden></p>
             </header>
             <div class="project-grid">
@@ -257,7 +290,7 @@
                         <figcaption class="mono muted" id="project-caption"></figcaption>
                     </figure>
                     <section class="spec-sheet" id="project-specs" aria-labelledby="specs-head" hidden>
-                        <h3 class="mono section-head" id="specs-head"></h3>
+                        <h2 class="mono section-head" id="specs-head"></h2>
                         <div class="cells spec-groups"></div>
                     </section>
                     <div class="prose" id="project-description-container"></div>
@@ -273,6 +306,17 @@
             </span>
         </footer>
     </div>
+
+    <!-- Lightbox for figure photos, opened by script.js. The body carries the padding, so a click on the dialog itself is the backdrop -->
+    <dialog class="lightbox" id="lightbox" aria-label="Enlarged image">
+        <div class="lightbox-body">
+            <img id="lightbox-img" alt="">
+            <div class="lightbox-bar">
+                <p class="mono muted" id="lightbox-caption"></p>
+                <form method="dialog"><button class="bare mono chip">Close</button></form>
+            </div>
+        </div>
+    </dialog>
 
     <script src="script.js"></script>
 </body>
