@@ -151,6 +151,8 @@ const projects = {
             { heading: "PIFOAMUI runs OpenFOAM CFD from a browser, fast enough to use between builds" },
             "PIFOAMUI is a browser interface I built with Claude Code for OpenFOAM 13, the open-source CFD toolkit. With it I no longer write OpenFOAM dictionaries or set up each case by hand, so I can test an aerodynamic change between builds.",
             "I used PIFOAMUI to run CFD while streamlining both bodies. So far I have simulated level flight, comparing Generation Nine with Generation X.",
+            { media: [{ src: "lws-x/front-pathlines.png", width: 1600, height: 772, alt: "Front view of the Generation X wing as a black bar, with pathlines colored by velocity from 7 to 10 m/s: air speeds up over the top of the wing and slows below it" }],
+                caption: "Pathlines around the Generation X wing from the front, colored by velocity magnitude: air speeds up over the wing and slows beneath it" },
             "PIFOAMUI is open source on GitHub under GPL-3.0: <a class=\"link\" href=\"https://github.com/BiscuitIV/PIFOAMUI\" target=\"_blank\" rel=\"noopener\">github.com/BiscuitIV/PIFOAMUI</a>",
             { heading: "A 15 A motor controller I designed in KiCad" },
             "The ESC is the project's first custom PCB. I designed it in KiCad to drive the 2003.5 motor on 2S to 3S at up to 15 A.",
