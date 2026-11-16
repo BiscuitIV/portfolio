@@ -2,21 +2,21 @@
 
 **LWS X** is a radio-controlled plane with a one-meter-class wingspan that weighs under 250 grams, battery and payload included. It is the current generation of the Light-Weight System (LWS), which I have designed, built and flown since 2024.
 
-Nine generations took it from a 263 g tube glider that flew for three seconds to the 216 g Predecessor. Generation X draws on a 275-airfoil XFoil sweep, OpenFOAM CFD and a custom motor controller.
+Nine generations took it from a 263 g tube glider that flew for three seconds to the 216 g Predecessor. Generation X draws on a 1,052-airfoil XFoil sweep, OpenFOAM CFD and a custom motor controller.
 
 ## The brief: under 250 g, 40 g payload, 30 minutes aloft
 
 Generation X must weigh under 250 g including battery and payload, with a 210 g target. It must carry at least 40 g of electronics (camera, video transmitter, flight controller and GPS) in a protected bay and power them with at least 5 W, fly 30 minutes at 15°C with full payload, cruise steadily at about 7 m/s, and be hand-launched by one person. It should also swap batteries in under a minute without tools, fit in a backpack, be ready to fly within five minutes, operate between 0 and 150 meters, and cost under $250 for the airframe and propulsion, excluding electronics. Regulatory and safety requirements, including FPV frequency selection, lighting for night flying, and privacy and local laws, are being reviewed alongside the design.
 
-## 275 airfoils ranked: the I.S.A. 960 has 2.2× the E205's lift-to-drag
+## 1,052 airfoils ranked: the I.S.A. 960 has 2.2× the E205's lift-to-drag
 
 Flight testing showed that the speed needed for level flight is closer to 8 m/s than the 7 m/s cruise target. With the 110 mm chord, 8 m/s gives a Reynolds number of about 60,300 at sea level and about 59,500 at 150 meters in the standard atmosphere, so I averaged the design Reynolds number at 60,000 across the operating envelope.
 
-To choose the airfoil, 275 airfoils were run through XFoil 6.99, the panel-method solver that airfoiltools.com also uses, at Re 60,000, Ncrit 9 and 160 panels, sweeping α from −5° to 15° in 0.25° steps. Coordinates came from airfoiltools, the UIUC Airfoil Coordinates Database or the AeroSandbox database, every file was converted to one format, and blunt trailing edges that XFoil would otherwise under-predict were closed. The results were ranked in an interactive tool. The selection followed five steps: find the Reynolds number from the operating environment, choose a metric based on the operational goal, filter by camber and thickness, compare the polars at their optimal angles of attack, and choose the airfoil based on fabrication feasibility and the goal metrics.
+To choose the airfoil, 1,052 airfoils were run through XFoil 6.99, the panel-method solver that airfoiltools.com also uses, at Re 60,000, Ncrit 9 and 160 panels, sweeping α from −5° to 15° in 0.25° steps. Coordinates came from airfoiltools, the UIUC Airfoil Coordinates Database or the AeroSandbox database, every file was converted to one format, and blunt trailing edges that XFoil would otherwise under-predict were closed. The results were ranked in an interactive tool. The selection followed five steps: find the Reynolds number from the operating environment, choose a metric based on the operational goal, filter by camber and thickness, compare the polars at their optimal angles of attack, and choose the airfoil based on fabrication feasibility and the goal metrics.
 
-The metric was the best lift-to-drag ratio (Cl/Cd) between 0° and 5°, the angles the wing actually sees in cruise with its 5° incidence. Every candidate was kept to a range of cambers and a maximum thickness of more than 8 mm at the 110 mm chord, so the wing can be built from balsa and PLA with room for a spar. The thinnest of the 275 is 8.8 mm.
+The metric was the best lift-to-drag ratio (Cl/Cd) between 0° and 5°, the angles the wing actually sees in cruise with its 5° incidence. Every candidate was kept to a range of cambers and a maximum thickness of more than 8 mm at the 110 mm chord, so the wing can be built from balsa and PLA with room for a spar. Of the 1,050 that converged in the cruise window, 930 meet that minimum.
 
-Generation X uses the I.S.A. 960. It scores 43.7 at 4.75°, fourth of the 273 airfoils that converged in the cruise window and within 3% of the best score of 45.0. At 10.3 mm thick with 5.7% camber, it is thicker than the two MID 108 sections that score higher, which are 9.2 mm thick, and its best point falls inside the cruise window rather than at its edge.
+Generation X uses the I.S.A. 960. It scores 43.7 at 4.75°, fourth of the 930 airfoils that converged in the cruise window and meet the thickness minimum and within 3% of the best score of 45.0. At 10.4 mm thick with 5.7% camber, it is thicker than the two MID 108 sections that score higher, which are 9.3 mm thick, and its best point falls inside the cruise window rather than at its edge.
 
 Compared with the E205 used up to Generation Nine, at each airfoil's best point in the cruise window and Re 60,000, the drag coefficient (Cd) drops from 0.0329 to 0.0228, about 31% lower, and the lift coefficient (Cl) rises from 0.651 to 0.998, about 53% higher. The best section lift-to-drag ratio improves from 19.8 to 43.7, about 2.2 times higher.
 
@@ -50,13 +50,13 @@ Generations Four to Eight moved to a two-piece frame, one piece per side with th
 
 The Predecessor's balsa frame finally gave the right balance of stiffness and weight, bringing the plane under 250 g at 216 g.
 
-## 18% lighter, and level flight down to 7.83 m/s
+## 18% lighter, and level flight down to 7.45 m/s
 
-Mass fell from 263 g in the first generation to 216 g in the Predecessor, 47 g or about 18% lighter. Level flight speed was 10.1 m/s for Generation Nine and is 7.83 m/s so far for Generation X, against a cruise target of 7 m/s.
+Mass fell from 263 g in the first generation to 216 g in the Predecessor, 47 g or about 18% lighter. Level flight speed was 10.1 m/s for Generation Nine and is 7.45 m/s so far for Generation X, against a cruise target of 7 m/s.
 
 ## Next: a 7 m/s cruise, a flight controller and the full payload
 
-- **Cruise at 7 m/s.** Further aerodynamic revision to bring level flight from 7.83 m/s down to the target.
+- **Cruise at 7 m/s.** Further aerodynamic revision to bring level flight from 7.45 m/s down to the target.
 - **Flight controller.** Being added for more automation.
 - **Lighter structure.** Carbon fiber is under consideration for the airframe, and custom PCBs are replacing off-the-shelf boards.
 - **Payload and endurance.** Fly the 40 g payload of camera, video transmitter, flight controller and GPS, and test the 30-minute endurance target.

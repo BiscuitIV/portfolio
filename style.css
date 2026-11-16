@@ -307,6 +307,8 @@ button.chip { font-weight: 600; }
     width: 100%;
     height: auto;
     aspect-ratio: 4 / 5;
+    /* Any photo fills the 4:5 frame, cropped rather than stretched, so the editor can swap it */
+    object-fit: cover;
     border: var(--line);
     border-radius: var(--radius);
 }
@@ -860,7 +862,8 @@ video.fig-img { cursor: auto; }
 .polar-table thead th { font-weight: 400; border-bottom: var(--line); }
 
 /* Airfoil sweep scatter: gray field, the chosen foil in the accent */
-.sweep-dot { fill: var(--ink-2); fill-opacity: 0.4; }
+.sweep-dot { fill: var(--ink-2); fill-opacity: 0.35; }
+.sweep-out { fill-opacity: 0.12; }  /* below the 8 mm minimum: shown, not ranked */
 .sweep-pick { fill: var(--accent); stroke: var(--paper); stroke-width: 2; }
 .sweep-hover { fill: none; stroke: var(--ink); stroke-width: 1.5; }
 .sweep-min { stroke: var(--accent); stroke-width: 1; stroke-dasharray: 4 3; }
