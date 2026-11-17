@@ -94,7 +94,9 @@
         .ed-card-head { display: flex; gap: var(--s-3); align-items: center; margin-bottom: var(--s-2); }
         .ed-media { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-bottom: var(--s-3); }
         .ed-media-item { width: 180px; display: flex; flex-direction: column; gap: var(--s-1); }
-        .ed-media-item .ed-thumb { width: 180px; height: 120px; object-fit: contain; background: var(--paper-2); border: var(--line); border-radius: var(--radius-sm); }
+        .ed-thumb { object-fit: contain; background: var(--paper-2); border: var(--line); border-radius: var(--radius-sm); }
+        .ed-media-item .ed-thumb { width: 180px; height: 120px; }
+        .ed-row > .ed-thumb { flex: none; width: 96px; height: 64px; }
         .ed-media-item .ed-row { justify-content: space-between; }
         .ed-caption { display: block; margin-top: var(--s-2); }
         .ed-fold { margin: 0 0 var(--s-5); padding: var(--s-3) var(--s-3) var(--s-1) var(--s-5); border-top: var(--line-soft); border-bottom: var(--line-soft); }

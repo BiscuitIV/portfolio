@@ -2,7 +2,8 @@
 // Reads and writes two files in the site folder through the File System Access API (Chrome, Edge):
 //  - content.js: `const projects = <strict JSON>;`, parsed and rewritten whole
 //  - index.html: only the text between `<!-- edit:name -->` and `<!-- /edit:name -->` markers,
-//    plus the two description <meta> tags; everything else stays byte-identical.
+//    plus the two description <meta> tags and the og:image tags; everything else stays byte-identical.
+// script.js is read, never written, for the `featured` key the home panel shows.
 // Edits live in the page until Save. Leaving a page commits its edits to the in-memory copy.
 "use strict";
 
@@ -30,6 +31,7 @@ const state = {
     html: "",            // index.html as last read or written
     projects: null,      // working copy, committed views included
     workingHtml: "",     // working copy of index.html, committed home edits included
+    featured: null,      // the project key the home panel shows (`featured` in script.js)
     contentDirty: false,
     htmlDirty: false,
     view: null,          // { key, dirty, commit() }
@@ -156,7 +158,8 @@ function editable(tag, value, { rich = false, cls = "", placeholder = "", onEnte
         const text = e.clipboardData.getData("text/plain").replace(/\s*\n\s*/g, " ");
         document.execCommand("insertText", false, text);
     });
-    el.value = () => !touched ? orig : rich ? cleanInline(el) : el.textContent.replace(/ /g, " ").replace(/\s+/g, " ").trim();
+    // defineProperty, not assignment: <li> has a native numeric `value` that would swallow the function
+    Object.defineProperty(el, "value", { value: () => !touched ? orig : rich ? cleanInline(el) : el.textContent.replace(/ /g, " ").replace(/\s+/g, " ").trim() });
     el.touch = () => { touched = true; };
     return el;
 }
@@ -331,11 +334,14 @@ async function openFolder(handle) {
             if (await handle.queryPermission({ mode: "readwrite" }) !== "granted" &&
                 await handle.requestPermission({ mode: "readwrite" }) !== "granted") throw new Error("Write access to the folder wasn't granted.");
         }
-        const [contentText, html] = await Promise.all([readText(handle, "content.js"), readText(handle, "index.html")]);
+        const [contentText, html, script] = await Promise.all([readText(handle, "content.js"), readText(handle, "index.html"),
+            readText(handle, "script.js").catch(() => "")]);
         const projects = parseContent(contentText);
+        let featured = script.match(/^const featured = "([^"]+)"/m)?.[1];
+        if (!projects[featured]) featured = Object.keys(projects).find(k => !projects[k].hidden);
         const found = Object.keys(regions(html));
         if (!found.length) throw new Error("index.html has no <!-- edit:… --> markers.");
-        Object.assign(state, { dir: handle, contentText, html, projects, workingHtml: html,
+        Object.assign(state, { dir: handle, contentText, html, projects, workingHtml: html, featured,
             contentDirty: false, htmlDirty: false, view: null, files: null });
         if (handle) {
             idb("readwrite", s => s.put(handle, "dir")).catch(() => {});
@@ -356,8 +362,8 @@ async function openFolder(handle) {
 
 async function save() {
     if (!state.projects) return;
-    state.view?.commit();
     try {
+        state.view?.commit();
         // Refuse to overwrite edits made on disk since the files were read. In download mode the
         // folder only changes when the downloads are moved in, so there is nothing to compare.
         if (state.dir) {
@@ -545,6 +551,22 @@ function homeView(main) {
         h("p", { class: "mono muted ed-hint" },
             "Click any text to edit it. Hover an entry or skill for move, duplicate (how you add one) and delete. Enter in a bullet starts a new one."));
 
+    // Home-page images outside the résumé regions: the featured part's panel image and each index
+    // row's thumbnail (both in content.js), and the link-preview card (the og:image tags)
+    const fp = state.projects[state.featured];
+    const hero = fp && heroImageFields(fp.image || {});
+    if (hero) doc.append(section("Featured image",
+        `The panel beside the index, and the image under the bio on phones, show the hero image of “${fp.title || state.featured}” (its thumbnail if it has none). Which part is featured is set by \`featured\` in script.js.`,
+        ...hero.el));
+    const thumbs = Object.entries(state.projects).filter(([, p]) => !p.hidden).map(([key, p]) => {
+        const preview = h("img", { class: "ed-thumb", src: p.thumb || "", alt: "", hidden: !p.thumb });
+        const path = pathField(p.thumb || "", "Image path", IMAGE_EXT, v => { preview.src = v; preview.hidden = !v; });
+        return { key, value: path.value, el: field(p.title || key, h("div", { class: "ed-row" }, preview, path.el)) };
+    });
+    doc.append(section("Index thumbnails", "One per index row; a row without one shows an empty box.", ...thumbs.map(t => t.el)));
+    const social = socialCardFields(() => { social.dirty = true; markDirty(); });
+    if (social) doc.append(section("Link preview", "The card shown when the site is shared. 1200 × 630 works best.", ...social.el));
+
     for (const [name, body] of Object.entries(parts)) {
         const region = h("div", { class: `ed-region${name === "about" ? " about" : ""}` });
         region.innerHTML = body;
@@ -558,6 +580,16 @@ function homeView(main) {
 
     function commit() {
         if (!view.dirty) return;
+        const before = JSON.stringify(state.projects);
+        if (hero) {
+            const img = hero.value();
+            if (img) fp.image = img; else delete fp.image;
+        }
+        for (const t of thumbs) {
+            const p = state.projects[t.key], v = opt(t.value(), p.thumb);
+            if (v === undefined) delete p.thumb; else p.thumb = v;
+        }
+        if (JSON.stringify(state.projects) !== before) state.contentDirty = true;
         let html = state.workingHtml.replace(REGION_RE, (m, name, body, ind) => {
             const ed = editors[name];
             if (!ed?.dirty) return m;
@@ -566,10 +598,49 @@ function homeView(main) {
         for (const input of metaInputs) {
             if (input.dirty) html = html.replace(input._re, (m, a, b, c) => a + escAttr(input.value.replace(/\s+/g, " ").trim()) + c);
         }
+        if (social?.dirty) html = social.apply(html);
         if (html !== state.workingHtml) { state.workingHtml = html; state.htmlDirty = true; }
         view.dirty = false;
     }
     return view;
+}
+
+// The link-preview card: og:image holds an absolute URL (og:url plus the file's path), with its size and alt text
+const ogRe = name => new RegExp(`(<meta property="og:${name}" content=")([^"]*)(">)`);
+function socialCardFields(changed) {
+    const get = name => state.workingHtml.match(ogRe(name))?.[2];
+    const src = get("image");
+    if (src === undefined) return null;
+    const base = get("url") || "";
+    const local = s => base && s.startsWith(base) ? s.slice(base.length) : s;
+    // Values as written in the file (attribute-escaped)
+    const tags = { "image": src, "image:width": get("image:width"), "image:height": get("image:height"), "image:alt": get("image:alt") };
+    const preview = h("img", { class: "ed-thumb", src: local(src), alt: "" });
+    const size = h("span", { class: "mono-data muted" });
+    const showSize = () => { size.textContent = `${fromSrc(local(tags.image))} · ${tags["image:width"] ?? "?"} × ${tags["image:height"] ?? "?"}`; };
+    showSize();
+    const alt = h("input", { class: "ed-input", value: unescAttr(tags["image:alt"] || ""),
+        oninput: () => { tags["image:alt"] = escAttr(alt.value.replace(/\s+/g, " ").trim()); changed(); } });
+    const change = btn("Change image…", async () => {
+        const f = await pickFile(IMAGE_EXT);
+        if (!f) return;
+        const path = toSrc(f), dims = await measure(path);
+        if (!dims) { setStatus(`Couldn't load ${f}.`, true); return; }
+        Object.assign(tags, { "image": base + path, "image:width": String(dims.width), "image:height": String(dims.height) });
+        preview.src = path;
+        showSize();
+        changed();
+        setStatus(dims.width < 1200 || dims.height < 630 || Math.abs(dims.width / dims.height - 1.91) > 0.05
+            ? `${f} is ${dims.width} × ${dims.height}; link previews expect 1200 × 630 (1.91:1) and may crop or blur it.`
+            : `Link-preview image set to ${f}.`);
+    });
+    return {
+        dirty: false,
+        el: [field("Image", h("div", { class: "ed-row" }, preview, size, change)), field("Alt text", alt)],
+        // Rewrites only the tags already in the file; none are added
+        apply: html => Object.entries(tags).reduce((acc, [name, v]) =>
+            v === undefined ? acc : acc.replace(ogRe(name), (m, a, b, c) => a + v + c), html)
+    };
 }
 
 // The About portrait: swap the photo (its width and height attributes follow it) and edit the alt text.
@@ -759,20 +830,11 @@ function projectView(main, key) {
     get.results = () => results.value().length ? results.value() : (proj.results ? [] : undefined);
 
     // Hero media
-    const img = proj.image || {};
-    const heroSrc = pathField(img.src || "", "Image path");
-    const heroAlt = h("input", { class: "ed-input", value: img.alt || "", oninput: markDirty, placeholder: "Describe the image" });
-    const heroCap = h("input", { class: "ed-input", value: img.caption || "", oninput: markDirty, placeholder: "What it shows and why it matters" });
+    const hero = heroImageFields(proj.image || {});
     const video = pathField(proj.video || "", "Clip path (.mp4), optional", /\.mp4$/i);
     doc.append(section("Hero image", "The large figure under the results; a clip, if set, plays instead.",
-        field("Image", heroSrc.el), field("Alt text", heroAlt), field("Caption", heroCap), field("Clip", video.el)));
-    get.image = () => {
-        if (!heroSrc.value()) return undefined;
-        const out = { src: heroSrc.value() };
-        if (heroAlt.value || "alt" in img) out.alt = heroAlt.value;
-        if (heroCap.value || "caption" in img) out.caption = heroCap.value;
-        return out;
-    };
+        ...hero.el, field("Clip", video.el)));
+    get.image = hero.value;
     get.video = () => opt(video.value(), proj.video);
 
     // Specs
@@ -818,14 +880,32 @@ function section(title, hint, ...kids) {
 
 const field = (label, control) => h("div", { class: "ed-field" }, h("span", { class: "mono ed-label" }, label), control);
 
-function pathField(value, placeholder, filter = MEDIA_EXT) {
-    const input = h("input", { class: "ed-input mono-data", value, placeholder, oninput: markDirty });
+function pathField(value, placeholder, filter = MEDIA_EXT, onChange) {
+    const changed = () => { markDirty(); onChange?.(input.value.trim()); };
+    const input = h("input", { class: "ed-input mono-data", value, placeholder, oninput: changed });
     const el = h("div", { class: "ed-row" }, input,
         btn("Choose…", async () => {
             const f = await pickFile(filter);
-            if (f) { input.value = toSrc(f); markDirty(); }
+            if (f) { input.value = toSrc(f); changed(); }
         }));
     return { el, value: () => input.value.trim() };
+}
+
+// A project's `image`: path, alt text and caption. value() is undefined without a path.
+function heroImageFields(img) {
+    const src = pathField(img.src || "", "Image path");
+    const alt = h("input", { class: "ed-input", value: img.alt || "", oninput: markDirty, placeholder: "Describe the image" });
+    const cap = h("input", { class: "ed-input", value: img.caption || "", oninput: markDirty, placeholder: "What it shows and why it matters" });
+    return {
+        el: [field("Image", src.el), field("Alt text", alt), field("Caption", cap)],
+        value: () => {
+            if (!src.value()) return undefined;
+            const out = { src: src.value() };
+            if (alt.value || "alt" in img) out.alt = alt.value;
+            if (cap.value || "caption" in img) out.caption = cap.value;
+            return out;
+        }
+    };
 }
 
 function tagInput(tags) {

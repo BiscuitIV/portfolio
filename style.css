@@ -15,10 +15,14 @@
     --font-label: "Inter Tight", system-ui, sans-serif;
 
     --t-12: 12px;
+    /* Supporting text: meta lines, outcomes, result labels, captions */
+    --t-15: 15px;
     --t-18: 18px;
     --t-24: 24px;
     --t-40: 40px;
     --t-display: clamp(56px, 7.4vw, 112px);
+    /* Project titles: smaller than the name, so long titles stay within two lines */
+    --t-project: clamp(40px, 5.2vw, 72px);
 
     --s-1: 4px;
     --s-2: 8px;
@@ -105,6 +109,9 @@ a { color: inherit; text-decoration: none; }
 
 .muted { color: var(--ink-2); }
 
+/* Supporting voice: one step under body text, sentence case, for meta lines, outcomes, result labels and captions */
+.caption, .entry-meta, .entry-desc, .part-outcome, .result-label { font-size: var(--t-15); line-height: 1.45; }
+
 .title {
     font-family: var(--font);
     font-size: var(--t-18);
@@ -162,8 +169,8 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
 
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 
-/* Buttons (jump nav, filter chips) a step heavier than the labels */
-button.chip { font-weight: 600; }
+/* Buttons (jump nav, filter chips) a step heavier than the labels, all one size */
+button.chip { padding: var(--s-2) var(--s-3); font-weight: 600; }
 
 /* Label/value list; optional <div> rows span both columns via subgrid */
 .kv {
@@ -252,11 +259,22 @@ button.chip { font-weight: 600; }
     gap: var(--s-7);
 }
 
+/* The hero fills the first screen: the section nav sits on its bottom edge and the résumé starts below the fold.
+   Subtracts the top padding (--s-7), the nav's offset under the intro (--s-6 − --s-3), the nav's measured
+   height (--jump-h) and a bottom inset (--s-6) */
+.intro {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100svh - var(--s-7) - (var(--s-6) - var(--s-3)) - var(--jump-h, 56px) - var(--s-6));
+}
+
 .name { margin: 0; }
 
-.lede { margin: var(--s-5) 0 0; }
+/* The bottom margin is the least gap above the bio */
+.lede { margin: var(--s-5) 0 var(--s-6); }
 
-.bio { margin: var(--s-6) 0 0; }
+/* The bio sits on a hairline at the bottom of the hero, just above the nav; the auto margin takes the spare height */
+.bio { margin: auto 0 0; padding-top: var(--s-5); border-top: var(--line-soft); }
 
 /* The featured part's image under the bio: only on narrow screens, where the panel is hidden */
 .frame.hero-frame { display: none; margin-top: var(--s-6); }
@@ -284,14 +302,22 @@ button.chip { font-weight: 600; }
 
 .jump .chip { flex: none; }
 
+/* Buttons centered in the column. Auto margins rather than justify-content: center, which would clip the
+   first buttons once the row overflows and scrolls sideways (the margins then collapse to 0) */
+.jump > :first-child { margin-inline-start: auto; }
+.jump > :last-child { margin-inline-end: auto; }
+
 /* Section headings land below the stuck nav (--jump-h is its measured height) */
 .sheet-left .section-head { scroll-margin-top: calc(var(--jump-h, 0px) + var(--s-4)); }
 
 .jump .chip[aria-current="true"]:not(.chip-solid) { border-color: var(--accent); color: var(--accent); }
 .jump .chip-solid[aria-current="true"] { border-color: var(--accent); background: var(--accent); }
 
-.chip-solid { padding: var(--s-2) var(--s-4); background: var(--ink); color: var(--paper); }
+.chip-solid { background: var(--ink); color: var(--paper); }
 .chip-solid:is(:hover, :focus-visible) { border-color: var(--accent); background: var(--accent); }
+
+/* Once stuck, only the current section is highlighted: Projects drops to an outline while another section is read */
+.jump.is-stuck .chip-solid:not([aria-current="true"]):not(:hover, :focus-visible) { background: var(--paper); color: var(--ink); }
 
 /* Closing section: portrait beside the intro, the sign-off and contact links */
 .about-body {
@@ -336,6 +362,9 @@ button.chip { font-weight: 600; }
     list-style: none;
 }
 
+/* Skills are labels, not buttons: a tint with no outline, so only clickable chips are ruled */
+.tags .chip { border-color: transparent; background: var(--paper-2); }
+
 /* A wider label column clears "Electronics" and "Fabrication"; rows get extra air for the taller chips */
 .skills { --kv-label: 7.5em; }
 .skills > div + div { padding-top: var(--s-4); }
@@ -354,17 +383,14 @@ button.chip { font-weight: 600; }
 .filter .chip:is(:hover, :focus-visible):not([aria-pressed="true"]),
 .jump .chip:is(:hover, :focus-visible):not(.chip-solid) { color: var(--accent); }
 
-/* Index rows: number, thumbnail, title over outcome over tags, year */
-.index-head,
+/* Index rows: number, thumbnail, title over outcome over the year-and-tags line */
 .part {
     display: grid;
-    grid-template-columns: var(--s-7) var(--thumb-w) 1fr auto;
+    grid-template-columns: var(--s-6) var(--thumb-w) 1fr;
     gap: var(--s-4);
     align-items: baseline;
-    --thumb-w: 96px;
+    --thumb-w: 128px;
 }
-
-.index-head { padding-bottom: var(--s-2); border-bottom: var(--line-strong); }
 
 .index-list { list-style: none; margin: 0; padding: 0; }
 .index-list > li { border-bottom: var(--line-soft); }
@@ -581,7 +607,9 @@ button.chip { font-weight: 600; }
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 0 var(--s-7);
+    padding: 0 var(--gutter);
+    /* Page gutter, also the limit for media rows that break out of the text column */
+    --gutter: var(--s-7);
 }
 
 .project > * {
@@ -613,11 +641,11 @@ button.chip { font-weight: 600; }
 .foot-cta { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); }
 
 .project-head {
-    padding: var(--s-8) 0 var(--s-7);
+    padding: var(--s-7) 0;
     border-bottom: var(--line-soft);
 }
 
-.project-title { margin: 0; }
+.project-title { margin: 0; font-size: var(--t-project); line-height: 1; }
 .project-subtitle { margin: var(--s-4) 0 0; }
 
 .project-grid {
@@ -628,6 +656,7 @@ button.chip { font-weight: 600; }
 
 /* Summary: the 15-second read (problem, role, timeline, tools) above the key results */
 .summary { --kv-label: 7.5em; }
+.summary dd { max-width: 62ch; }
 
 /* Key results: ruled cells, value over a plain-language label over the mono detail */
 .results {
@@ -766,10 +795,15 @@ button.chip { font-weight: 600; }
 .fig-img { display: block; width: 100%; height: auto; cursor: zoom-in; }
 video.fig-img { cursor: auto; }
 
-/* Media rows: ink gutters between items, like .cells; --aspect (summed width/height, set by script.js)
-   caps the row at about 560px tall, so a lone portrait doesn't fill the column */
+/* Media rows: ink gutters between items, like .cells. They break out of the text column up to the article
+   width, centered on the text; --aspect (summed width/height, set by script.js) caps the row at about 560px tall,
+   so a lone portrait doesn't fill the column */
 .fig-media { display: grid; gap: 1px; background: var(--ink); }
-.fig.has-media { max-width: calc(560px * var(--aspect)); margin-inline: auto; }
+.fig.has-media {
+    --w: min(var(--article), calc(560px * var(--aspect)), calc(100vw - 2 * var(--gutter)));
+    width: var(--w);
+    margin-inline: calc(50% - var(--w) / 2);
+}
 
 /* Lightbox: a figure photo at full size over a dimmed page. The dialog has no padding (the body does),
    so script.js can tell a backdrop click from a click inside */
@@ -931,6 +965,9 @@ video.fig-img { cursor: auto; }
         padding: var(--s-5) var(--s-4) var(--s-7);
     }
 
+    /* Same first-screen hero, for the smaller top padding (--s-5) and bottom inset (--s-4) */
+    .intro { min-height: calc(100svh - var(--s-5) - (var(--s-6) - var(--s-3)) - var(--jump-h, 56px) - var(--s-4)); }
+
     .panel { display: none; }
 
     .frame.hero-frame { display: grid; }
@@ -945,13 +982,10 @@ video.fig-img { cursor: auto; }
     .about-body { grid-template-columns: 1fr; }
     .headshot { width: var(--portrait-w); }
 
-    /* Rows drop to three columns; the year moves under the outcome */
-    .index-head,
+    /* Narrower number and thumbnail columns */
     .part { grid-template-columns: var(--s-5) var(--thumb-w) 1fr; --thumb-w: 72px; }
-    .part > :last-child { grid-column: 3; }
-    .index-head > :last-child { display: none; }
 
-    .project { padding: 0 var(--s-4); }
+    .project { --gutter: var(--s-4); }
     .project-head { padding: var(--s-7) 0 var(--s-6); }
 
     .fig-plate { padding: var(--s-4); }
@@ -967,6 +1001,7 @@ video.fig-img { cursor: auto; }
     .panel, .jump, .filter, .hero-frame, .project-bar, .toc, .next-part, .lightbox, video { display: none !important; }
 
     .sheet-left { width: auto; min-height: 0; padding: 0; gap: var(--s-6); }
+    .intro { min-height: 0; }
     .project { min-height: 0; padding: 0; }
     .project-head { padding-top: 0; }
 

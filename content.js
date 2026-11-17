@@ -6,7 +6,7 @@ const projects = {
         "title": "Sub-250 g Endurance Plane",
         "subtitle": "LWS X, the tenth generation of my Light-Weight System",
         "outcome": "<strong>18% lighter</strong> airframe, and a wing airfoil with <strong>2.2×</strong> the lift-to-drag ratio, picked from 1,052 I simulated",
-        "thumb": "lws-x/web/predecessor-thumb.jpg",
+        "thumb": "lws-x/front-pathlines.png",
         "tags": [
             "Aero",
             "CAD",
@@ -70,7 +70,7 @@ const projects = {
                         ],
                         [
                             "Incidence",
-                            "5°"
+                            "4.5°"
                         ],
                         [
                             "Materials",
@@ -86,20 +86,20 @@ const projects = {
                             "I.S.A. 960"
                         ],
                         [
-                            "Section Cl @ 4.75°",
-                            "0.998"
+                            "Section Cl @ 4.5°",
+                            "0.977"
                         ],
                         [
-                            "Section Cd @ 4.75°",
-                            "0.0228"
+                            "Section Cd @ 4.5°",
+                            "0.0223"
                         ],
                         [
                             "Section Cl/Cd",
                             "≈ 43.7"
                         ],
                         [
-                            "Re @ 8 m/s",
-                            "≈ 60,200"
+                            "Re @ 7.45 m/s",
+                            "≈ 56,100"
                         ],
                         [
                             "Design Re",
@@ -120,7 +120,7 @@ const projects = {
                         ],
                         [
                             "ESC",
-                            "2–3S, 15 A"
+                            "2S, 15 A"
                         ]
                     ]
                 },
@@ -173,12 +173,12 @@ const projects = {
             ]
         },
         "text": [
-            "<strong>LWS X</strong> is a radio-controlled plane with a wingspan of about one meter that weighs under 250 grams, battery and payload included. It is the current generation of the Light-Weight System (LWS), which I have designed, built and flown since 2024.",
-            "Nine generations took it from a 263 g tube glider that flew for three seconds to the 216 g Predecessor. For Generation X, I simulated 1,052 airfoils in XFoil to choose the wing section, ran OpenFOAM CFD to streamline the body, and designed my own motor controller.",
+            "<strong>LWS X</strong> is an ELRS-controlled plane with a wingspan of about one meter that weighs under 250 grams, battery and payload included. It is the current generation of the Light-Weight System (LWS), which I have designed, built and flown since 2024.",
+            "Nine generations took it from a 263 g tube glider that flew for three seconds to the 216 g Predecessor. For Generation X, I simulated 1,052 airfoils in XFoil to choose the wing section, ran OpenFOAM CFD to streamline the body, and designed my own electronics, as well as optimizing manufactured components for weight and strength.",
             {
                 "heading": "The requirements: under 250 g, a 40 g payload and 30 minutes in the air"
             },
-            "Generation X must meet the first four requirements; the rest keep it practical in the field.",
+            "Generation X must meet the first four requirements.",
             {
                 "list": [
                     "<strong>Mass</strong> under 250 g including battery and payload, 210 g target",
@@ -189,16 +189,16 @@ const projects = {
                     "<strong>Cost</strong> under $250 for airframe and propulsion, excluding electronics"
                 ]
             },
-            "I'm reviewing the regulatory and safety requirements alongside the design: FPV frequency selection, lighting for night flying, and privacy and local laws.",
+            "Regulatory and safety requirements are also being put into consideration: FPV frequency selection, lighting for night flying, and privacy and local laws.",
             {
                 "heading": "1,052 airfoils ranked: the I.S.A. 960 has 2.2× the E205's lift-to-drag"
             },
-            "<strong>Design Re: 60,000.</strong> Flight testing showed level flight needs closer to 8 m/s than the 7 m/s cruise target. At 8 m/s on the 110 mm chord, Re is about 60,300 at sea level and 59,500 at 150 meters in the standard atmosphere.",
+            "<strong>Design Re: 60,000.</strong> Early flight tests needed close to 8 m/s for level flight, about Re 60,000 on the 110 mm chord, so the airfoils were ranked there. Flight simulations now put Generation X at 7.45 m/s, closer to the 7 m/s cruise target: Re about 56,100 at sea level in the standard atmosphere, so the design Re is slightly conservative.",
             {
                 "figure": "reynolds"
             },
             "<strong>Choice: I.S.A. 960.</strong> Its best lift-to-drag ratio is 43.7, at 4.75°. That ranks it fourth of the 930 airfoils that converged in the cruise window and meet the 8 mm thickness minimum, within 3% of the top result of 45.0.",
-            "The two MID 108 sections that rank higher are only 9.3 mm thick. The I.S.A. 960 is 10.4 mm thick with 5.7% camber, and it reaches its best lift-to-drag ratio inside the 0° to 5° cruise window rather than at one end of it.",
+            "The two MID 108 sections that rank higher are only 9.3 mm thick. The I.S.A. 960 is 10.4 mm thick with 5.7% camber, and it reaches its best lift-to-drag ratio inside the 0° to 5° cruise window rather than at one end of it. Additionally it maintains a high lift-to-drag ratio through a wide range of angles of attack.",
             {
                 "figure": "sweep"
             },
@@ -215,24 +215,24 @@ const projects = {
                             "<strong>Output</strong> polars and cruise-window metrics, ranked in an interactive tool to sort, filter and compare polars"
                         ]
                     },
-                    "<strong>Metric and filters.</strong> They were ranked by best lift-to-drag ratio (Cl/Cd) between 0° and 5°, the angles the wing sees in cruise with its 5° incidence. Candidates had to fall within a range of cambers and be more than 8 mm thick at the 110 mm chord, so the wing can be built from balsa and PLA with room for a spar. 1,050 converged in the cruise window, and 930 of those meet the thickness minimum.",
+                    "<strong>Metric and filters.</strong> They were ranked by best lift-to-drag ratio (Cl/Cd) between 0° and 5°, the angles the wing sees in cruise with its 4.5° incidence. Candidates had to fall within a range of cambers and be more than 8 mm thick at the 110 mm chord, so the wing can be built from balsa and PLA with room for a spar. 1,050 converged in the cruise window, and 930 of those meet the thickness minimum.",
                     "The selection followed five steps, from operating conditions to a buildable airfoil:",
                     {
                         "list": [
-                            "<strong>Reynolds number</strong> about 60,000, from level flight at 8 m/s on the 110 mm chord between 0 and 150 meters",
+                            "<strong>Reynolds number</strong> about 60,000, from early flight tests near 8 m/s on the 110 mm chord between 0 and 150 meters",
                             "<strong>Goal metric</strong> best Cl/Cd between 0° and 5°, the cruise window",
                             "<strong>Camber and thickness</strong> a range of cambers and a maximum thickness above 8 mm, which 930 of the converged airfoils meet",
                             "<strong>Polars at optimal angle</strong> Cl, Cl/Cd and the drag polar at each airfoil's best angle, with 1,050 ranked",
-                            "<strong>Fabrication and metrics</strong> the I.S.A. 960: 10.4 mm thick, 5.7% camber, Cl/Cd 43.7 at 4.75°"
+                            "<strong>Fabrication and metrics</strong> the I.S.A. 960: 10.4 mm thick, 5.7% camber, Cl/Cd 43.7 from 4.5° (the incidence) to 4.75° (its best)"
                         ]
                     }
                 ]
             },
-            "<strong>Versus the E205</strong> used up to Generation Nine, at each airfoil's best point in the cruise window and Re 60,000:",
+            "<strong>Versus the E205</strong> used up to Generation Nine, the E205 at its best point in the cruise window and the I.S.A. 960 at the 4.5° incidence, both at Re 60,000:",
             {
                 "list": [
-                    "<strong>Drag</strong> Cd 0.0329 → 0.0228, about 31% lower",
-                    "<strong>Lift</strong> Cl 0.651 → 0.998, about 53% higher",
+                    "<strong>Drag</strong> Cd 0.0329 → 0.0223, about 32% lower",
+                    "<strong>Lift</strong> Cl 0.651 → 0.977, about 50% higher",
                     "<strong>Lift-to-drag</strong> Cl/Cd 19.8 → 43.7, about 2.2 times higher"
                 ]
             },
@@ -245,8 +245,8 @@ const projects = {
             {
                 "heading": "PIFOAMUI runs OpenFOAM CFD from a browser, fast enough to use between builds"
             },
-            "PIFOAMUI is a browser interface I built with Claude Code for OpenFOAM 13, the open-source CFD toolkit. With it I no longer write OpenFOAM dictionaries or set up each case by hand, so I can test an aerodynamic change between builds.",
-            "I used PIFOAMUI to run CFD while streamlining both bodies. So far I have simulated level flight, comparing Generation Nine with Generation X.",
+            "PIFOAMUI is a browser interface I built with Claude Code for OpenFOAM 13, the open-source CFD toolkit. With it I no longer write OpenFOAM case files by hand, so I can test an aerodynamic change between builds.",
+            "I used PIFOAMUI to run CFD on Generations Nine and X to analyze and refine the modern aero design.",
             {
                 "media": [
                     {
@@ -262,8 +262,8 @@ const projects = {
             {
                 "heading": "Two custom boards in KiCad: a 15 A motor controller and a flight controller"
             },
-            "The ESC is the project's first custom PCB. I designed it in KiCad to drive the 2003.5 motor on 2S to 3S at up to 15 A.",
-            "The ESC needs no Hall sensors to track the rotor. As the motor spins, each phase generates a voltage (back-EMF), and the ESC compares it with a virtual neutral point to decide when to switch phases.",
+            "The ESC was designed in KiCad to drive the 2003.5 motor on 2S at up to 15 A.",
+            "As the motor spins, each phase generates a voltage (back-EMF), and the ESC compares it with a virtual neutral point to decide when to switch phases.",
             {
                 "media": [
                     {
@@ -275,7 +275,7 @@ const projects = {
                 ],
                 "caption": "ESC V1 schematic in KiCad: sensing, gate driver, MCU and three half-bridges on one board · <a class=\"link\" href=\"lws-x/ESC%20V1.pdf\" target=\"_blank\" rel=\"noopener\">PDF</a>"
             },
-            "The flight controller is the second custom board. An STM32F405 reads an ICM-42688-P IMU, a BMP280 barometer, an MMC5983MA magnetometer and a SAM-M10Q GPS, and logs to a microSD card. Three buck converters supply 3.3 V, 5 V and the servo rail from the battery, with separate LDOs for the IMU and GPS.",
+            "The flight controller uses an STM32F405, paired with an ICM-42688-P IMU, a BMP280 barometer, an MMC5983MA magnetometer, and a SAM-M10Q GPS. Three buck converters supply 3.3 V, 5 V and the servo rail from the battery, with isolated LDOs for the IMU and GPS.",
             {
                 "media": [
                     {
@@ -290,7 +290,7 @@ const projects = {
             {
                 "heading": "A two-part body, a bigger propeller and 67% more battery energy"
             },
-            "<strong>Airframe.</strong> Generation X splits the airframe into a front body and a rear body, joined by frame plates, so each body can be streamlined without compromising the joint between them. It is built from PLA and balsa, and I'm considering carbon fiber.",
+            "<strong>Airframe.</strong> Generation X splits the airframe into a front body and a rear body, joined by frame plates, to separate the tail from the main body region. It is built from PLA and balsa, and I'm considering carbon fiber.",
             {
                 "media": [
                     {
@@ -302,9 +302,9 @@ const projects = {
                 ],
                 "caption": "LWS X in CAD: one-metre wing and split airframe"
             },
-            "<strong>Wing.</strong> The chord is 110 mm at 5° incidence, up from 100 mm at 0° in the first generation. Each half of the wing is 486 mm wide.",
-            "<strong>Propulsion.</strong> A 2003.5 motor on a 2S to 3S 15 A ESC drives a 7-inch 7x4.5 bi-blade propeller, up from the 6-inch propeller of the first three generations.",
-            "<strong>Power.</strong> The custom 2S 1200 mAh battery weighs 56 g and stores about 8.9 Wh. Compared with the earlier 2S 720 mAh pack, it holds roughly 67% more energy and weighs 53% more. Custom PCBs replace off-the-shelf boards to save weight, and I'm adding a flight controller for more automation.",
+            "<strong>Wing.</strong> The chord is 110 mm at 4.5° incidence, up from 100 mm at 0° in the first generation. Each half of the wing is 486 mm wide.",
+            "<strong>Propulsion.</strong> A 2003.5 motor on a 2S 15 A ESC drives a 7-inch 7x4.5 bi-blade propeller, up from the 6-inch propeller of the first three generations.",
+            "<strong>Power.</strong> The custom 2S 1200 mAh battery weighs 56 g and stores about 8.9 Wh. Compared with the earlier 2S 720 mAh pack, it holds roughly 67% more energy and weighs 53% more. Custom PCBs replace off-the-shelf boards to save weight.",
             {
                 "media": [
                     {
@@ -319,11 +319,11 @@ const projects = {
             {
                 "heading": "Nine generations, from 263 g to 216 g"
             },
-            "I had never flown an RC plane when the project began, so the early generations taught me to fly as much as they tested the aircraft, and every revision got crash-tested. I still follow the lesson they taught me: take out any weight the plane doesn't need to fly.",
+            "I had never flown an RC plane when the project began, so the early generations taught me to fly as much as they tested the aircraft, and every revision got crash-tested. As a result, rigidity and quality of fabrication have become larger priorities in design considerations.",
             {
                 "figure": "timeline"
             },
-            "<strong>Gen 1 · Tube glider.</strong> At 263 g, the first prototype was already over the target. It used carbon fiber tubes for the wing and fuselage, so I could move components along them to balance it. I built it in under a month, and it crashed three times on a rough asphalt runway: the tube fuselage was too flexible to fly well.",
+            "<strong>Gen 1 · Tube glider.</strong> At 263 g, the first prototype was already over the target. It used carbon fiber tubes for the wing and fuselage, so I could move components along them to balance it. I built it in under a month, and it crashed three times on a rough asphalt runway: the tube fuselage was too flexible (resulting in a torsional deformity) to fly well.",
             {
                 "media": [
                     {
@@ -360,7 +360,7 @@ const projects = {
                 ],
                 "caption": "3D-printed tail surface with integrated servo mount, two-piece frame era, January 2025"
             },
-            "<strong>Gen 9 · The Predecessor.</strong> At 216 g, it brought the plane under 250 g. Its balsa frame finally gave the right balance of stiffness and weight.",
+            "<strong>Gen 9 · The Predecessor.</strong> At 216 g, it brought the plane under 250 g. Its balsa frame gave a balance of stiffness and weight.",
             {
                 "media": [
                     {
@@ -415,8 +415,8 @@ const projects = {
             {
                 "list": [
                     "<strong>Cruise at 7 m/s</strong> further aerodynamic revision to bring level flight from 7.45 m/s down to the target",
-                    "<strong>Flight controller</strong> being added for more automation",
-                    "<strong>Lighter structure</strong> carbon fiber under consideration for the airframe, and custom PCBs replacing off-the-shelf boards",
+                    "<strong>ESC and flight controller</strong> PCBs in design for more features and lower weight",
+                    "<strong>Lighter structure</strong> carbon fiber under consideration for the airframe",
                     "<strong>Payload and endurance</strong> fly the 40 g payload of camera, video transmitter, flight controller and GPS, and test the 30-minute endurance target"
                 ]
             }

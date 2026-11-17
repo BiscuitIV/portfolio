@@ -5,7 +5,7 @@ const WING_CHORD = 0.11; // m, Generation X
 // per surface: E205 from the UIUC Airfoil Coordinates Database, I.S.A. 960 from the batch run's
 // simulated geometry (trailing edge closed, repaneled by XFoil).
 // polar: [α°, Cl, Cd], XFoil 6.99 batch run at Re 60,000, Ncrit 9, 160 panels, α −5° to 15° (polars stored to 12°);
-// gaps are angles where XFoil did not converge. cl/cd: the best-Cl/Cd point for α 0–5° (cruise window)
+// gaps are angles where XFoil did not converge. cl/cd: E205 at its best-Cl/Cd point for α 0–5° (cruise window), I.S.A. 960 at 4.5°, the Gen X incidence
 const airfoils = [
     {
         name: "E205", gen: "Gen 9", chord: 0.100, cl: 0.6509, cd: 0.03285,
@@ -13,7 +13,7 @@ const airfoils = [
         polar: [[-4.75,-0.4266,0.04756],[-4.5,-0.4163,0.04283],[-4.25,-0.4042,0.04036],[-4,-0.3899,0.0377],[-3.75,-0.3437,0.03373],[-3.5,-0.2979,0.03113],[-3.25,-0.2511,0.02911],[-3,-0.209,0.02753],[-2.75,-0.1677,0.02621],[-2.5,-0.1246,0.02422],[-2.25,-0.0109,0.02032],[-2,0.034,0.02051],[-1.75,0.0766,0.02072],[-1.5,0.1184,0.02093],[-1.25,0.1593,0.02113],[-1,0.2032,0.02124],[-0.75,0.2386,0.02147],[-0.5,0.2655,0.02183],[-0.25,0.2922,0.02224],[0,0.3243,0.02253],[0.25,0.3537,0.02287],[0.5,0.3721,0.0235],[0.75,0.3952,0.02404],[1,0.4272,0.02433],[1.25,0.4416,0.02517],[1.5,0.4615,0.02587],[1.75,0.4916,0.02623],[2,0.5043,0.02724],[2.25,0.5237,0.02806],[2.5,0.5505,0.02857],[2.75,0.5615,0.02978],[3,0.5858,0.03046],[3.25,0.6051,0.03134],[3.5,0.6159,0.03269],[3.75,0.6509,0.03285],[4,0.6588,0.03437],[4.25,0.6692,0.03582],[4.5,0.6969,0.03634],[4.75,0.7172,0.03721],[5,0.7262,0.03877],[5.25,0.7404,0.04002],[5.5,0.7671,0.04049],[5.75,0.8034,0.04016],[6,0.8176,0.04128],[6.25,0.8356,0.04209],[6.5,0.8573,0.04253],[6.75,0.8842,0.04244],[7,0.9162,0.04174],[7.25,0.9542,0.04031],[7.5,1.002,0.03772],[7.75,1.0145,0.0381],[8,1.067,0.03454],[8.25,1.093,0.03321],[8.5,1.1212,0.03146],[8.75,1.139,0.03051],[9,1.1515,0.03014],[9.25,1.1558,0.03088],[9.5,1.1585,0.03236],[9.75,1.1582,0.03434],[10,1.1595,0.03651],[10.25,1.1532,0.03857],[10.5,1.1455,0.04069],[10.75,1.1403,0.04317],[11,1.1497,0.04612],[11.25,1.1709,0.04961],[11.5,1.1747,0.05246],[11.75,1.1906,0.05603],[12,1.1849,0.05934]]
     },
     {
-        name: "I.S.A. 960", gen: "Gen X", chord: WING_CHORD, cl: 0.9983, cd: 0.02282,
+        name: "I.S.A. 960", gen: "Gen X", chord: WING_CHORD, cl: 0.9774, cd: 0.02235,
         points: [[1,0.0021],[0.9979,0.0027],[0.9915,0.0045],[0.9809,0.0074],[0.9662,0.0112],[0.9476,0.0156],[0.9251,0.0205],[0.899,0.026],[0.8695,0.0326],[0.8368,0.04],[0.8013,0.0479],[0.7632,0.0553],[0.7229,0.0626],[0.6806,0.07],[0.6368,0.0776],[0.5919,0.0845],[0.5461,0.0903],[0.5,0.0951],[0.4539,0.0991],[0.4081,0.1021],[0.3632,0.1039],[0.3194,0.1043],[0.2771,0.1031],[0.2368,0.101],[0.1987,0.0987],[0.1632,0.0958],[0.1305,0.0876],[0.101,0.0793],[0.0749,0.0748],[0.0524,0.0649],[0.0338,0.0547],[0.0191,0.0442],[0.0085,0.0344],[0.0021,0.0268],[-0.0003,0.0196],[0.0021,0.0148],[0.0085,0.0103],[0.0191,0.0064],[0.0338,0.0031],[0.0524,0.0004],[0.0749,0.0001],[0.101,0.0001],[0.1305,0.0017],[0.1632,0.0039],[0.1987,0.0056],[0.2368,0.0074],[0.2771,0.0092],[0.3194,0.0105],[0.3632,0.0113],[0.4081,0.0117],[0.4539,0.0121],[0.5,0.0121],[0.5461,0.0115],[0.5919,0.0105],[0.6368,0.0097],[0.6806,0.0089],[0.7229,0.0081],[0.7632,0.0072],[0.8013,0.0064],[0.8368,0.0056],[0.8695,0.0049],[0.899,0.0042],[0.9251,0.0035],[0.9476,0.003],[0.9662,0.0026],[0.9809,0.0023],[0.9915,0.0022],[0.9979,0.0021],[1,0.0021]],
         polar: [[-5,-0.3817,0.06765],[-4.75,-0.3705,0.06466],[-4.5,-0.3592,0.06191],[-4,-0.261,0.04787],[-3.75,-0.1988,0.04255],[-3.5,-0.142,0.0382],[-3.25,-0.0857,0.03557],[-3,-0.0338,0.03303],[-2.75,0.018,0.03176],[-2.5,0.0619,0.03085],[-2.25,0.1116,0.02982],[-2,0.1516,0.02902],[-1.75,0.188,0.02841],[-1.5,0.2321,0.02762],[-1.25,0.283,0.02661],[-1,0.3196,0.02558],[-0.75,0.393,0.02316],[-0.5,0.4313,0.02291],[-0.25,0.4691,0.02259],[0,0.5105,0.02212],[0.25,0.5398,0.02193],[0.75,0.5991,0.02152],[1,0.6289,0.02132],[1.25,0.6585,0.0212],[1.5,0.6897,0.02105],[1.75,0.7202,0.0209],[2,0.7459,0.02091],[2.25,0.7705,0.02099],[2.5,0.7949,0.02107],[2.75,0.8191,0.02115],[3,0.8401,0.02132],[3.25,0.8617,0.02145],[3.5,0.8852,0.02153],[3.75,0.9102,0.02157],[4,0.9321,0.02179],[4.25,0.9564,0.02198],[4.5,0.9774,0.02235],[4.75,0.9983,0.02282],[5,1.02,0.02336],[5.25,1.0418,0.02397],[5.5,1.062,0.02464],[5.75,1.0821,0.02531],[6,1.1032,0.02605],[6.25,1.1246,0.02685],[6.5,1.1467,0.02774],[6.75,1.17,0.02875],[7,1.1938,0.02991],[7.25,1.2183,0.0312],[7.5,1.247,0.03255],[7.75,1.269,0.03405],[8,1.2964,0.03557],[8.25,1.3228,0.03731],[8.5,1.337,0.03909],[8.75,1.3624,0.04002],[9,1.3686,0.04115],[9.25,1.3815,0.0421],[9.5,1.3952,0.04268],[9.75,1.4047,0.04296],[10,1.4028,0.04401],[10.25,1.3993,0.04443],[10.5,1.3907,0.04455],[10.75,1.3743,0.04557],[11,1.3583,0.04683],[11.25,1.3426,0.04837],[11.5,1.3268,0.05055],[11.75,1.3389,0.05633],[12,1.3271,0.0599]]
     }
@@ -60,7 +60,7 @@ const drawingNumber = key => String(projectKeys.indexOf(key) + 1).padStart(2, "0
 function makeFigure(plateClass, plateHTML, caption) {
     const fig = document.createElement("figure");
     fig.className = "fig";
-    fig.innerHTML = `<div class="fig-plate tint ${plateClass}">${plateHTML}</div><figcaption class="mono muted">${caption}</figcaption>`;
+    fig.innerHTML = `<div class="fig-plate tint ${plateClass}">${plateHTML}</div><figcaption class="caption muted">${caption}</figcaption>`;
     return fig;
 }
 
@@ -301,7 +301,7 @@ const figures = {
             ["1", "Tube glider", "carbon fiber tube wing and fuselage · E205, 100 mm chord, 0° · 2814 motor, 32 g ESC", "263 g · ~3 s flight"],
             ["4–8", "Two-piece frame", "tube or balsa halves · flap linkage · adjustable wing mount · 2207 motor · 5 g servos", "flights of seconds"],
             ["9", "The Predecessor", "balsa frame · 10 g ESC", "216 g · 10.1 m/s level"],
-            ["X", "Front and rear body", "PLA and balsa · I.S.A. 960, 110 mm chord, 5° · custom PCBs", "210 g target · 7.45 m/s level"]
+            ["X", "Front and rear body", "PLA and balsa · I.S.A. 960, 110 mm chord, 4.5° · custom PCBs", "210 g target · 7.45 m/s level"]
         ];
         return makeFigure("pipe", `
             <p class="mono muted pipe-head">Generation</p>
@@ -396,7 +396,7 @@ const figures = {
                 <i>Re</i> = <span class="frac"><span>ρ<i>V</i><i>c</i></span><span>μ</span></span>
             </p>
             <div class="re-inputs">
-                <label class="re-input"><span class="mono-data muted">Airspeed <i>V</i></span><input type="range" min="4" max="12" step="0.1" value="8"><output class="mono-data"></output></label>
+                <label class="re-input"><span class="mono-data muted">Airspeed <i>V</i></span><input type="range" min="4" max="12" step="0.05" value="7.45"><output class="mono-data"></output></label>
                 <label class="re-input"><span class="mono-data muted">Altitude <i>h</i></span><input type="range" min="0" max="150" step="5" value="0"><output class="mono-data"></output></label>
             </div>
             <dl class="cells re-values">
@@ -414,7 +414,7 @@ const figures = {
             const v = Number(speed.value);
             const h = Number(alt.value);
             const { rho, mu } = air(h);
-            speed.nextElementSibling.value = `${v.toFixed(1)} m/s`;
+            speed.nextElementSibling.value = `${v.toFixed(2)} m/s`;
             alt.nextElementSibling.value = `${h} m`;
             out("rho").textContent = `${rho.toFixed(3)} kg/m³`;
             out("mu").textContent = `${(mu * 1e5).toFixed(3)}×10⁻⁵ Pa·s`;
@@ -662,7 +662,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const canHover = matchMedia("(hover: hover)");
 
-    // GENERATE INDEX: number, thumbnail (an empty tint box without one), title, subtitle, outcome, tags, year.
+    // GENERATE INDEX: number, thumbnail (an empty tint box without one), title, subtitle, outcome, then year and tags on one line.
     // The thumbnail is decorative: the title already names the link
     const rows = projectKeys.map(key => {
         const proj = projects[key];
@@ -673,15 +673,14 @@ document.addEventListener("DOMContentLoaded", function () {
         link.innerHTML = `
             <span class="mono muted cue part-no">${drawingNumber(key)}</span>
             ${proj.thumb
-                ? `<img class="part-thumb" src="${proj.thumb}" width="96" height="72" loading="lazy" alt="">`
+                ? `<img class="part-thumb" src="${proj.thumb}" width="128" height="96" loading="lazy" alt="">`
                 : `<span class="part-thumb tint" aria-hidden="true"></span>`}
             <span>
                 <span class="title title-md upright link">${proj.title}</span>
                 ${proj.subtitle ? `<span class="muted entry-meta">${proj.subtitle}</span>` : ""}
                 ${proj.outcome ? `<span class="part-outcome">${proj.outcome}</span>` : ""}
-                ${proj.tags ? `<span class="mono muted part-tags">${proj.tags.join(" · ")}</span>` : ""}
+                <span class="mono muted part-tags">${[proj.date, ...(proj.tags || [])].join(" · ")}</span>
             </span>
-            <span class="mono muted">${proj.date}</span>
         `;
 
         // Touch screens fire mouseenter on tap and never mouseleave, which would leave a preview stuck

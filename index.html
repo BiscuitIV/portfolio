@@ -65,9 +65,6 @@
             <main class="index" aria-labelledby="projects-head">
                 <h2 class="mono section-head" id="projects-head">Projects</h2>
                 <div class="filter" id="project-filter" role="group" aria-label="Filter projects by discipline"></div>
-                <div class="mono muted index-head" aria-hidden="true">
-                    <span>No.</span><span></span><span>Part</span><span>Year</span>
-                </div>
                 <ol class="index-list" id="project-links-container"></ol>
                 <!-- The index is built by script.js; without it, say so and keep a way to get in touch -->
                 <noscript>
@@ -303,7 +300,7 @@
                             <video id="project-video" muted loop playsinline controls></video>
                             <img id="project-image" alt="" hidden>
                         </div>
-                        <figcaption class="mono muted" id="project-caption"></figcaption>
+                        <figcaption class="caption muted" id="project-caption"></figcaption>
                     </figure>
                     <section class="spec-sheet" id="project-specs" aria-labelledby="specs-head" hidden>
                         <h2 class="mono section-head" id="specs-head"></h2>
@@ -328,7 +325,7 @@
         <div class="lightbox-body">
             <img id="lightbox-img" alt="">
             <div class="lightbox-bar">
-                <p class="mono muted" id="lightbox-caption"></p>
+                <p class="caption muted" id="lightbox-caption"></p>
                 <form method="dialog"><button class="bare mono chip">Close</button></form>
             </div>
         </div>
