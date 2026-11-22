@@ -4,7 +4,7 @@
 // no comments, trailing commas or expressions below this line.
 const updates = [
     {
-        "date": "2026-11-15",
+        "date": "2026-11-17",
         "title": "Electronic speed controller V1 is in the layout design process",
         "text": "<strong>The LWS X electronic speed controller is in the design stage.</strong>",
         "image": {
@@ -22,12 +22,7 @@ const projects = {
         "subtitle": "LWS X, the tenth generation of my Light-Weight System",
         "outcome": "<strong>18% lighter</strong> airframe, and a wing airfoil with <strong>2.2×</strong> the lift-to-drag ratio, picked from 1,052 I simulated",
         "thumb": "lws-x/front-pathlines.png",
-        "tags": [
-            "Aero",
-            "CAD",
-            "Electronics",
-            "Fabrication"
-        ],
+        "tags": [],
         "date": "2024–2026",
         "problem": "Fit a wing about one meter across, a battery and a 40 g payload under 250 g, and cruise at 7 m/s for 30 minutes",
         "role": "Personal project · design, build, flight test",
@@ -188,6 +183,17 @@ const projects = {
             ]
         },
         "text": [
+            {
+                "media": [
+                    {
+                        "src": "lws-x/LWS%20X%20Drawing.png",
+                        "width": 3508,
+                        "height": 2480,
+                        "alt": ""
+                    }
+                ],
+                "caption": "A drawing of the current design"
+            },
             "<strong>LWS X</strong> is an ELRS-controlled plane with a wingspan of about one meter that weighs under 250 grams, battery and payload included. It is the current generation of the Light-Weight System (LWS), which I have designed, built and flown since 2024.",
             "Nine generations took the plane from a 263 g tube glider that flew for three seconds to the 216 g Predecessor. For Generation X, I simulated 1,052 airfoils in XFoil to choose the wing section, ran OpenFOAM CFD to streamline the body, and designed my own electronics, as well as optimizing manufactured components for weight and strength.",
             {
@@ -812,8 +818,8 @@ const projects = {
         ]
     },
     "misc": {
-        "title": "Miscellaneous CAD",
-        "subtitle": "Smaller parts and enclosures modeled between the main projects",
+        "title": "Other Projects",
+        "subtitle": "Projects that aren't in the spotlight, or remain unfinished",
         "outcome": "<strong>Nine</strong> smaller builds, from a fume extractor and a reusable filament spool to a six-radio dock",
         "thumb": "Miscellaneous/Screenshot%202026-11-21%20212207.png",
         "tags": [
@@ -834,7 +840,7 @@ const projects = {
                         "alt": "CAD line render of the fume extractor: a fan behind a hexagonal grille, with a side cover held by four screws"
                     }
                 ],
-                "caption": "The fume extractor, with a hexagonal grille over the fan and a screwed side cover"
+                "caption": "The fume extractor, designed to be battery powered"
             },
             {
                 "heading": "Beeper"
@@ -848,7 +854,7 @@ const projects = {
                         "alt": "CAD line render of the beeper: a rounded housing with a USB-C port on the front and a mechanical key switch on top"
                     }
                 ],
-                "caption": "The beeper, a USB-C housing with a mechanical key switch on top"
+                "caption": "A simple electronics project, designed to beep"
             },
             {
                 "heading": "Wallet"
@@ -862,7 +868,7 @@ const projects = {
                         "alt": "CAD line render of the wallet: a flat plate with four counterbored screw holes and a curved cutout in one side"
                     }
                 ],
-                "caption": "The wallet, a plate with four counterbored screw holes and a cutout along one side"
+                "caption": "A thin, cheap, 3D printed wallet"
             },
             {
                 "heading": "Radio dock"
@@ -876,7 +882,7 @@ const projects = {
                         "alt": "CAD line render of the radio dock: six radio pockets split into two halves of three"
                     }
                 ],
-                "caption": "The radio dock for six radios, printed as two halves of three pockets"
+                "caption": "The radio dock for six T600 radios, printed as two halves of three pockets"
             },
             {
                 "heading": "Filament-optimized reusable spool"
@@ -890,7 +896,7 @@ const projects = {
                         "alt": "CAD line render of the reusable spool hub: six arms around a keyed bore"
                     }
                 ],
-                "caption": "The filament-optimized reusable spool, six arms around a keyed bore"
+                "caption": "A filament-optimized reusable spool"
             },
             {
                 "heading": "Ejection pot"
@@ -904,7 +910,7 @@ const projects = {
                         "alt": "CAD line render of the ejection pot: a tapered cylinder with a stepped bore"
                     }
                 ],
-                "caption": "The ejection pot, a tapered cylinder with a stepped bore"
+                "caption": "A 3D printed pot with a button at the bottom for plant ejection"
             },
             {
                 "heading": "Rotating screwdriver"
@@ -918,7 +924,7 @@ const projects = {
                         "alt": "CAD line render of the rotating screwdriver: a cylindrical body with a socket-head bolt in one end and an arm along its side"
                     }
                 ],
-                "caption": "The rotating screwdriver, a cylindrical body with a hex socket at one end and an arm along its side"
+                "caption": "A rotating screwdriver, a cylindrical body which can be rotated for higher torque applications"
             },
             {
                 "heading": "Soil sensor"
@@ -932,7 +938,7 @@ const projects = {
                         "alt": "CAD line render of the soil sensor: a rounded head on a slotted two-prong probe"
                     }
                 ],
-                "caption": "The soil sensor, a rounded head on a slotted two-prong probe"
+                "caption": "A soil sensor meant to communicate via wifi, showing moisture, humidity, temperature, and lumens of UV &amp; light"
             },
             {
                 "heading": "Trainer butterfly knife"
@@ -946,7 +952,7 @@ const projects = {
                         "alt": "CAD line render of the trainer butterfly knife with its two drilled handles open beside the blade"
                     }
                 ],
-                "caption": "The trainer butterfly knife, with drilled handles"
+                "caption": "A 3D printed butteryfly knife trainer"
             }
         ]
     }
