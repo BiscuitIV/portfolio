@@ -48,8 +48,8 @@ const contact = [
     { label: "Email", href: "mailto:pavlos.paparrizos@gmail.com" }
 ];
 
-// The part the home panel shows when no index row is hovered
-const featured = "plane";
+// updates (the idle panel's feed) is also in content.js. Its dates are YYYY-MM-DD, shown as "Nov 15, 2026"
+const formatDate = iso => new Date(`${iso}T00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
 // Published parts, in drawing order; an entry with hidden: true is skipped everywhere
 const projectKeys = Object.keys(projects).filter(key => !projects[key].hidden);
@@ -497,34 +497,60 @@ document.addEventListener("DOMContentLoaded", function () {
         $("tb-date").textContent = info ? info.date : "2026";
     }
 
-    // PANEL: the featured part when idle; hovering or focusing an index row previews that part instead
+    // PANEL: the latest updates when idle; hovering or focusing an index row previews that part instead
     const card = $("frame-card");
     const featuredLink = frame.querySelector(".frame-featured");
     const featuredImage = featuredLink.querySelector("img");
     const panelResults = $("panel-results");
 
-    function fillProjectCard(key, excerptText) {
-        const proj = projects[key];
+    // Plain text of an HTML string (drops <strong> lead-ins)
+    function stripTags(html) {
+        const el = document.createElement("div");
+        el.innerHTML = html || "";
+        return el.textContent;
+    }
+
+    function fillCard(meta, title, excerptText) {
         const excerpt = document.createElement("p");
         excerpt.className = "card-excerpt";
         excerpt.textContent = excerptText;
-        $("card-meta").textContent = `Dwg no. ${drawingNumber(key)} · ${proj.date}`;
-        $("card-title").textContent = proj.title;
+        $("card-meta").textContent = meta;
+        $("card-title").textContent = title;
         $("card-body").replaceChildren(excerpt);
     }
+
+    const fillProjectCard = (key, excerptText) =>
+        fillCard(`Dwg no. ${drawingNumber(key)} · ${projects[key].date}`, projects[key].title, excerptText);
 
     // A part's picture for the panel and the narrow-screen hero: its image, else its thumbnail
     const partImage = key => projects[key].image || (projects[key].thumb && { src: projects[key].thumb, alt: "" });
 
-    // NARROW-SCREEN HERO: below 860px the panel is hidden, so the featured part's image sits under the bio instead
+    // An update links to a published part when it names one; without its own image it borrows that part's
+    const updateHref = post => (projectKeys.includes(post.link) ? `#${post.link}` : null);
+    const updateImage = post => post.image || (updateHref(post) && partImage(post.link));
+
+    // The frame: an image whose caption chip links to href, or (with no image) the excerpt card, filled by the caller
+    function fillFrame(image, href, caption) {
+        frame.classList.toggle("has-preview", !image);
+        card.hidden = Boolean(image);
+        if (!image) return;
+        featuredImage.src = image.src;
+        featuredImage.alt = image.alt;
+        if (href) featuredLink.href = href; else featuredLink.removeAttribute("href");
+        featuredLink.querySelector(".frame-caption").textContent = caption;
+    }
+
+    // NARROW-SCREEN HERO: below 860px the panel is hidden, so the latest update's image sits under the bio instead
     const heroFrame = $("hero-frame");
-    const heroImage = partImage(featured);
+    const latest = updates[0];
+    const heroImage = latest && updateImage(latest);
     if (heroImage) {
         const heroLink = heroFrame.querySelector("a");
-        heroLink.href = `#${featured}`;
+        const href = updateHref(latest);
+        if (href) heroLink.href = href;
         heroLink.querySelector("img").src = heroImage.src;
         heroLink.querySelector("img").alt = heroImage.alt;
-        heroLink.querySelector(".frame-caption").textContent = `Featured · ${projects[featured].title}`;
+        heroLink.querySelector(".frame-caption").textContent = `Latest · ${latest.title}`;
     } else {
         heroFrame.hidden = true;
     }
@@ -533,24 +559,48 @@ document.addEventListener("DOMContentLoaded", function () {
     function fillPanel(key, label) {
         const proj = projects[key];
         const image = partImage(key);
-        frame.classList.toggle("has-preview", !image);
-        card.hidden = Boolean(image);
-        if (image) {
-            featuredImage.src = image.src;
-            featuredImage.alt = image.alt;
-            featuredLink.href = `#${key}`;
-            featuredLink.querySelector(".frame-caption").textContent = `${label} · ${proj.title}`;
-        } else {
-            // Strip the <strong> markup from the first paragraph
-            const excerpt = document.createElement("div");
-            excerpt.innerHTML = proj.text[0] || "";
-            fillProjectCard(key, excerpt.textContent);
-        }
+        fillFrame(image, `#${key}`, `${label} · ${proj.title}`);
+        if (!image) fillProjectCard(key, stripTags(proj.text[0]));
 
         const results = (proj.results || []).slice(0, 3);
         panelResults.hidden = !results.length;
+        panelResults.setAttribute("aria-label", "Key results");
         panelResults.innerHTML = results.map(([value, resultLabel]) => `
             <li class="stat"><span class="title title-md upright">${value}</span><span class="result-label">${resultLabel}</span></li>`).join("");
+    }
+
+    // Idle panel: the newest update's image (or excerpt card), with its date and title as one headline linking to its part
+    function fillFeed() {
+        if (latest) {
+            const image = updateImage(latest);
+            fillFrame(image, updateHref(latest), "Latest update");
+            if (!image) fillCard(`Latest · ${formatDate(latest.date)}`, latest.title, stripTags(latest.text));
+        } else {
+            fillFrame(null);
+            card.hidden = true;
+        }
+
+        const posts = updates.slice(0, 1);
+        panelResults.hidden = !posts.length;
+        panelResults.setAttribute("aria-label", "Latest update");
+        panelResults.replaceChildren(...posts.map(post => {
+            const href = updateHref(post);
+            const body = document.createElement(href ? "a" : "div");
+            if (href) body.href = href;
+            body.className = "stat feed-post";
+            body.title = stripTags(post.text);
+            const date = document.createElement("span");
+            date.className = "mono-data muted";
+            date.textContent = formatDate(post.date);
+            const title = document.createElement("span");
+            title.className = "title upright link";
+            title.textContent = post.title;
+            body.append(date, title);
+            const item = document.createElement("li");
+            item.className = "feed-item";
+            item.append(body);
+            return item;
+        }));
     }
 
     function activatePanel(info) {
@@ -600,12 +650,12 @@ document.addEventListener("DOMContentLoaded", function () {
         frameWrap.classList.remove("is-active");
         featuredVideo.classList.remove("visible");
         setTitleBlock(null);
-        fillPanel(featured, "Featured");
+        fillFeed();
 
         videoTimeout = setTimeout(() => clearVideo(featuredVideo), 300);
     }
 
-    fillPanel(featured, "Featured");
+    fillFeed();
 
     // SECTION NAV: one button per résumé section, each targeting its heading by id (data-jump).
     // The nav sticks to the top of the left column; the button for the section being read gets aria-current
@@ -664,7 +714,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // GENERATE INDEX: number, thumbnail (an empty tint box without one), title, subtitle, outcome, then year and tags on one line.
     // The thumbnail is decorative: the title already names the link
-    const rows = projectKeys.map(key => {
+    projectKeys.forEach(key => {
         const proj = projects[key];
         const li = document.createElement("li");
         const link = document.createElement("a");
@@ -691,33 +741,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         li.appendChild(link);
         list.appendChild(li);
-        return { li, tags: proj.tags || [] };
     });
-
-    // DISCIPLINE FILTER: "All" plus every tag in first-seen order, each with its part count; rows without the
-    // chosen tag are hidden, and the status line (aria-live) says how many are shown
-    const tags = [...new Set(rows.flatMap(row => row.tags))];
-    const filter = $("project-filter");
-    filter.hidden = !tags.length;
-    const filterStatus = document.createElement("span");
-    filterStatus.className = "mono muted filter-status";
-    filterStatus.setAttribute("aria-live", "polite");
-    const matches = tag => rows.filter(row => tag === "All" || row.tags.includes(tag));
-    const chips = ["All", ...tags].map(tag => {
-        const chip = document.createElement("button");
-        chip.type = "button";
-        chip.className = "bare mono chip";
-        chip.textContent = `${tag} ${matches(tag).length}`;
-        chip.setAttribute("aria-pressed", String(tag === "All"));
-        chip.addEventListener("click", () => {
-            chips.forEach(other => other.setAttribute("aria-pressed", String(other === chip)));
-            const shown = matches(tag);
-            rows.forEach(row => { row.li.hidden = !shown.includes(row); });
-            filterStatus.textContent = tag === "All" ? "" : `${shown.length} of ${rows.length} parts`;
-        });
-        return chip;
-    });
-    filter.append(...chips, filterStatus);
 
     // ROUTING (#project-key opens a project, anything else shows the index)
     const projectVideo = $("project-video");

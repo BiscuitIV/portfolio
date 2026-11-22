@@ -1,6 +1,21 @@
-// Project content: one entry per index row and project page, in drawing order (see CLAUDE.md).
-// Everything after the "=" below is strict JSON so editor.html can read and rewrite it:
+// Recent updates: the feed the home panel shows when idle, newest first (see CLAUDE.md).
+// Project content: one entry per index row and project page, in drawing order.
+// Both values are strict JSON after their "=" so editor.html can read and rewrite them:
 // no comments, trailing commas or expressions below this line.
+const updates = [
+    {
+        "date": "2026-11-15",
+        "title": "Electronic speed controller V1 is in the layout design process",
+        "text": "<strong>The LWS X electronic speed controller is in the design stage.</strong>",
+        "image": {
+            "src": "lws-x/Screenshot%202026-11-21%20181059.png",
+            "width": 3508,
+            "height": 2481,
+            "alt": "LWS X ESC V1 initial layout design process in KiCad"
+        },
+        "link": "plane"
+    }
+];
 const projects = {
     "plane": {
         "title": "Sub-250 g Endurance Plane",
@@ -174,9 +189,9 @@ const projects = {
         },
         "text": [
             "<strong>LWS X</strong> is an ELRS-controlled plane with a wingspan of about one meter that weighs under 250 grams, battery and payload included. It is the current generation of the Light-Weight System (LWS), which I have designed, built and flown since 2024.",
-            "Nine generations took it from a 263 g tube glider that flew for three seconds to the 216 g Predecessor. For Generation X, I simulated 1,052 airfoils in XFoil to choose the wing section, ran OpenFOAM CFD to streamline the body, and designed my own electronics, as well as optimizing manufactured components for weight and strength.",
+            "Nine generations took the plane from a 263 g tube glider that flew for three seconds to the 216 g Predecessor. For Generation X, I simulated 1,052 airfoils in XFoil to choose the wing section, ran OpenFOAM CFD to streamline the body, and designed my own electronics, as well as optimizing manufactured components for weight and strength.",
             {
-                "heading": "The requirements: under 250 g, a 40 g payload and 30 minutes in the air"
+                "heading": "Build Requirements"
             },
             "Generation X must meet the first four requirements.",
             {
@@ -191,14 +206,14 @@ const projects = {
             },
             "Regulatory and safety requirements are also being put into consideration: FPV frequency selection, lighting for night flying, and privacy and local laws.",
             {
-                "heading": "1,052 airfoils ranked: the I.S.A. 960 has 2.2× the E205's lift-to-drag"
+                "heading": "Airfoil Selection"
             },
-            "<strong>Design Re: 60,000.</strong> Early flight tests needed close to 8 m/s for level flight, about Re 60,000 on the 110 mm chord, so the airfoils were ranked there. Flight simulations now put Generation X at 7.45 m/s, closer to the 7 m/s cruise target: Re about 56,100 at sea level in the standard atmosphere, so the design Re is slightly conservative.",
+            "<strong>Design Re: 60,000.</strong> Early simulations tested close to 8 m/s for level flight, about Re 60,000 on the 110 mm chord, so the airfoils were ranked there. Flight simulations now put Generation X at 7.45 m/s, closer to the 7 m/s cruise target: Re about 56,100 at sea level in the standard atmosphere, so the design Re is slightly conservative.",
             {
                 "figure": "reynolds"
             },
             "<strong>Choice: I.S.A. 960.</strong> Its best lift-to-drag ratio is 43.7, at 4.75°. That ranks it fourth of the 930 airfoils that converged in the cruise window and meet the 8 mm thickness minimum, within 3% of the top result of 45.0.",
-            "The two MID 108 sections that rank higher are only 9.3 mm thick. The I.S.A. 960 is 10.4 mm thick with 5.7% camber, and it reaches its best lift-to-drag ratio inside the 0° to 5° cruise window rather than at one end of it. Additionally it maintains a high lift-to-drag ratio through a wide range of angles of attack.",
+            "Other airfoils ranked higher, although thickness was a priority for manufacturability. The I.S.A. 960 is 10.4 mm thick with 5.7% camber, and in particular maintains a high lift-to-drag ratio through a wide range of angles of attack.",
             {
                 "figure": "sweep"
             },
@@ -243,7 +258,7 @@ const projects = {
                 "figure": "polars"
             },
             {
-                "heading": "PIFOAMUI runs OpenFOAM CFD from a browser, fast enough to use between builds"
+                "heading": "OpenFOAM CFD Simulation"
             },
             "PIFOAMUI is a browser interface I built with Claude Code for OpenFOAM 13, the open-source CFD toolkit. With it I no longer write OpenFOAM case files by hand, so I can test an aerodynamic change between builds.",
             "I used PIFOAMUI to run CFD on Generations Nine and X to analyze and refine the modern aero design.",
@@ -260,7 +275,7 @@ const projects = {
             },
             "PIFOAMUI is open source on GitHub under GPL-3.0: <a class=\"link\" href=\"https://github.com/BiscuitIV/PIFOAMUI\" target=\"_blank\" rel=\"noopener\">github.com/BiscuitIV/PIFOAMUI</a>",
             {
-                "heading": "Two custom boards in KiCad: a 15 A motor controller and a flight controller"
+                "heading": "Custom PCB Boards"
             },
             "The ESC was designed in KiCad to drive the 2003.5 motor on 2S at up to 15 A.",
             "As the motor spins, each phase generates a voltage (back-EMF), and the ESC compares it with a virtual neutral point to decide when to switch phases.",
@@ -288,7 +303,7 @@ const projects = {
                 "caption": "FC V1 schematic in KiCad: MCU, sensors, GPS, logging and power on one board · <a class=\"link\" href=\"lws-x/FC%20V1.pdf\" target=\"_blank\" rel=\"noopener\">PDF</a>"
             },
             {
-                "heading": "A two-part body, a bigger propeller and 67% more battery energy"
+                "heading": "Ten Generations of Airframe"
             },
             "<strong>Airframe.</strong> Generation X splits the airframe into a front body and a rear body, joined by frame plates, to separate the tail from the main body region. It is built from PLA and balsa, and I'm considering carbon fiber.",
             {
@@ -316,10 +331,7 @@ const projects = {
                 ],
                 "caption": "Wing rib in CAD, with lightening cutouts to save weight"
             },
-            {
-                "heading": "Nine generations, from 263 g to 216 g"
-            },
-            "I had never flown an RC plane when the project began, so the early generations taught me to fly as much as they tested the aircraft, and every revision got crash-tested. As a result, rigidity and quality of fabrication have become larger priorities in design considerations.",
+            "<strong>Nine generations, from 263 g to 216 g.</strong> I had never flown an RC plane when the project began, so the early generations taught me to fly as much as they tested the aircraft, and every revision got crash-tested. As a result, rigidity and quality of fabrication have become larger priorities in design considerations.",
             {
                 "figure": "timeline"
             },
@@ -401,16 +413,7 @@ const projects = {
                 "caption": "3D-printed parts from successive LWS generations"
             },
             {
-                "heading": "18% lighter, and level flight down to 7.45 m/s"
-            },
-            {
-                "list": [
-                    "<strong>Mass</strong> 263 g in the first generation → 216 g in the Predecessor, 47 g or about 18% lighter",
-                    "<strong>Level flight</strong> 10.1 m/s for Generation Nine → 7.45 m/s so far for Generation X, against a cruise target of 7 m/s"
-                ]
-            },
-            {
-                "heading": "Next: a 7 m/s cruise, a flight controller and the full payload"
+                "heading": "Next Up"
             },
             {
                 "list": [
@@ -630,7 +633,7 @@ const projects = {
         "text": [
             "<strong>These drones</strong> are my high school club's competition entry, a tennis-ball payload carried on an S500 quadcopter, the three FPV quads that were my first builds, and the carbon fiber frame I designed for one of them.",
             {
-                "heading": "A tennis-ball payload that placed 3rd of 12"
+                "heading": "Aviation Club"
             },
             "As Head of Mechanical at d.Aviation, I designed a mechanism, moved by a servo, that picks up and releases multiple tennis balls at a time. We placed 3rd of 12 teams at the 2023 STEM-ED Aero Robotics Competition.",
             {
@@ -647,6 +650,17 @@ const projects = {
             {
                 "media": [
                     {
+                        "src": "Miscellaneous/Screenshot%202026-11-21%20213215.png",
+                        "width": 1209,
+                        "height": 633,
+                        "alt": "CAD line render of the tennis-ball payload mechanism: a tray with perforated side walls, slots and curved stops"
+                    }
+                ],
+                "caption": "The tennis-ball payload mechanism in CAD: a tray with perforated walls and curved stops"
+            },
+            {
+                "media": [
+                    {
                         "src": "across-the-years/web/drone-s500-hover.mp4",
                         "width": 1280,
                         "height": 576,
@@ -656,7 +670,7 @@ const projects = {
                 "caption": "The d.Aviation S500 climbing and descending over a field, with a load slung on a line below"
             },
             {
-                "heading": "Two FPV quads I built from parts and tuned myself"
+                "heading": "FPV Drones"
             },
             "FPV quads, flown through a live camera feed, were my first builds. I fly a tiny whoop, a 3.5-inch and a 5-inch.",
             "For the 3.5-inch and the 5-inch I ordered every part and assembled each quad by hand. I then configured the firmware in Betaflight and tuned the PID loops myself, and I still use Betaflight to debug them.",
@@ -685,6 +699,17 @@ const projects = {
             {
                 "media": [
                     {
+                        "src": "web/WhatsApp%20Image%202026-10-30%20at%2011.57.25%20AM.jpeg",
+                        "width": 1200,
+                        "height": 1600,
+                        "alt": "5-inch FPV Drone"
+                    }
+                ],
+                "caption": "5-inch FPV Drone"
+            },
+            {
+                "media": [
+                    {
                         "src": "across-the-years/web/drone-quad-2023-12.mp4",
                         "width": 720,
                         "height": 1280,
@@ -694,7 +719,7 @@ const projects = {
                 "caption": "An FPV quad flight, December 2023"
             },
             {
-                "heading": "A 56 g carbon fiber frame, the first airframe I designed myself"
+                "heading": "FPV Drone Frame"
             },
             "I modeled the frame in Onshape, built it and flew it. It replaced the old frame on my 3-inch FPV quad.",
             "I designed it to be light and strong. Stacked plates on standoffs hold the electronics, and cutouts in the plates and arms remove material the frame doesn't need for strength. Over four versions, V1 to V4, I refined the weight and the overall structure.",
@@ -783,6 +808,145 @@ const projects = {
                     }
                 ],
                 "caption": "The printed radio dock in use, April 2026, beside the manufacturer's photo of the Motorola T600 it was designed around"
+            }
+        ]
+    },
+    "misc": {
+        "title": "Miscellaneous CAD",
+        "subtitle": "Smaller parts and enclosures modeled between the main projects",
+        "outcome": "<strong>Nine</strong> smaller builds, from a fume extractor and a reusable filament spool to a six-radio dock",
+        "thumb": "Miscellaneous/Screenshot%202026-11-21%20212207.png",
+        "tags": [
+            "CAD"
+        ],
+        "date": "Various",
+        "text": [
+            "<strong>Not every part is a project.</strong> Most of these projects, although unfinished have incrementally taught me engineering principles.",
+            {
+                "heading": "Fume extractor"
+            },
+            {
+                "media": [
+                    {
+                        "src": "Miscellaneous/Screenshot%202026-11-21%20212207.png",
+                        "width": 859,
+                        "height": 721,
+                        "alt": "CAD line render of the fume extractor: a fan behind a hexagonal grille, with a side cover held by four screws"
+                    }
+                ],
+                "caption": "The fume extractor, with a hexagonal grille over the fan and a screwed side cover"
+            },
+            {
+                "heading": "Beeper"
+            },
+            {
+                "media": [
+                    {
+                        "src": "Miscellaneous/Screenshot%202026-11-21%20192541.png",
+                        "width": 1008,
+                        "height": 781,
+                        "alt": "CAD line render of the beeper: a rounded housing with a USB-C port on the front and a mechanical key switch on top"
+                    }
+                ],
+                "caption": "The beeper, a USB-C housing with a mechanical key switch on top"
+            },
+            {
+                "heading": "Wallet"
+            },
+            {
+                "media": [
+                    {
+                        "src": "Miscellaneous/Screenshot%202026-11-21%20193316.png",
+                        "width": 1062,
+                        "height": 652,
+                        "alt": "CAD line render of the wallet: a flat plate with four counterbored screw holes and a curved cutout in one side"
+                    }
+                ],
+                "caption": "The wallet, a plate with four counterbored screw holes and a cutout along one side"
+            },
+            {
+                "heading": "Radio dock"
+            },
+            {
+                "media": [
+                    {
+                        "src": "Miscellaneous/Screenshot%202026-11-21%20212002.png",
+                        "width": 1203,
+                        "height": 670,
+                        "alt": "CAD line render of the radio dock: six radio pockets split into two halves of three"
+                    }
+                ],
+                "caption": "The radio dock for six radios, printed as two halves of three pockets"
+            },
+            {
+                "heading": "Filament-optimized reusable spool"
+            },
+            {
+                "media": [
+                    {
+                        "src": "Miscellaneous/Screenshot%202026-11-21%20192822.png",
+                        "width": 898,
+                        "height": 747,
+                        "alt": "CAD line render of the reusable spool hub: six arms around a keyed bore"
+                    }
+                ],
+                "caption": "The filament-optimized reusable spool, six arms around a keyed bore"
+            },
+            {
+                "heading": "Ejection pot"
+            },
+            {
+                "media": [
+                    {
+                        "src": "Miscellaneous/Screenshot%202026-11-21%20193140.png",
+                        "width": 993,
+                        "height": 754,
+                        "alt": "CAD line render of the ejection pot: a tapered cylinder with a stepped bore"
+                    }
+                ],
+                "caption": "The ejection pot, a tapered cylinder with a stepped bore"
+            },
+            {
+                "heading": "Rotating screwdriver"
+            },
+            {
+                "media": [
+                    {
+                        "src": "Miscellaneous/Screenshot%202026-11-21%20212731.png",
+                        "width": 1006,
+                        "height": 621,
+                        "alt": "CAD line render of the rotating screwdriver: a cylindrical body with a socket-head bolt in one end and an arm along its side"
+                    }
+                ],
+                "caption": "The rotating screwdriver, a cylindrical body with a hex socket at one end and an arm along its side"
+            },
+            {
+                "heading": "Soil sensor"
+            },
+            {
+                "media": [
+                    {
+                        "src": "Miscellaneous/Screenshot%202026-11-21%20212925.png",
+                        "width": 736,
+                        "height": 655,
+                        "alt": "CAD line render of the soil sensor: a rounded head on a slotted two-prong probe"
+                    }
+                ],
+                "caption": "The soil sensor, a rounded head on a slotted two-prong probe"
+            },
+            {
+                "heading": "Trainer butterfly knife"
+            },
+            {
+                "media": [
+                    {
+                        "src": "Miscellaneous/Screenshot%202026-11-21%20192957.png",
+                        "width": 1195,
+                        "height": 646,
+                        "alt": "CAD line render of the trainer butterfly knife with its two drilled handles open beside the blade"
+                    }
+                ],
+                "caption": "The trainer butterfly knife, with drilled handles"
             }
         ]
     }

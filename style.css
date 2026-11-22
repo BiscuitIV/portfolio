@@ -39,7 +39,7 @@
     /* Corner rounding: boxes (frames, plates, ruled cell groups) and small parts (thumbnails, tooltips, focus rings) */
     --radius: 4px;
     --radius-sm: 2px;
-    /* Chips (buttons, filters, skill tags): between the two, so they read as buttons */
+    /* Chips (buttons, skill tags): between the two, so they read as buttons */
     --radius-chip: 3px;
     --article: 960px;
 
@@ -169,7 +169,7 @@ a.link:not([href^="#"])::after { content: "\2009\2197"; content: "\2009\2197" / 
 
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 
-/* Buttons (jump nav, filter chips) a step heavier than the labels, all one size */
+/* Buttons (jump nav) a step heavier than the labels, all one size */
 button.chip { padding: var(--s-2) var(--s-3); font-weight: 600; }
 
 /* Label/value list; optional <div> rows span both columns via subgrid */
@@ -293,7 +293,9 @@ button.chip { padding: var(--s-2) var(--s-3); font-weight: 600; }
     scrollbar-width: none;
     /* The column's flex gap is --s-7; the nav sits --s-6 under the bio, less its own top padding */
     margin: calc(var(--s-6) - var(--s-7) - var(--s-3)) calc(-1 * var(--s-7)) 0;
-    padding: var(--s-3) var(--s-7);
+    /* Narrow side padding: the centered buttons don't need the column gutter, and the full --s-7 made the row
+       overflow (and drop to left-aligned scrolling) on columns under ~810px, e.g. 1920px screens at 125% scale */
+    padding: var(--s-3) var(--s-4);
     background: var(--paper);
     transition: box-shadow var(--dur) var(--ease);
 }
@@ -369,18 +371,6 @@ button.chip { padding: var(--s-2) var(--s-3); font-weight: 600; }
 .skills { --kv-label: 7.5em; }
 .skills > div + div { padding-top: var(--s-4); }
 
-/* Discipline filter: chip toggles above the index */
-.filter {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2);
-    margin-bottom: var(--s-4);
-}
-
-/* How many parts the chosen filter shows, at the end of the chip row */
-.filter-status { align-self: center; margin-left: auto; }
-
-.filter .chip:is(:hover, :focus-visible):not([aria-pressed="true"]),
 .jump .chip:is(:hover, :focus-visible):not(.chip-solid) { color: var(--accent); }
 
 /* Index rows: number, thumbnail, title over outcome over the year-and-tags line */
@@ -452,6 +442,12 @@ button.chip { padding: var(--s-2) var(--s-3); font-weight: 600; }
 }
 
 .results.panel-results { width: var(--frame-w); margin: 0; }
+
+/* Idle feed: each cell is a link (date over title) filling its cell, so the whole cell is the target */
+.results li.feed-item { padding: 0; }
+.feed-post { height: 100%; padding: var(--s-3); transition: background-color var(--dur) var(--ease); }
+a.feed-post:is(:hover, :focus-visible) { background: var(--paper-2); }
+a.feed-post:focus-visible { outline-offset: calc(-1 * var(--s-1)); }
 
 .frame {
     position: relative;
@@ -973,10 +969,7 @@ video.fig-img { cursor: auto; }
     .frame.hero-frame { display: grid; }
 
     /* The nav row bleeds to the narrower page gutter */
-    .jump {
-        margin-inline: calc(-1 * var(--s-4));
-        padding-inline: var(--s-4);
-    }
+    .jump { margin-inline: calc(-1 * var(--s-4)); }
 
     /* Portrait stacks above the text */
     .about-body { grid-template-columns: 1fr; }
@@ -998,7 +991,7 @@ video.fig-img { cursor: auto; }
 
 /* ---------- Print and save-to-PDF: one column of content, no navigation; script.js opens the folds ---------- */
 @media print {
-    .panel, .jump, .filter, .hero-frame, .project-bar, .toc, .next-part, .lightbox, video { display: none !important; }
+    .panel, .jump, .hero-frame, .project-bar, .toc, .next-part, .lightbox, video { display: none !important; }
 
     .sheet-left { width: auto; min-height: 0; padding: 0; gap: var(--s-6); }
     .intro { min-height: 0; }

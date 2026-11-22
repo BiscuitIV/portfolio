@@ -1,15 +1,16 @@
 // Local content editor for the portfolio (editor.html). Not deployed: listed in .vercelignore.
 // Reads and writes two files in the site folder through the File System Access API (Chrome, Edge):
-//  - content.js: `const projects = <strict JSON>;`, parsed and rewritten whole
+//  - content.js: `const updates = <strict JSON>;` (the home panel's feed) and `const projects = <strict JSON>;`,
+//    each parsed and rewritten whole; the comment lines above them are kept
 //  - index.html: only the text between `<!-- edit:name -->` and `<!-- /edit:name -->` markers,
 //    plus the two description <meta> tags and the og:image tags; everything else stays byte-identical.
-// script.js is read, never written, for the `featured` key the home panel shows.
 // Edits live in the page until Save. Leaving a page commits its edits to the in-memory copy.
 "use strict";
 
 // Names in the `figures` registry in script.js; keep in step with it
 const FIGURES = ["airfoils", "polars", "timeline", "sweep", "reynolds"];
 const PREFIX = "const projects = ";
+const UPDATES_PREFIX = "const updates = ";
 const REGION_RE = /<!-- edit:([\w-]+) -->\n([\s\S]*?)\n([ \t]*)<!-- \/edit:\1 -->/g;
 const REGION_LABELS = {
     lede: "Value prop", bio: "Bio", education: "Education", experience: "Experience",
@@ -31,7 +32,7 @@ const state = {
     html: "",            // index.html as last read or written
     projects: null,      // working copy, committed views included
     workingHtml: "",     // working copy of index.html, committed home edits included
-    featured: null,      // the project key the home panel shows (`featured` in script.js)
+    updates: null,       // working copy of `updates`, or null when content.js has no such block
     contentDirty: false,
     htmlDirty: false,
     view: null,          // { key, dirty, commit() }
@@ -302,10 +303,30 @@ function parseContent(text) {
     catch (err) { throw new Error(`content.js isn't strict JSON after “${PREFIX}” (${err.message}). Remove comments, trailing commas or expressions.`); }
 }
 
+// The `updates` JSON sits above `projects`: from its prefix (at the start of a line) to the last ";" before PREFIX.
+// Returns [start, end] of the JSON text, or null when content.js has no updates block.
+function updatesSpan(text) {
+    const i = text.match(new RegExp(`^${UPDATES_PREFIX}`, "m"))?.index ?? -1;
+    const p = prefixAt(text);
+    if (i < 0 || p < i) return null;
+    const j = text.lastIndexOf(";", p);
+    return j > i ? [i + UPDATES_PREFIX.length, j] : null;
+}
+
+function parseUpdates(text) {
+    const span = updatesSpan(text);
+    if (!span) return null;
+    try { return JSON.parse(text.slice(...span)); }
+    catch (err) { throw new Error(`content.js isn't strict JSON after “${UPDATES_PREFIX}” (${err.message}). Remove comments, trailing commas or expressions.`); }
+}
+
 function serializeContent(projects) {
     const t = state.contentText;
     const i = prefixAt(t), j = t.lastIndexOf(";");
-    return t.slice(0, i) + PREFIX + JSON.stringify(projects, null, 4) + t.slice(j);
+    let head = t.slice(0, i);
+    const span = updatesSpan(t);
+    if (span && state.updates) head = head.slice(0, span[0]) + JSON.stringify(state.updates, null, 4) + head.slice(span[1]);
+    return head + PREFIX + JSON.stringify(projects, null, 4) + t.slice(j);
 }
 
 function regions(html) {
@@ -334,14 +355,12 @@ async function openFolder(handle) {
             if (await handle.queryPermission({ mode: "readwrite" }) !== "granted" &&
                 await handle.requestPermission({ mode: "readwrite" }) !== "granted") throw new Error("Write access to the folder wasn't granted.");
         }
-        const [contentText, html, script] = await Promise.all([readText(handle, "content.js"), readText(handle, "index.html"),
-            readText(handle, "script.js").catch(() => "")]);
+        const [contentText, html] = await Promise.all([readText(handle, "content.js"), readText(handle, "index.html")]);
         const projects = parseContent(contentText);
-        let featured = script.match(/^const featured = "([^"]+)"/m)?.[1];
-        if (!projects[featured]) featured = Object.keys(projects).find(k => !projects[k].hidden);
+        const updates = parseUpdates(contentText);
         const found = Object.keys(regions(html));
         if (!found.length) throw new Error("index.html has no <!-- edit:… --> markers.");
-        Object.assign(state, { dir: handle, contentText, html, projects, workingHtml: html, featured,
+        Object.assign(state, { dir: handle, contentText, html, projects, updates, workingHtml: html,
             contentDirty: false, htmlDirty: false, view: null, files: null });
         if (handle) {
             idb("readwrite", s => s.put(handle, "dir")).catch(() => {});
@@ -551,13 +570,12 @@ function homeView(main) {
         h("p", { class: "mono muted ed-hint" },
             "Click any text to edit it. Hover an entry or skill for move, duplicate (how you add one) and delete. Enter in a bullet starts a new one."));
 
-    // Home-page images outside the résumé regions: the featured part's panel image and each index
-    // row's thumbnail (both in content.js), and the link-preview card (the og:image tags)
-    const fp = state.projects[state.featured];
-    const hero = fp && heroImageFields(fp.image || {});
-    if (hero) doc.append(section("Featured image",
-        `The panel beside the index, and the image under the bio on phones, show the hero image of “${fp.title || state.featured}” (its thumbnail if it has none). Which part is featured is set by \`featured\` in script.js.`,
-        ...hero.el));
+    // The idle panel's feed (`updates` in content.js), then home-page images outside the résumé regions:
+    // each index row's thumbnail (in content.js) and the link-preview card (the og:image tags)
+    const feed = state.updates && updatesEditor(state.updates);
+    if (feed) doc.append(section("Recent updates",
+        "Newest first. The panel beside the index shows the newest one's image (or its linked part's) and its date and title as a link; phones show the newest image under the bio.",
+        feed.el));
     const thumbs = Object.entries(state.projects).filter(([, p]) => !p.hidden).map(([key, p]) => {
         const preview = h("img", { class: "ed-thumb", src: p.thumb || "", alt: "", hidden: !p.thumb });
         const path = pathField(p.thumb || "", "Image path", IMAGE_EXT, v => { preview.src = v; preview.hidden = !v; });
@@ -581,9 +599,9 @@ function homeView(main) {
     function commit() {
         if (!view.dirty) return;
         const before = JSON.stringify(state.projects);
-        if (hero) {
-            const img = hero.value();
-            if (img) fp.image = img; else delete fp.image;
+        if (feed) {
+            const posts = feed.value();
+            if (JSON.stringify(posts) !== JSON.stringify(state.updates)) { state.updates = posts; state.contentDirty = true; }
         }
         for (const t of thumbs) {
             const p = state.projects[t.key], v = opt(t.value(), p.thumb);
@@ -889,6 +907,55 @@ function pathField(value, placeholder, filter = MEDIA_EXT, onChange) {
             if (f) { input.value = toSrc(f); changed(); }
         }));
     return { el, value: () => input.value.trim() };
+}
+
+// The `updates` feed: one card per post (date, title, text, optional image, optional part link), newest first.
+// value() returns the edited array; fields a post had that the form doesn't show are kept.
+function updatesEditor(initial) {
+    const list = h("div");
+    let rows = [];
+    const keys = Object.keys(state.projects);
+
+    function row(post) {
+        const date = h("input", { type: "date", class: "ed-input mono-data", value: post.date || "", oninput: markDirty });
+        const title = h("input", { class: "ed-input", value: post.title || "", oninput: markDirty, placeholder: "What changed" });
+        const text = h("textarea", { class: "ed-input", rows: 3, oninput: markDirty, placeholder: "<strong>Lead-in.</strong> One or two sentences." });
+        text.value = post.text || "";
+        const src = pathField(post.image?.src || "", "Image path (empty: the linked part's image)", IMAGE_EXT);
+        const alt = h("input", { class: "ed-input", value: post.image?.alt || "", oninput: markDirty, placeholder: "Describe the image" });
+        const link = h("select", { class: "ed-input", onchange: markDirty }, h("option", { value: "" }, "No link"),
+            keys.map(k => h("option", { value: k, selected: k === post.link }, state.projects[k].title || k)));
+        const r = {
+            value() {
+                const out = { ...post, date: date.value, title: title.value.trim(), text: text.value.trim() };
+                if (src.value()) out.image = { ...post.image, src: src.value(), alt: alt.value.trim() }; else delete out.image;
+                if (link.value) out.link = link.value; else delete out.link;
+                return out;
+            }
+        };
+        r.el = h("div", { class: "ed-card" },
+            h("div", { class: "ed-card-head" }, date,
+                btn("Up", () => edit(posts => { const i = rows.indexOf(r); if (i > 0) posts.splice(i - 1, 0, posts.splice(i, 1)[0]); }), undefined, "Move up"),
+                btn("Delete", () => edit(posts => posts.splice(rows.indexOf(r), 1)), undefined, "Delete update")),
+            field("Title", title), field("Text", text), field("Image", src.el), field("Alt text", alt), field("Links to", link));
+        return r;
+    }
+
+    function draw(posts) {
+        rows = posts.map(row);
+        list.replaceChildren(...rows.map(r => r.el));
+    }
+    function edit(change) {
+        const posts = rows.map(r => r.value());
+        change(posts);
+        draw(posts);
+        markDirty();
+    }
+
+    draw(initial);
+    const add = btn("Add update", () => edit(posts => posts.unshift({ date: new Date().toLocaleDateString("en-CA"), title: "", text: "" })),
+        "bare mono chip ed-btn");
+    return { el: h("div", {}, add, list), value: () => rows.map(r => r.value()) };
 }
 
 // A project's `image`: path, alt text and caption. value() is undefined without a path.
