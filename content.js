@@ -8,7 +8,7 @@ const updates = [
         "title": "Electronic speed controller V1 is in the layout design process",
         "text": "<strong>The LWS X electronic speed controller is in the design stage.</strong>",
         "image": {
-            "src": "lws-x/Screenshot%202026-11-21%20181059.png",
+            "src": "web/Screenshot%202026-11-22%20194214.png",
             "width": 3508,
             "height": 2481,
             "alt": "LWS X ESC V1 initial layout design process in KiCad"
