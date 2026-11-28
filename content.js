@@ -4,6 +4,16 @@
 // no comments, trailing commas or expressions below this line.
 const updates = [
     {
+        "date": "2026-11-27",
+        "title": "Electronic speed controller V1 Layout Finished",
+        "text": "<strong>The LWS X ESC V1 layout is finished.</strong>",
+        "image": {
+            "src": "lws-x/Screenshot%202026-11-27%20202847.png",
+            "alt": "LWS X ESC V1 layout design finished in KiCad"
+        },
+        "link": "plane"
+    },
+    {
         "date": "2026-11-17",
         "title": "Electronic speed controller V1 is in the layout design process",
         "text": "<strong>The LWS X electronic speed controller is in the design stage.</strong>",
